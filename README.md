@@ -23,5 +23,5 @@ Custom theme based on the [AMP Start Travel Theme](https://ampstart-iframes.fire
 
 ## Credits ##
 
-* Based on the [AMP Start Travel Theme](https://ampstart-iframes.firebaseapp.com/templates/travel/travel.amp), (C) 2012-2017 Automattic, Inc., [GPLv2 or later](https://www.gnu.org/licenses/gpl-2.0.html)
+* Based on the [AMP Start Travel Theme](https://ampstart-iframes.firebaseapp.com/templates/travel/travel.amp)
 
