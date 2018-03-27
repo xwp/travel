@@ -27,8 +27,8 @@ export default registerBlockType(
 
 						<div className="flex justify-center pb2">
 							<div className="travel-input-group flex items-center col-8">
-								<input className="travel-input travel-input-big line-height-2 block col-12 flex-auto rounded-left" type="text" name="query" placeholder="Where would you like to go?" on="change:AMP.setState({fields_query: event.value})" value="" />
-                                <span className="travel-input-group-sep travel-border-gray relative z1 block"></span>
+								<input className="travel-input travel-input-big line-height-2 block col-12 flex-auto rounded-left" type="text" name="query" placeholder="Where would you like to go?" value="" />
+								<span className="travel-input-group-sep travel-border-gray relative z1 block"></span>
 								<a href="travel-results.amp" className="travel-link travel-input travel-input-big line-height-2 link rounded-right nowrap text-decoration-none">
 								Find my next adventure
 							</a>
@@ -50,9 +50,9 @@ export default registerBlockType(
 						<div className="flex justify-center pb2">
 							<div className="travel-input-group flex items-center col-8">
 								<input className="travel-input travel-input-big line-height-2 block col-12 flex-auto rounded-left" type="text" name="query" placeholder="Where would you like to go?" on="change:AMP.setState({fields_query: event.value})" value="" { ...ampValueProp } />
-                                <span className="travel-input-group-sep travel-border-gray relative z1 block"></span>
-                                <a href="travel-results.amp" className="travel-link travel-input travel-input-big line-height-2 link rounded-right nowrap text-decoration-none" on="
-								 tap:AMP.setState({
+								<span className="travel-input-group-sep travel-border-gray relative z1 block"></span>
+								<a href="travel-results.amp" className="travel-link travel-input travel-input-big line-height-2 link rounded-right nowrap text-decoration-none" on="
+								tap:AMP.setState({
 								ui_reset: false,
 								ui_filterPane: false,
 								query_query: fields_query,
