@@ -7,3 +7,4 @@ import './featured';
 import './hero';
 import './popular';
 import './search';
+import './travel-angles';
