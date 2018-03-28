@@ -13,6 +13,10 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
     "cross-env": "^5.1.1",
+    "eslint": "^4.19.1",
+    "grunt-cli": "^1.2.0",
+    "jscs": "^3.0.7",
+    "jshint": "^2.9.5",
     "raw-loader": "^0.5.1",
     "webpack": "^3.10.0"
   },

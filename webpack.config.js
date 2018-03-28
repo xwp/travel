@@ -2,11 +2,11 @@ const path = require( 'path' );
 
 module.exports = {
 	entry: {
-		'./assets/js/editor-blocks' : './blocks/index.js',
+		'./assets/js/editor-blocks': './blocks/index.js'
 	},
 	output: {
 		path: path.resolve( __dirname ),
-		filename: '[name].js',
+		filename: '[name].js'
 	},
 	watch: true,
 	devtool: 'cheap-eval-source-map',
@@ -16,9 +16,9 @@ module.exports = {
 				test: /\.js$/,
 				exclude: /(node_modules|bower_components)/,
 				use: {
-					loader: 'babel-loader',
-				},
-			},
-		],
-	},
+					loader: 'babel-loader'
+				}
+			}
+		]
+	}
 };

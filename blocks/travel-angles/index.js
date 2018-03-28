@@ -14,39 +14,33 @@ export default registerBlockType(
 		category: 'common',
 		icon: 'wordpress-alt',
 		keywords: [
-			__( 'Design' ),
+			__( 'Design' )
 		],
 
 		// Copy from Travel HTML template.
 		edit: props => {
+
+			// Don't display the travel angels since that will hide the block configure buttons behind an image.
 			return (
-				<div className="travel-angles max-width-3 mx-auto">
-					<div className="travel-angle-left">
-						<div className="travel-angle-1 absolute"></div>
-					</div>
-					<div className="travel-angle-left">
-						<div className="travel-angle-2 absolute"></div>
-					</div>
-					<div className="travel-angle-right">
-						<div className="travel-angle-3 absolute"></div>
-					</div>
+				<div className='travel-angles max-width-3 mx-auto'>
+					--- Placeholder for Travel angles ---
 				</div>
 			);
 		},
 		save: props => {
 			return (
-				<div className="travel-angles max-width-3 mx-auto">
-					<div className="travel-angle-left">
-						<div className="travel-angle-1 absolute"></div>
+				<div className='travel-angles max-width-3 mx-auto'>
+					<div className='travel-angle-left'>
+						<div className='travel-angle-1 absolute'></div>
 					</div>
-					<div className="travel-angle-left">
-						<div className="travel-angle-2 absolute"></div>
+					<div className='travel-angle-left'>
+						<div className='travel-angle-2 absolute'></div>
 					</div>
-					<div className="travel-angle-right">
-						<div className="travel-angle-3 absolute"></div>
+					<div className='travel-angle-right'>
+						<div className='travel-angle-3 absolute'></div>
 					</div>
 				</div>
 			);
-		},
+		}
 	},
 );

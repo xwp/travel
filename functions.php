@@ -16,9 +16,9 @@ function travel_enqueue_editor_scripts()
 	// This will be needed for featured block for the sample image URLs.
 	wp_localize_script(
 		'travel-editor-blocks-js',
-		'travel_globals',
+		'travelGlobals',
 		array(
-			'theme_url' => esc_url( get_template_directory_uri() ),
+			'themeUrl' => esc_url( get_template_directory_uri() ),
 		)
 	);
 
