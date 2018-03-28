@@ -12,13 +12,13 @@ const { registerBlockType } = wp.blocks;
 export default registerBlockType(
 	'amp-travel/popular',
 	{
-		title: __( 'Popular Adventures block' ),
+		title: __( 'Popular Adventures' ),
 		category: 'common',
 		icon: 'wordpress-alt',
 		keywords: [
-			__( 'High rating' ),
+			__( 'Top rated' ),
 			__( 'Best' ),
-			__( 'Top' ),
+			__( 'Travel' ),
 		],
 
 		edit: props => {
