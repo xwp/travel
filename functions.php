@@ -3,8 +3,7 @@
 /**
  * Enqueue JS for block editor only.
  */
-function travel_enqueue_editor_scripts()
-{
+function travel_enqueue_editor_scripts() {
 
 	// If Gutenberg doesn't exist, don't load any scripts.
 	if ( ! function_exists( 'gutenberg_init') ) {
@@ -38,3 +37,24 @@ function travel_enqueue_editor_scripts()
 
 // Hook into block editor assets.
 add_action( 'enqueue_block_editor_assets', 'travel_enqueue_editor_scripts' );
+
+/**
+ * Replaces data-ampsrc with [src].
+ * This is a workaround for React considering [src] as an invalid attribute.
+ * @todo Confirm if this makes sense / if there's a better way.
+ *
+ * @param string $content Content
+ * @return mixed
+ */
+function travel_filter_the_content_amp_atts( $content ) {
+	if ( ! function_exists( 'gutenberg_init') ) {
+		return $content;
+	}
+
+	if ( is_singular() ) {
+		$content = str_replace('data-ampsrc=', '[src]=', $content );
+		return $content;
+	}
+}
+
+add_filter( 'the_content', 'travel_filter_the_content_amp_atts', 10, 1 );

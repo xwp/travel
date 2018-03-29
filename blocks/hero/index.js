@@ -68,8 +68,10 @@ export default registerBlockType(
 			const ampValueProp = {
 				'[value]': 'fields_query'
 			};
+
+			// @todo Confirm possible solution for replacing [src] -- add data-ampsrc instead and replace it with filters when displaying the post.
 			const ampSrcProp = {
-				'[src]': "'/api/places?types=(regions)&amp;types=(cities)&amp;input=' + fields_query_live"
+				'data-ampsrc': "'/api/places?types=(regions)&amp;types=(cities)&amp;input=' + fields_query_live"
 			};
 
 			const departureClassNameProp = {
