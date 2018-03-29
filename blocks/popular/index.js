@@ -68,7 +68,7 @@ export default registerBlockType(
 										</div>
 										<span className='travel-results-result-subtext mr1'>241 Reviews</span>
 										<span className='travel-results-result-subtext'>
-											<svg className='travel-icon' viewBox='0 0 77 100'><g fill='none' fill-rule='evenodd'><path stroke='currentColor' stroke-width='7.5' d='M38.794 93.248C58.264 67.825 68 49.692 68 38.848 68 22.365 54.57 9 38 9S8 22.364 8 38.85c0 10.842 9.735 28.975 29.206 54.398a1 1 0 0 0 1.588 0z'></path><circle cx='38' cy='39' r='10' fill='currentColor'></circle></g></svg>
+											<svg className='travel-icon' viewBox='0 0 77 100'><g fill='none' fillRule='evenodd'><path stroke='currentColor' strokeWidth='7.5' d='M38.794 93.248C58.264 67.825 68 49.692 68 38.848 68 22.365 54.57 9 38 9S8 22.364 8 38.85c0 10.842 9.735 28.975 29.206 54.398a1 1 0 0 0 1.588 0z'></path><circle cx='38' cy='39' r='10' fill='currentColor'></circle></g></svg>
 											Oaxaca
 										</span>
 									</div>
@@ -111,7 +111,7 @@ export default registerBlockType(
 											<div className='travel-results-result-stars green'>★★★★★</div>
 										</div>
 										<span className='travel-results-result-subtext mr1'>42 Reviews</span>
-										<span className='travel-results-result-subtext'><svg className='travel-icon' viewBox='0 0 77 100'><g fill='none' fill-rule='evenodd'><path stroke='currentColor' stroke-width='7.5' d='M38.794 93.248C58.264 67.825 68 49.692 68 38.848 68 22.365 54.57 9 38 9S8 22.364 8 38.85c0 10.842 9.735 28.975 29.206 54.398a1 1 0 0 0 1.588 0z'></path><circle cx='38' cy='39' r='10' fill='currentColor'></circle></g></svg> Oaxaca</span>
+										<span className='travel-results-result-subtext'><svg className='travel-icon' viewBox='0 0 77 100'><g fill='none' fillRule='evenodd'><path stroke='currentColor' strokeWidth='7.5' d='M38.794 93.248C58.264 67.825 68 49.692 68 38.848 68 22.365 54.57 9 38 9S8 22.364 8 38.85c0 10.842 9.735 28.975 29.206 54.398a1 1 0 0 0 1.588 0z'></path><circle cx='38' cy='39' r='10' fill='currentColor'></circle></g></svg> Oaxaca</span>
 									</div>
 								</div>
 								<div className='m1 mt3 mb2'>
@@ -150,7 +150,7 @@ export default registerBlockType(
 											<div className='travel-results-result-stars green'>★★★★★</div>
 										</div>
 										<span className='travel-results-result-subtext mr1'>17 Reviews</span>
-										<span className='travel-results-result-subtext'><svg className='travel-icon' viewBox='0 0 77 100'><g fill='none' fill-rule='evenodd'><path stroke='currentColor' stroke-width='7.5' d='M38.794 93.248C58.264 67.825 68 49.692 68 38.848 68 22.365 54.57 9 38 9S8 22.364 8 38.85c0 10.842 9.735 28.975 29.206 54.398a1 1 0 0 0 1.588 0z'></path><circle cx='38' cy='39' r='10' fill='currentColor'></circle></g></svg> Mexico City</span>
+										<span className='travel-results-result-subtext'><svg className='travel-icon' viewBox='0 0 77 100'><g fill='none' fillRule='evenodd'><path stroke='currentColor' strokeWidth='7.5' d='M38.794 93.248C58.264 67.825 68 49.692 68 38.848 68 22.365 54.57 9 38 9S8 22.364 8 38.85c0 10.842 9.735 28.975 29.206 54.398a1 1 0 0 0 1.588 0z'></path><circle cx='38' cy='39' r='10' fill='currentColor'></circle></g></svg> Mexico City</span>
 									</div>
 								</div>
 							</div>
@@ -204,7 +204,7 @@ export default registerBlockType(
 											<div className='travel-results-result-stars green'>★★★★★</div>
 										</div>
 										<span className='travel-results-result-subtext mr1'>241 Reviews</span>
-										<span className='travel-results-result-subtext'><svg className='travel-icon' viewBox='0 0 77 100'><g fill='none' fill-rule='evenodd'><path stroke='currentColor' stroke-width='7.5' d='M38.794 93.248C58.264 67.825 68 49.692 68 38.848 68 22.365 54.57 9 38 9S8 22.364 8 38.85c0 10.842 9.735 28.975 29.206 54.398a1 1 0 0 0 1.588 0z'></path><circle cx='38' cy='39' r='10' fill='currentColor'></circle></g></svg> Oaxaca</span>
+										<span className='travel-results-result-subtext'><svg className='travel-icon' viewBox='0 0 77 100'><g fill='none' fillRule='evenodd'><path stroke='currentColor' strokeWidth='7.5' d='M38.794 93.248C58.264 67.825 68 49.692 68 38.848 68 22.365 54.57 9 38 9S8 22.364 8 38.85c0 10.842 9.735 28.975 29.206 54.398a1 1 0 0 0 1.588 0z'></path><circle cx='38' cy='39' r='10' fill='currentColor'></circle></g></svg> Oaxaca</span>
 									</div>
 								</div>
 								<div className='m1 mt3 mb2'>
@@ -245,7 +245,7 @@ export default registerBlockType(
 											<div className='travel-results-result-stars green'>★★★★★</div>
 										</div>
 										<span className='travel-results-result-subtext mr1'>42 Reviews</span>
-										<span className='travel-results-result-subtext'><svg className='travel-icon' viewBox='0 0 77 100'><g fill='none' fill-rule='evenodd'><path stroke='currentColor' stroke-width='7.5' d='M38.794 93.248C58.264 67.825 68 49.692 68 38.848 68 22.365 54.57 9 38 9S8 22.364 8 38.85c0 10.842 9.735 28.975 29.206 54.398a1 1 0 0 0 1.588 0z'></path><circle cx='38' cy='39' r='10' fill='currentColor'></circle></g></svg> Oaxaca</span>
+										<span className='travel-results-result-subtext'><svg className='travel-icon' viewBox='0 0 77 100'><g fill='none' fillRule='evenodd'><path stroke='currentColor' strokeWidth='7.5' d='M38.794 93.248C58.264 67.825 68 49.692 68 38.848 68 22.365 54.57 9 38 9S8 22.364 8 38.85c0 10.842 9.735 28.975 29.206 54.398a1 1 0 0 0 1.588 0z'></path><circle cx='38' cy='39' r='10' fill='currentColor'></circle></g></svg> Oaxaca</span>
 									</div>
 								</div>
 								<div className='m1 mt3 mb2'>
@@ -283,7 +283,7 @@ export default registerBlockType(
 											<div className='travel-results-result-stars green'>★★★★★</div>
 										</div>
 										<span className='travel-results-result-subtext mr1'>17 Reviews</span>
-										<span className='travel-results-result-subtext'><svg className='travel-icon' viewBox='0 0 77 100'><g fill='none' fill-rule='evenodd'><path stroke='currentColor' stroke-width='7.5' d='M38.794 93.248C58.264 67.825 68 49.692 68 38.848 68 22.365 54.57 9 38 9S8 22.364 8 38.85c0 10.842 9.735 28.975 29.206 54.398a1 1 0 0 0 1.588 0z'></path><circle cx='38' cy='39' r='10' fill='currentColor'></circle></g></svg> Mexico City</span>
+										<span className='travel-results-result-subtext'><svg className='travel-icon' viewBox='0 0 77 100'><g fill='none' fillRule='evenodd'><path stroke='currentColor' strokeWidth='7.5' d='M38.794 93.248C58.264 67.825 68 49.692 68 38.848 68 22.365 54.57 9 38 9S8 22.364 8 38.85c0 10.842 9.735 28.975 29.206 54.398a1 1 0 0 0 1.588 0z'></path><circle cx='38' cy='39' r='10' fill='currentColor'></circle></g></svg> Mexico City</span>
 									</div>
 								</div>
 							</div>
