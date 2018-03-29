@@ -6,6 +6,11 @@
 function travel_enqueue_editor_scripts()
 {
 
+	// If Gutenberg doesn't exist, don't load any scripts.
+	if ( ! function_exists( 'gutenberg_init') ) {
+		return;
+	}
+
 	// Enqueue JS bundled file.
 	wp_enqueue_script(
 		'travel-editor-blocks-js',

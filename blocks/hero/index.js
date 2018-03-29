@@ -106,6 +106,20 @@ export default registerBlockType(
 
 								<amp-list layout='flex-item' src='/api/places?types=(regions)&amp;types=(cities)&amp;input=' {...ampSrcProp } aria-live='polite'>
 									<template type='amp-mustache'>
+										{ wp.element.createElement(
+											'datalist',
+											{
+												id: 'locations',
+											},
+											'{{#predictions}}',
+											wp.element.createElement(
+												'option',
+												{
+													value: '{{description}}'
+												},
+												'{{/predictions}}'
+											)
+										) }
 									</template>
 					            </amp-list>
 
