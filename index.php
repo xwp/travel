@@ -7,7 +7,9 @@
  * @todo Create proper templates.
  */
 
+// Ignore the issues of this file since that's just a copied HTML placeholder and contains some issues (e.g. including the scripts directly.)
 
+// @codingStandardsIgnoreFile
 ?>
 <!doctype html>
 <html ⚡="">

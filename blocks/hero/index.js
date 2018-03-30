@@ -1,6 +1,6 @@
 /* globals travelGlobals */
-// jscs:disable disallowMultipleLineStrings
-// jscs:disable validateQuoteMarks
+/* jscs:disable disallowMultipleLineStrings */
+/* jscs:disable validateQuoteMarks */
 
 /**
  * Internal block libraries.
@@ -64,7 +64,6 @@ export default registerBlockType(
 		},
 		save: props => {
 
-			// Note: amp-mustache template content is not included in "save".
 			const ampValueProp = {
 				'[value]': 'fields_query'
 			};
@@ -112,7 +111,7 @@ export default registerBlockType(
 										{ wp.element.createElement(
 											'datalist',
 											{
-												id: 'locations',
+												id: 'locations'
 											},
 											'{{#predictions}}',
 											wp.element.createElement(
