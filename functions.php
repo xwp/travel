@@ -23,6 +23,7 @@ function travel_enqueue_editor_scripts() {
 		'travelGlobals',
 		array(
 			'themeUrl' => esc_url( get_template_directory_uri() ),
+			'apiUrl'   => get_rest_url(),
 		)
 	);
 
@@ -58,3 +59,28 @@ function travel_filter_the_content_amp_atts( $content ) {
 }
 
 add_filter( 'the_content', 'travel_filter_the_content_amp_atts', 10, 1 );
+
+/**
+ * Filters the rest_pre_echo_response for amp-list categories.
+ *
+ * @param $result
+ * @param $server
+ * @param $request
+ * @return array
+ */
+function travel_filter_rest_pre_echo_response( $result, $server, $request ) {
+
+	// Amp-list is processing JSON in a specific way, also requires items array.
+	if ( false !== strpos( $request->get_route(), 'categories' ) ) {
+		$items = array(
+			'items' => array(
+				array(
+					'categories' => $result,
+				),
+			),
+		);
+		return $items;
+	}
+	return $result;
+}
+add_filter( 'rest_pre_echo_response', 'travel_filter_rest_pre_echo_response', 10, 3 );
