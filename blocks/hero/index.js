@@ -1,6 +1,6 @@
 /* globals travelGlobals */
-// jscs:disable disallowMultipleLineStrings
-// jscs:disable validateQuoteMarks
+/* jscs:disable disallowMultipleLineStrings */
+/* jscs:disable validateQuoteMarks */
 
 /**
  * Internal block libraries.
@@ -155,7 +155,7 @@ export default registerBlockType(
 										{ wp.element.createElement(
 											'datalist',
 											{
-												id: 'locations',
+												id: 'locations'
 											},
 											'{{#categories}}',
 											wp.element.createElement(

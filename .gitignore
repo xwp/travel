@@ -1,6 +1,5 @@
 .DS_Store
 vendor
-node_modules
-.idea
 /node_modules
+.idea
 package-lock.json

@@ -1,4 +1,9 @@
 <?php
+/**
+ * Theme functions file.
+ *
+ * @package WPAMPTheme
+ */
 
 /**
  * Enqueue JS for block editor only.
@@ -6,7 +11,7 @@
 function travel_enqueue_editor_scripts() {
 
 	// If Gutenberg doesn't exist, don't load any scripts.
-	if ( ! function_exists( 'gutenberg_init') ) {
+	if ( ! function_exists( 'gutenberg_init' ) ) {
 		return;
 	}
 
@@ -31,7 +36,7 @@ function travel_enqueue_editor_scripts() {
 	// @todo Use only style that's actually needed within the editor.
 	wp_enqueue_style(
 		'travel-editor-blocks-css',
-		get_template_directory_uri() . '/blocks/editor-blocks.css',
+		get_template_directory_uri() . '/assets/css/editor-blocks.css',
 		array( 'wp-blocks' )
 	);
 }
@@ -42,18 +47,18 @@ add_action( 'enqueue_block_editor_assets', 'travel_enqueue_editor_scripts' );
 /**
  * Replaces data-ampsrc with [src].
  * This is a workaround for React considering [src] as an invalid attribute.
- * @todo Confirm if this makes sense / if there's a better way.
  *
- * @param string $content Content
+ * @todo Confirm if this makes sense / if there's a better way.
+ * @param string $content Content.
  * @return mixed
  */
 function travel_filter_the_content_amp_atts( $content ) {
-	if ( ! function_exists( 'gutenberg_init') ) {
+	if ( ! function_exists( 'gutenberg_init' ) ) {
 		return $content;
 	}
 
 	if ( is_singular() ) {
-		$content = str_replace('data-ampsrc=', '[src]=', $content );
+		$content = str_replace( 'data-ampsrc=', '[src]=', $content );
 		return $content;
 	}
 }
