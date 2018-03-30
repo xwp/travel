@@ -1,0 +1,25 @@
+{
+  "name": "wp-travel-theme",
+  "version": "0.1.0",
+  "description": "WordPress Travel Theme",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "test": "DIFF_BASE=develop ./node_modules/wp-dev-lib/pre-commit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xwp/travel.git"
+  },
+  "author": "",
+  "license": "GPL-2.0+",
+  "bugs": {
+    "url": "https://github.com/xwp/travel/issues"
+  },
+  "homepage": "https://github.com/xwp/travel#readme",
+  "devDependencies": {
+    "eslint": "^4.13.1",
+    "eslint-config-wordpress": "^2.0.0",
+    "wp-dev-lib": "github:xwp/wp-dev-lib"
+  }
+}

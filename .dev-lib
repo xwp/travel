@@ -1,0 +1,4 @@
+PROJECT_TYPE=theme
+WPCS_STANDARD=phpcs.xml.dist
+PATH_EXCLUDES_PATTERN='^(.*/)?(vendor|node_modules)/.*'
+DEV_LIB_SKIP=yuicompressor,codeception,grunt,jshint
