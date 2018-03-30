@@ -68,9 +68,9 @@ add_filter( 'the_content', 'travel_filter_the_content_amp_atts', 10, 1 );
 /**
  * Filters the rest_pre_echo_response for amp-list categories.
  *
- * @param $result
- * @param $server
- * @param $request
+ * @param array           $result  Response data to send to the client.
+ * @param WP_REST_Server  $server  Server instance.
+ * @param WP_REST_Request $request Request used to generate the response.
  * @return array
  */
 function travel_filter_rest_pre_echo_response( $result, $server, $request ) {
