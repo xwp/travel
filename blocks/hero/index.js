@@ -50,7 +50,7 @@ export default registerBlockType(
 						<div className='travel-hero-content-inner relative px1 md-px2 flex-auto self-end'>
 							<header>
 								<RichText
-									key="editable"
+									key='editable'
 									className='travel-hero-heading mb2 line-height-1'
 									tagName='h1'
 									value={ heading }
@@ -58,7 +58,7 @@ export default registerBlockType(
 									placeholder={ __( 'Adventures made easy' ) }
 								/>
 								<RichText
-									key="editable"
+									key='editable'
 									className='travel-hero-subheading line-height-2 bold xs-hide sm-hide'
 									tagName='h2'
 									value={ subheading }
@@ -90,8 +90,8 @@ export default registerBlockType(
 
 								<RichText
 									className='ampstart-btn travel-input-big rounded center bold white block col-12'
-									key="editable"
-									tagName="a"
+									key='editable'
+									tagName='a'
 									value={ ctaText || [ __( 'Find Adventures & Tours' ) ] }
 									onChange={ ( value ) => setAttributes( { ctaText: value } ) }
 								/>
