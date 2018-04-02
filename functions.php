@@ -71,7 +71,6 @@ add_filter( 'the_content', 'travel_filter_the_content_amp_atts', 10, 1 );
  * @return string Output.
  */
 function travel_render_block_travel_discover( $attributes ) {
-	global $post;
 	$posts = wp_get_recent_posts( array(
 		'numberposts' => 1,
 		'post_status' => 'publish',
