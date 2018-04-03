@@ -137,18 +137,20 @@ function travel_render_block_travel_discover( $attributes ) {
  * Register Travel Discover block type.
  */
 function travel_register_block_travel_discover() {
-	register_block_type( 'amp-travel/discover', array(
-		'attributes'      => array(
-			'heading'    => array(
-				'type'    => 'string',
-				'default' => __( 'Discover Adventures', 'travel' ),
+	if ( function_exists( 'register_block_type' ) ) {
+		register_block_type( 'amp-travel/discover', array(
+			'attributes'      => array(
+				'heading'    => array(
+					'type'    => 'string',
+					'default' => __( 'Discover Adventures', 'travel' ),
+				),
+				'subheading' => array(
+					'type'    => 'string',
+					'default' => __( 'Get inspired and find your next big trip', 'travel' ),
+				),
 			),
-			'subheading' => array(
-				'type'    => 'string',
-				'default' => __( 'Get inspired and find your next big trip', 'travel' ),
-			),
-		),
-		'render_callback' => 'travel_render_block_travel_discover',
-	) );
+			'render_callback' => 'travel_render_block_travel_discover',
+		) );
+	}
 }
 add_action( 'init', 'travel_register_block_travel_discover' );
