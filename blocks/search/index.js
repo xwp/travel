@@ -47,11 +47,11 @@ export default registerBlockType(
 							tagName='h3'
 							value={ heading }
 							onChange={ ( value ) => setAttributes( { heading: value } ) }
-							placeholder={ __( 'Have a specific destination in mind?' ) }
+							placeholder={ __( 'Have a specific adventure in mind?' ) }
 						/>
 						<div className='flex justify-center pb2'>
 							<div className='travel-input-group flex col-12 items-center'>
-								<span className='travel-input travel-input-big line-height-2 block col-12 flex-auto rounded-left'>{ __( 'Where would you like to go?' ) }</span>
+								<span className='travel-input travel-input-big line-height-2 block col-12 flex-auto rounded-left'>{ __( 'Search for adventures' ) }</span>
 								<span className='travel-input-group-sep travel-border-gray relative z1 block'></span>
 								<RichText
 									className='travel-link travel-input travel-input-big line-height-2 link rounded-right nowrap text-decoration-none'
@@ -71,7 +71,7 @@ export default registerBlockType(
 				'[value]': 'fields_query'
 			};
 			const ampHrefProp = {
-				'[href]': "'" + travelGlobals.siteUrl + "?category_name=' + fields_query"
+				'[href]': "'" + travelGlobals.siteUrl + "?s=' + fields_query"
 			};
 			return (
 				<section className='travel-search py4 xs-hide sm-hide relative'>
@@ -80,9 +80,9 @@ export default registerBlockType(
 
 						<div className='flex justify-center pb2'>
 							<div className='travel-input-group flex items-center col-8'>
-								<input className='travel-input travel-input-big line-height-2 block col-12 flex-auto rounded-left' type='text' name='query' placeholder='Where would you like to go?' on='change:AMP.setState({fields_query: event.value})' value='' { ...ampValueProp } />
+								<input className='travel-input travel-input-big line-height-2 block col-12 flex-auto rounded-left' type='text' name='query' placeholder='Search for adventures' on='change:AMP.setState({fields_query: event.value})' value='' { ...ampValueProp } />
 								<span className='travel-input-group-sep travel-border-gray relative z1 block'></span>
-								<a href={ travelGlobals.siteUrl + '?category_name=' } { ...ampHrefProp } className='travel-link travel-input travel-input-big line-height-2 link rounded-right nowrap text-decoration-none' on='
+								<a href={ travelGlobals.siteUrl + '?s=' } { ...ampHrefProp } className='travel-link travel-input travel-input-big line-height-2 link rounded-right nowrap text-decoration-none' on='
 								tap:AMP.setState({
 								ui_reset: false,
 								ui_filterPane: false,
