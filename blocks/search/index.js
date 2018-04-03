@@ -1,4 +1,5 @@
 // jscs:disable disallowMultipleLineStrings
+/* jscs:disable validateQuoteMarks */
 
 /**
  * Internal block libraries.
@@ -29,7 +30,8 @@ export default registerBlockType(
 			ctaText: {
 				source: 'children',
 				type: 'array',
-				selector: '.travel-search .travel-link'
+				selector: '.travel-search .travel-link',
+				default: [ __( 'Find my next adventure' ) ]
 			}
 		},
 
@@ -67,6 +69,9 @@ export default registerBlockType(
 			const ampValueProp = {
 				'[value]': 'fields_query'
 			};
+			const ampHrefProp = {
+				'[href]': "'?category_name=' + fields_query"
+			};
 			return (
 				<section className='travel-search py4 xs-hide sm-hide relative'>
 					<div className='px1 md-px2 pb1 relative'>
@@ -76,7 +81,7 @@ export default registerBlockType(
 							<div className='travel-input-group flex items-center col-8'>
 								<input className='travel-input travel-input-big line-height-2 block col-12 flex-auto rounded-left' type='text' name='query' placeholder='Where would you like to go?' on='change:AMP.setState({fields_query: event.value})' value='' { ...ampValueProp } />
 								<span className='travel-input-group-sep travel-border-gray relative z1 block'></span>
-								<a href='travel-results.amp' className='travel-link travel-input travel-input-big line-height-2 link rounded-right nowrap text-decoration-none' on='
+								<a href='?category_name=' { ...ampHrefProp } className='travel-link travel-input travel-input-big line-height-2 link rounded-right nowrap text-decoration-none' on='
 								tap:AMP.setState({
 								ui_reset: false,
 								ui_filterPane: false,

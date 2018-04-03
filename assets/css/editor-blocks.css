@@ -8,3 +8,7 @@ html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-t
 .travel-input-group {
     font-size: 14px;
 }
+
+.travel-search-input.blocks-rich-text {
+    width: 100%;
+}
