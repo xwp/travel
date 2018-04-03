@@ -29,6 +29,7 @@ function travel_enqueue_editor_scripts() {
 		array(
 			'themeUrl' => esc_url( get_template_directory_uri() ),
 			'apiUrl'   => get_rest_url(),
+			'siteUrl'  => site_url(),
 		)
 	);
 

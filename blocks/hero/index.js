@@ -105,14 +105,10 @@ export default registerBlockType(
 		},
 		save( { attributes } ) {
 
-			/* @todo Clicking this should direct to the search results template (doesn't exist yet). */
-			/* @todo Make it work with the CPT categories which currently don't exist yet. */
-
 			const ampValueProp = {
 				'[value]': 'fields_query'
 			};
 
-			// @todo Confirm possible solution for replacing [src] -- add data-ampsrc instead and replace it with filters when displaying the post.
 			const ampSrcProp = {
 				'data-ampsrc': "'" + travelGlobals.apiUrl + "wp/v2/categories?search=' + fields_query_live"
 			};
@@ -125,6 +121,9 @@ export default registerBlockType(
 			};
 			const ampDisabledProp = {
 				'[disabled]': '!fields_departure'
+			};
+			const ampHrefProp = {
+				'[href]': "'" + travelGlobals.siteUrl + "?s=' + fields_query_live"
 			};
 
 			return (
@@ -195,7 +194,7 @@ export default registerBlockType(
 					            </div>
 					          </label>
 					        </div>
-					        <a href='travel-results.amp' className='ampstart-btn travel-input-big rounded center bold white block col-12' on='
+					        <a href={ travelGlobals.siteUrl + '?s=' } { ...ampHrefProp } className='ampstart-btn travel-input-big rounded center bold white block col-12' on='
 					            tap:AMP.setState({
 					                ui_reset: false,
 					                ui_filterPane: false,
