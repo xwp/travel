@@ -28,6 +28,7 @@ function travel_enqueue_editor_scripts() {
 		'travelGlobals',
 		array(
 			'themeUrl' => esc_url( get_template_directory_uri() ),
+			'siteUrl'  => site_url(),
 		)
 	);
 
