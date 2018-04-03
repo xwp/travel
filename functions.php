@@ -71,6 +71,8 @@ add_filter( 'the_content', 'travel_filter_the_content_amp_atts', 10, 1 );
  * @return string Output.
  */
 function travel_render_block_travel_discover( $attributes ) {
+	global $post;
+
 	$posts = wp_get_recent_posts( array(
 		'numberposts' => 1,
 		'post_status' => 'publish',
@@ -89,7 +91,21 @@ function travel_render_block_travel_discover( $attributes ) {
 		$discover_post = $posts[0];
 		$title         = get_the_title( $discover_post['ID'] );
 		$link          = get_permalink( $discover_post['ID'] );
-		$excerpt       = $discover_post['post_excerpt'];
+
+		// If the Discover Post is the same as the current post, use the wp_trim_words directly since otherwise the_content will run endlessly.
+		if (
+			$post
+			&&
+			$post->ID === $discover_post['ID']
+			&&
+			! has_excerpt( $discover_post['post_excerpt'] )
+		) {
+			$excerpt_length = apply_filters( 'excerpt_length', 15 );
+			$excerpt_more   = apply_filters( 'excerpt_more', ' ...' );
+			$excerpt        = wp_trim_words( $discover_post['post_content'], $excerpt_length, $excerpt_more );
+		} else {
+			$excerpt = get_the_excerpt( $discover_post['ID'] );
+		}
 	}
 
 	$output = "<section class='travel-discover py4 mb3 relative xs-hide sm-hide'>
