@@ -23,7 +23,7 @@ export default registerBlockType(
 		],
 
 		// Copied from Travel template HTML, removed amp tags not to break edit.
-		edit: props => {
+		edit() {
 			return (
 				<section className='travel-featured pt3 relative clearfix'>
 					<header className='max-width-2 mx-auto px1 md-px2 relative'>
@@ -86,7 +86,7 @@ export default registerBlockType(
 				</section>
 			);
 		},
-		save: props => {
+		save() {
 			return (
 				<section className='travel-featured pt3 relative clearfix'>
 					<header className='max-width-2 mx-auto px1 md-px2 relative'>

@@ -44,10 +44,9 @@ function travel_enqueue_editor_scripts() {
 add_action( 'enqueue_block_editor_assets', 'travel_enqueue_editor_scripts' );
 
 /**
- * Replaces data-ampsrc with [src].
- * This is a workaround for React considering [src] as an invalid attribute.
+ * Replaces data-amp-bind-* with [*].
+ * This is a workaround for React considering some AMP attributes (e.g. [src]) invalid.
  *
- * @todo Confirm if this makes sense / if there's a better way.
  * @param string $content Content.
  * @return mixed
  */
@@ -56,10 +55,7 @@ function travel_filter_the_content_amp_atts( $content ) {
 		return $content;
 	}
 
-	if ( is_singular() ) {
-		$content = str_replace( 'data-ampsrc=', '[src]=', $content );
-		return $content;
-	}
+	return preg_replace( '/\sdata-amp-bind-(.+?)=/', ' [$1]=', $content );
 }
 
 add_filter( 'the_content', 'travel_filter_the_content_amp_atts', 10, 1 );
