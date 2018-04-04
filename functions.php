@@ -64,3 +64,18 @@ function travel_filter_the_content_amp_atts( $content ) {
 }
 
 add_filter( 'the_content', 'travel_filter_the_content_amp_atts', 10, 1 );
+
+/**
+ * Modify the default search query to include 'adventure' post type.
+ *
+ * @param object $query  Original query.
+ */
+function travel_filter_search_pre_get_posts( $query ) {
+
+	if ( $query->is_search ) {
+		$query->set( 'post_type', array( 'post', 'adventure' ) );
+	}
+
+}
+
+add_filter( 'pre_get_posts', 'travel_filter_search_pre_get_posts', 10, 1 );
