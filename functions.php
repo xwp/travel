@@ -213,7 +213,7 @@ function amp_travel_add_activity_meta_fields() {
 		<label for='travel-activity-svg'>SVG</label>
 		<?php wp_nonce_field( basename( __FILE__ ), 'travel_activity_svg_nonce' ); ?>
 		<textarea aria-required='true' name='travel-activity-svg' id='travel-activity-svg'></textarea>
-		<p class="description"><?php _e( 'This is for the background icon of the activity term.', 'travel' ); ?></p>
+		<p class="description"><?php esc_attr_e( 'This is for the background icon of the activity term.', 'travel' ); ?></p>
 	</div>
 <?php
 }
@@ -231,11 +231,11 @@ function amp_travel_edit_activity_meta_fields( $term ) {
 	}
 	?>
 	<tr class="form-field term-svg-wrap">
-		<th scope="row"><label for="travel-activity-svg"><?php _e( 'SVG', 'travel' ); ?></label></th>
+		<th scope="row"><label for="travel-activity-svg"><?php esc_attr_e( 'SVG', 'travel' ); ?></label></th>
 		<td>
 			<?php wp_nonce_field( basename( __FILE__ ), 'travel_activity_svg_nonce' ); ?>
 			<textarea aria-required="true" name="travel-activity-svg" id="travel-activity-svg"><?php echo amp_travel_sanitize_activity_svg( $value ); ?></textarea>
-			<p class="description"><?php _e( 'This is for the background icon of the activity term.', 'travel' ); ?></p>
+			<p class="description"><?php esc_attr_e( 'This is for the background icon of the activity term.', 'travel' ); ?></p>
 		</td>
 	</tr>
 <?php
