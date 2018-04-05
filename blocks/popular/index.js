@@ -101,7 +101,7 @@ export default registerBlockType(
 									</div>
 
 									<div className='h2 line-height-2 mb1'>
-										<span className='travel-results-result-text'>Discover Oaxaca's Electronic Music Scene with a Top DJ</span>
+										<span className='travel-results-result-text'>Discover Oaxaca&lsquo;s Electronic Music Scene with a Top DJ</span>
 										<span className='travel-results-result-subtext h3'>•</span>
 										<span className='travel-results-result-subtext h3'>$&nbsp;</span><span className='black bold'>113</span>
 									</div>
@@ -235,7 +235,7 @@ export default registerBlockType(
 									</div>
 
 									<div className='h2 line-height-2 mb1'>
-										<span className='travel-results-result-text'>Discover Oaxaca's Electronic Music Scene with a Top DJ</span>
+										<span className='travel-results-result-text'>Discover Oaxaca&lsquo;s Electronic Music Scene with a Top DJ</span>
 										<span className='travel-results-result-subtext h3'>•</span>
 										<span className='travel-results-result-subtext h3'>$&nbsp;</span><span className='black bold'>113</span>
 									</div>
