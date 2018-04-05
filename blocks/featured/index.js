@@ -7,7 +7,7 @@
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
-import { deamplifiy } from '../amp-transformer';
+import { deamplify } from '../amp-transformer';
 
 /**
  * Render the featured block.
@@ -24,7 +24,7 @@ const renderStaticFeaturedBlock = () => {
 				<div className='travel-featured-grid flex flex-wrap items-stretch'>
 					<div className='col-12 md-col-6 flex items-stretch flex-auto'>
 						<a href='travel-results.amp' className='travel-featured-tile flex flex-auto relative travel-featured-color-blue' on="tap:AMP.setState({fields_query: 'New York', query_query: 'New York'})">
-							<amp-img className='travel-object-cover flex-auto' layout='responsive' width='336' height='507' src={travelGlobals.themeUrl + '/img/new-york.jpg'}></amp-img>
+							<amp-img class='travel-object-cover flex-auto' layout='responsive' width='336' height='507' src={travelGlobals.themeUrl + '/img/new-york.jpg'}></amp-img>
 							<div className='travel-featured-overlay absolute z1 center top-0 right-0 bottom-0 left-0 white p2'>
 								<div className='travel-featured-tile-heading caps bold line-height-2 h3'>New York</div>
 								<div className='h5'>379 adventures</div>
@@ -32,14 +32,14 @@ const renderStaticFeaturedBlock = () => {
 						</a>
 						<div className='flex flex-column items-stretch flex-auto'>
 							<a href='travel-results.amp' className='travel-featured-tile flex flex-auto relative travel-featured-color-cyan' on="tap:AMP.setState({fields_query: 'Barcelona', query_query: 'Barcelona'})">
-								<amp-img className='travel-object-cover flex-auto' layout='responsive' width='264' height='246' src={travelGlobals.themeUrl + '/img/barcelona.jpg'}></amp-img>
+								<amp-img class='travel-object-cover flex-auto' layout='responsive' width='264' height='246' src={travelGlobals.themeUrl + '/img/barcelona.jpg'}></amp-img>
 								<div className='travel-featured-overlay absolute z1 center top-0 right-0 bottom-0 left-0 white p2'>
 									<div className='travel-featured-tile-heading bold caps line-height-2 h3'>Barcelona</div>
 									<div className='h5'>68 adventures</div>
 								</div>
 							</a>
 							<a href='travel-results.amp' className='travel-featured-tile flex flex-auto pointer relative travel-featured-color-orange' on="tap:AMP.setState({fields_query: 'Paris', query_query: 'Paris'})">
-								<amp-img className='travel-object-cover flex-auto' layout='responsive' width='264' height='264' src={travelGlobals.themeUrl + '/img/paris.jpg'}></amp-img>
+								<amp-img class='travel-object-cover flex-auto' layout='responsive' width='264' height='264' src={travelGlobals.themeUrl + '/img/paris.jpg'}></amp-img>
 								<div className='travel-featured-overlay absolute z1 center top-0 right-0 bottom-0 left-0 white p2'>
 									<div className='travel-featured-tile-heading bold caps line-height-2 h3'>Paris</div>
 									<div className='h5'>221 adventures</div>
@@ -50,14 +50,14 @@ const renderStaticFeaturedBlock = () => {
 					<div className='col-12 md-col-6 flex items-stretch flex-auto'>
 						<div className='flex flex-column items-stretch flex-auto'>
 							<a href='travel-results.amp' className='travel-featured-tile flex flex-auto pointer relative travel-featured-color-purple' on="tap:AMP.setState({fields_query: 'Tokyo', query_query: 'Tokyo'})">
-								<amp-img className='travel-object-cover flex-auto' layout='responsive' width='276' height='207' src={travelGlobals.themeUrl + '/img/tokyo.jpg'}></amp-img>
+								<amp-img class='travel-object-cover flex-auto' layout='responsive' width='276' height='207' src={travelGlobals.themeUrl + '/img/tokyo.jpg'}></amp-img>
 								<div className='travel-featured-overlay absolute z1 center top-0 right-0 bottom-0 left-0 white p2'>
 									<div className='travel-featured-tile-heading caps bold line-height-2 h3'>Tokyo</div>
 									<div className='h5'>500+ adventures</div>
 								</div>
 							</a>
 							<a href='travel-results.amp' className='travel-featured-tile flex flex-auto relative travel-featured-color-cornflower' on="tap:AMP.setState({fields_query: 'Chicago', query_query: 'Chicago'})">
-								<amp-img className='travel-object-cover flex-auto' layout='responsive' width='264' height='286' src={travelGlobals.themeUrl + '/img/chicago.jpg'}></amp-img>
+								<amp-img class='travel-object-cover flex-auto' layout='responsive' width='264' height='286' src={travelGlobals.themeUrl + '/img/chicago.jpg'}></amp-img>
 								<div className='travel-featured-overlay absolute z1 center top-0 right-0 bottom-0 left-0 white p2'>
 									<div className='travel-featured-tile-heading caps bold line-height-2 h3'>Chicago</div>
 									<div className='h5'>143 adventures</div>
@@ -65,7 +65,7 @@ const renderStaticFeaturedBlock = () => {
 							</a>
 						</div>
 						<a href='travel-results.amp' className='travel-featured-tile flex flex-auto relative travel-featured-color-teal' on="tap:AMP.setState({fields_query: 'Reykjavik', query_query: 'Reykjavik'})">
-							<amp-img className='travel-object-cover flex-auto' layout='responsive' width='312' height='507' src={travelGlobals.themeUrl + '/img/reykjavik.jpg'}></amp-img>
+							<amp-img class='travel-object-cover flex-auto' layout='responsive' width='312' height='507' src={travelGlobals.themeUrl + '/img/reykjavik.jpg'}></amp-img>
 							<div className='travel-featured-overlay absolute z1 center top-0 right-0 bottom-0 left-0 white p2'>
 								<div className='travel-featured-tile-heading caps bold h3'>Reykjavik</div>
 								<div className='h5'>87 adventures</div>
@@ -93,9 +93,8 @@ export default registerBlockType(
 			__( 'Travel' )
 		],
 
-		// Copied from Travel template HTML, removed amp tags not to break edit.
 		edit() {
-			return deamplifiy( renderStaticFeaturedBlock() );
+			return deamplify( renderStaticFeaturedBlock() );
 		},
 		save() {
 
