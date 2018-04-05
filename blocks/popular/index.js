@@ -21,7 +21,7 @@ export default registerBlockType(
 			__( 'Travel' )
 		],
 
-		edit: props => {
+		edit() {
 			return (
 				<section className='travel-popular pb4 pt3 relative'>
 					<header className='max-width-3 mx-auto px1 md-px2'>
@@ -159,7 +159,7 @@ export default registerBlockType(
 				</section>
 			);
 		},
-		save: props => {
+		save() {
 			return (
 				<section className='travel-popular pb4 pt3 relative'>
 					<header className='max-width-3 mx-auto px1 md-px2'>
@@ -292,5 +292,5 @@ export default registerBlockType(
 				</section>
 			);
 		}
-	},
+	}
 );

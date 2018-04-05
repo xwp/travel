@@ -214,5 +214,5 @@ export default registerBlockType(
 		save() {
 			return renderStaticActivityList();
 		}
-	},
+	}
 );

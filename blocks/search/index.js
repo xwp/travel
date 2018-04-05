@@ -68,5 +68,5 @@ export default registerBlockType(
 		save() {
 			return renderStaticSearchBlock();
 		}
-	},
+	}
 );
