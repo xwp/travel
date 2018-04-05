@@ -97,8 +97,6 @@ export default registerBlockType(
 			return deamplify( renderStaticFeaturedBlock() );
 		},
 		save() {
-
-			// @todo WARNING: If the user does not have unfiltered_html, then the amp-img elements will be removed from the saved post_content! Should wp_kses_allowed_html be filtered to allow all AMP elements and attributes that will be used in blocks here?
 			return renderStaticFeaturedBlock();
 		}
 	}

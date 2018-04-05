@@ -30,7 +30,7 @@ class AMP_Travel_Blocks {
 	 * @param string $content Content.
 	 * @return mixed
 	 */
-	function filter_the_content_amp_atts( $content ) {
+	public function filter_the_content_amp_atts( $content ) {
 		return preg_replace( '/\sdata-amp-bind-(.+?)=/', ' [$1]=', $content );
 	}
 
