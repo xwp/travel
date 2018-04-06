@@ -23,13 +23,53 @@ class AMP_Travel_CTP {
 	 * AMP_Travel_CTP constructor.
 	 */
 	public function __construct() {
-		add_action( 'init', array( $this, 'register_post_type' ) );
+		add_action( 'init', array( $this, 'setup' ) );
+	}
+
+	/**
+	 * Setup the Custom post type support.
+	 */
+	public function setup() {
+		/*
+		 * Enable support for Post Thumbnails on posts and pages.
+		 *
+		 * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
+		 */
+		add_theme_support( 'post-thumbnails' );
+
+		// Image Sizes.
+		$image_sizes = apply_filters( 'amp_travel_image_sizes', array(
+			'1600x900',
+			'1400x787',
+			'1200x675',
+			'1040x585',
+			'768x432',
+			'727x409',
+			'600x338',
+			'500x281',
+			'375x211',
+			'335x188',
+			'320x180',
+			'280x158',
+			'240x135',
+			'160x90',
+			'122x67',
+		) );
+
+		// Custom image sizes.
+		foreach ( $image_sizes as $size ) {
+			$dimensions = explode( 'x', $size );
+			add_image_size( 'travel-' . $size, $dimensions[0], $dimensions[1], true );
+		}
+
+		// Register the post type.
+		$this->register_post_type();
 	}
 
 	/**
 	 * Register 'adventure' post type.
 	 */
-	public function register_post_type() {
+	private function register_post_type() {
 		$labels = array(
 			'name'                  => _x( 'Adventures', 'Post type general name', 'travel' ),
 			'singular_name'         => _x( 'Adventure', 'Post type singular name', 'travel' ),
