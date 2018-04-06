@@ -73,13 +73,19 @@ class AMP_Travel_Blocks {
 	public function filter_wp_kses_allowed_html( $allowed_tags, $context ) {
 		if ( 'post' === $context ) {
 			$amp_tags = array(
-				'amp-img'  => array(
-					'class'  => true,
-					'src'    => true,
-					'width'  => true,
-					'height' => true,
-					'layout' => true,
-				),
+				'amp-img'  => array_merge( $allowed_tags['img'], array(
+					'attribution' => true,
+					'class'       => true,
+					'fallback'    => true,
+					'heights'     => true,
+					'media'       => true,
+					'noloading'   => true,
+					'on'          => true,
+					'placeholder' => true,
+					'srcset'      => true,
+					'sizes'       => true,
+					'layout'      => true,
+				) ),
 				'amp-list' => array(
 					'class'            => true,
 					'credentials'      => true,
@@ -95,6 +101,7 @@ class AMP_Travel_Blocks {
 					'width'            => true,
 					'height'           => true,
 					'layout'           => true,
+					'fallback'         => true,
 				),
 			);
 

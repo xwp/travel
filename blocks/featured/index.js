@@ -97,7 +97,9 @@ export default registerBlockType(
 			return deamplify( renderStaticFeaturedBlock() );
 		},
 		save() {
-			return renderStaticFeaturedBlock();
+
+			// Handled by PHP.
+			return null;
 		}
 	}
 );
