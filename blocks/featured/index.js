@@ -33,7 +33,7 @@ export default registerBlockType(
 
 		edit: withAPIData( () => {
 			return {
-				featuredLocations: 'wp/v2/locations?meta_value=0&meta_key=amp_travel_featured&per_page=6'
+				featuredLocations: 'wp/v2/locations?meta_value=1&meta_key=amp_travel_featured&per_page=6'
 			};
 		} )( ( { featuredLocations, attributes, setAttributes } ) => { // eslint-disable-line
 			const hasLocations = Array.isArray( featuredLocations.data ) && 6 === featuredLocations.data.length;
