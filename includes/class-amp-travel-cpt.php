@@ -216,7 +216,7 @@ class AMP_Travel_CPT {
 		$price            = isset( $adventure_custom['amp_travel_price'][0] ) ? $adventure_custom['amp_travel_price'][0] : '';
 		?>
 		<label for='amp_travel_price'><?php esc_attr_e( 'Price (USD)', 'travel' ); ?></label>
-		<input id='amp_travel_price' name='amp_travel_price' value='<?php echo $price; ?>'>
+		<input id='amp_travel_price' name='amp_travel_price' value='<?php echo esc_attr( $price ); ?>'>
 		<?php wp_nonce_field( basename( __FILE__ ), 'amp_travel_price_nonce' ); ?>
 		<?php
 	}
