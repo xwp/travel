@@ -17,7 +17,7 @@ class AMP_Travel_CTP {
 	 *
 	 * @var string
 	 */
-	const POST_TYPE_SLUG = 'adventure';
+	const POST_TYPE_SLUG = 'adventures';
 
 	/**
 	 * AMP_Travel_CTP constructor.
@@ -37,7 +37,11 @@ class AMP_Travel_CTP {
 		 */
 		add_theme_support( 'post-thumbnails' );
 
-		// Image Sizes.
+		/**
+		 * Filter the image sizes to allow manipulating and adding sizes to be registered.
+		 *
+		 * @param array $sizes The array of sizes to be registered.
+		 */
 		$image_sizes = apply_filters( 'amp_travel_image_sizes', array(
 			'1600x900',
 			'1400x787',
@@ -98,30 +102,33 @@ class AMP_Travel_CTP {
 		);
 
 		$args = array(
-			'labels'              => $labels,
-			'description'         => __( 'Adventure Custom Post Type for travel theme.', 'travel' ),
-			'public'              => true,
-			'exclude_from_search' => true,
-			'publicly_queryable'  => true,
-			'show_ui'             => true,
-			'show_in_nav_menus'   => true,
-			'show_in_menu'        => true,
-			'show_in_admin_bar'   => true,
-			'menu_position'       => 20,
-			'menu_icon'           => 'dashicons-location-alt',
-			'capability_type'     => 'post',
-			'hierarchical'        => false,
-			'supports'            => array(
+			'labels'                => $labels,
+			'description'           => __( 'Adventure Custom Post Type for travel theme.', 'travel' ),
+			'public'                => true,
+			'exclude_from_search'   => true,
+			'publicly_queryable'    => true,
+			'show_ui'               => true,
+			'show_in_nav_menus'     => true,
+			'show_in_menu'          => true,
+			'show_in_admin_bar'     => true,
+			'menu_position'         => 20,
+			'menu_icon'             => 'dashicons-location-alt',
+			'capability_type'       => 'post',
+			'hierarchical'          => false,
+			'supports'              => array(
 				'title',
 				'editor',
 				'thumbnail',
 			),
-			'has_archive'         => true,
-			'rewrite'             => array(
+			'has_archive'           => true,
+			'rewrite'               => array(
 				'slug' => self::POST_TYPE_SLUG,
 			),
-			'query_var'           => true,
-			'can_export'          => true,
+			'query_var'             => true,
+			'can_export'            => true,
+			'show_in_rest'          => true,
+			'rest_base'             => self::POST_TYPE_SLUG,
+			'rest_controller_class' => 'WP_REST_Posts_Controller',
 		);
 
 		register_post_type( self::POST_TYPE_SLUG, $args );
