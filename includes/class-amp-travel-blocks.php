@@ -22,10 +22,6 @@ class AMP_Travel_Blocks {
 			add_filter( 'wp_kses_allowed_html', array( $this, 'filter_wp_kses_allowed_html' ), 10, 2 );
 
 			add_action( 'init', array( $this, 'register_block_travel_popular' ) );
-
-			// @todo Change 'post' to 'adventure'.
-			add_filter( 'rest_post_collection_params', array( $this, 'filter_rest_post_collection_params' ), 10, 1 );
-			add_filter( 'rest_post_query', array( $this, 'filter_rest_post_query' ), 10, 2 );
 		}
 	}
 
@@ -54,43 +50,6 @@ class AMP_Travel_Blocks {
 				'render_callback' => array( $this, 'render_block_travel_popular' ),
 			) );
 		}
-	}
-
-	/**
-	 * Change query args to include meta_key and meta_type.
-	 *
-	 * @param array           $args Query args.
-	 * @param WP_REST_Request $request Request object.
-	 * @return array
-	 */
-	public function filter_rest_post_query( $args, $request ) {
-		$order_key = $request->get_param( 'orderby' );
-		$meta_key  = $request->get_param( 'meta_key' );
-		if ( ! empty( $order_key ) && 'meta_value_num' === $order_key && 'amp_travel_rating' === $meta_key ) {
-			$args['meta_key']  = $meta_key;
-			$args['meta_type'] = 'DECIMAL';
-		}
-
-		return $args;
-	}
-
-	/**
-	 * Filter the REST accepted params to accept ordering by 'rating'.
-	 *
-	 * @todo Change this to 'adventure'.
-	 * @param array $query_params Collection params.
-	 * @return mixed Collection params.
-	 */
-	public function filter_rest_post_collection_params( $query_params ) {
-
-		$query_params['orderby']['enum'][] = 'meta_value_num';
-		$query_params['meta_key']          = array(
-			'description'       => __( 'The meta key to query.', 'travel' ),
-			'type'              => 'string',
-			'enum'              => array( 'amp_travel_rating' ),
-			'validate_callback' => 'rest_validate_request_arg',
-		);
-		return $query_params;
 	}
 
 	/**
