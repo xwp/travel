@@ -180,5 +180,3 @@ class AMP_Travel_Blocks {
 		return $allowed_tags;
 	}
 }
-
-new AMP_Travel_Blocks();

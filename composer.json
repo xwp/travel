@@ -1,6 +1,6 @@
 {
-    "name": "ampconf/theme",
-    "description": "WordPress AMPConf theme",
+    "name": "travel/theme",
+    "description": "WordPress Travel theme",
     "type": "wordpress-theme",
     "license": "GPL-2.0+",
     "require-dev": {
