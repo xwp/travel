@@ -13,11 +13,18 @@
 class AMP_Travel_CTP {
 
 	/**
-	 * The post type slug.
+	 * The post type single slug.
 	 *
 	 * @var string
 	 */
-	const POST_TYPE_SLUG = 'adventures';
+	const POST_TYPE_SLUG_SINGLE = 'adventure';
+
+	/**
+	 * The post type plural slug.
+	 *
+	 * @var string
+	 */
+	const POST_TYPE_SLUG_PLURAL = 'adventures';
 
 	/**
 	 * AMP_Travel_CTP constructor.
@@ -122,15 +129,15 @@ class AMP_Travel_CTP {
 			),
 			'has_archive'           => true,
 			'rewrite'               => array(
-				'slug' => self::POST_TYPE_SLUG,
+				'slug' => self::POST_TYPE_SLUG_SINGLE,
 			),
 			'query_var'             => true,
 			'can_export'            => true,
 			'show_in_rest'          => true,
-			'rest_base'             => self::POST_TYPE_SLUG,
+			'rest_base'             => self::POST_TYPE_SLUG_PLURAL,
 			'rest_controller_class' => 'WP_REST_Posts_Controller',
 		);
 
-		register_post_type( self::POST_TYPE_SLUG, $args );
+		register_post_type( self::POST_TYPE_SLUG_SINGLE, $args );
 	}
 }
