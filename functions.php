@@ -29,7 +29,7 @@ if ( ! function_exists( 'travel_setup' ) ) :
 		add_theme_support( 'amp', array() );
 
 		// Init custom post type.
-		new AMP_Travel_CTP();
+		new AMP_Travel_CPT();
 
 		// Init Travel blocks.
 		new AMP_Travel_Blocks();

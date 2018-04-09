@@ -6,11 +6,11 @@
  */
 
 /**
- * Class AMP_Travel_CTP
+ * Class AMP_Travel_CPT
  *
  * @package WPAMPTheme
  */
-class AMP_Travel_CTP {
+class AMP_Travel_CPT {
 
 	/**
 	 * The post type single slug.
@@ -31,6 +31,8 @@ class AMP_Travel_CTP {
 	 */
 	public function __construct() {
 		add_action( 'init', array( $this, 'setup' ) );
+		add_action( 'add_meta_boxes_adventure', array( $this, 'add_adventure_meta_boxes' ) );
+		add_action( 'save_post_adventure', array( $this, 'save_adventure_post' ) );
 	}
 
 	/**
@@ -112,7 +114,7 @@ class AMP_Travel_CTP {
 			'labels'                => $labels,
 			'description'           => __( 'Adventure Custom Post Type for travel theme.', 'travel' ),
 			'public'                => true,
-			'exclude_from_search'   => true,
+			'exclude_from_search'   => false,
 			'publicly_queryable'    => true,
 			'show_ui'               => true,
 			'show_in_nav_menus'     => true,
@@ -139,5 +141,49 @@ class AMP_Travel_CTP {
 		);
 
 		register_post_type( self::POST_TYPE_SLUG_SINGLE, $args );
+	}
+
+	/**
+	 * Adds meta boxes for adventure post type.
+	 */
+	public function add_adventure_meta_boxes() {
+		add_meta_box( 'amp_travel_adventure_meta', __( 'Adventure details' ), array( $this, 'adventure_meta_box_html' ), 'adventure', 'side' );
+	}
+
+	/**
+	 * Displays meta boxes in admin.
+	 */
+	public function adventure_meta_box_html() {
+		global $post;
+		$adventure_custom = get_post_custom( $post->ID );
+		$start_date       = isset( $adventure_custom['amp_travel_start_date'][0] ) ? $adventure_custom['amp_travel_start_date'][0] : '';
+		$end_date         = isset( $adventure_custom['amp_travel_end_date'][0] ) ? $adventure_custom['amp_travel_end_date'][0] : '';
+		?>
+		<div>
+			<label for='amp_travel_start_date'><?php esc_attr_e( 'Start date', 'travel' ); ?></label><input placeholder='yyyy-mm-dd' pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}' type='date' id='amp_travel_start_date' name='amp_travel_start_date' value='<?php echo $start_date; ?>'>
+		</div>
+		<div>
+			<label for='amp_travel_end_date'><?php esc_attr_e( 'Ending date', 'travel' ); ?></label><input placeholder='yyyy-mm-dd' pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}' type='date' id='amp_travel_end_date' name='amp_travel_end_date' value='<?php echo $end_date; ?>'>
+		</div>
+		<p class='description'><?php esc_attr_e( 'Leave empty if the adventure is ongoing', 'travel' ); ?></p>
+		<?php
+	}
+
+	/**
+	 * Saves the custom meta.
+	 */
+	public function save_adventure_post() {
+		if ( ! empty( $_POST ) ) {
+			global $post;
+
+			// @todo Add nonce.
+			if ( isset( $_POST['amp_travel_start_date'] ) ) {
+				update_post_meta( $post->ID, 'amp_travel_start_date', esc_attr( $_POST['amp_travel_start_date'] ) );
+			}
+
+			if ( isset( $_POST['amp_travel_end_date'] ) ) {
+				update_post_meta( $post->ID, 'amp_travel_end_date', esc_attr( $_POST['amp_travel_end_date'] ) );
+			}
+		}
 	}
 }
