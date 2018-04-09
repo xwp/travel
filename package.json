@@ -20,9 +20,6 @@
   },
   "homepage": "https://github.com/xwp/travel#readme",
   "devDependencies": {
-    "eslint": "^4.13.1",
-    "eslint-config-wordpress": "^2.0.0",
-    "wp-dev-lib": "github:xwp/wp-dev-lib",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -30,10 +27,14 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
     "cross-env": "^5.1.1",
+    "eslint": "^4.13.1",
+    "eslint-config-wordpress": "^2.0.0",
+    "eslint-plugin-react": "^7.7.0",
     "grunt-cli": "^1.2.0",
     "jscs": "^3.0.7",
     "jshint": "^2.9.5",
     "raw-loader": "^0.5.1",
-    "webpack": "^3.10.0"
+    "webpack": "^3.10.0",
+    "wp-dev-lib": "github:xwp/wp-dev-lib"
   }
 }

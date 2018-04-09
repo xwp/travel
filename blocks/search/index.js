@@ -1,6 +1,8 @@
 /* globals travelGlobals */
 /* jscs:disable disallowMultipleLineStrings */
 /* jscs:disable validateQuoteMarks */
+/* eslint-disable quotes */
+/* eslint-disable space-in-parens */
 
 /**
  * Internal block libraries.
@@ -36,7 +38,7 @@ export default registerBlockType(
 			}
 		},
 
-		edit( { attributes, setAttributes } ) {
+		edit( { attributes, setAttributes } ) { // eslint-disable-line
 			const { heading, ctaText } = attributes;
 			return (
 				<section className='travel-search py4 xs-hide sm-hide relative'>
@@ -66,7 +68,7 @@ export default registerBlockType(
 			</section>
 			);
 		},
-		save( { attributes } ) {
+		save( { attributes } ) { // eslint-disable-line
 			const ampValueProp = {
 				'[value]': 'fields_query'
 			};
@@ -82,26 +84,7 @@ export default registerBlockType(
 							<div className='travel-input-group flex items-center col-8'>
 								<input className='travel-input travel-input-big line-height-2 block col-12 flex-auto rounded-left' type='text' name='query' placeholder='Search for adventures' on='change:AMP.setState({fields_query: event.value})' value='' { ...ampValueProp } />
 								<span className='travel-input-group-sep travel-border-gray relative z1 block'></span>
-								<a href={ travelGlobals.siteUrl + '?s=' } { ...ampHrefProp } className='travel-link travel-input travel-input-big line-height-2 link rounded-right nowrap text-decoration-none' on='
-								tap:AMP.setState({
-								ui_reset: false,
-								ui_filterPane: false,
-								query_query: fields_query,
-								fields_query_edited: false,
-								query_departure: fields_departure,
-								fields_departure_edited: false,
-								query_return: fields_return,
-								fields_return_edited: false,
-								query_maxPrice: fields_maxPrice,
-								fields_maxPrice_edited: false,
-								query_city: fields_city,
-								fields_city_edited: false,
-								query_type: fields_type,
-								fields_type_edited: false,
-								query_sort: fields_sort,
-								fields_sort_edited: false,
-							})
-								'>
+								<a href={ travelGlobals.siteUrl + '?s=' } { ...ampHrefProp } className='travel-link travel-input travel-input-big line-height-2 link rounded-right nowrap text-decoration-none'>
 									{ attributes.ctaText }
 								</a>
 							</div>
@@ -110,5 +93,5 @@ export default registerBlockType(
 				</section>
 			);
 		}
-	},
+	}
 );

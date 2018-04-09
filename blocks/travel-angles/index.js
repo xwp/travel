@@ -18,7 +18,7 @@ export default registerBlockType(
 		],
 
 		// Copy from Travel HTML template.
-		edit: props => {
+		edit() {
 
 			// Don't display the travel angels since that will hide the block configure buttons behind an image.
 			return (
@@ -27,7 +27,7 @@ export default registerBlockType(
 				</div>
 			);
 		},
-		save: props => {
+		save() {
 			return (
 				<div className='travel-angles max-width-3 mx-auto'>
 					<div className='travel-angle-left'>
@@ -42,5 +42,5 @@ export default registerBlockType(
 				</div>
 			);
 		}
-	},
+	}
 );
