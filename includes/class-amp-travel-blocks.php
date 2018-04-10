@@ -21,6 +21,134 @@ class AMP_Travel_Blocks {
 			add_filter( 'the_content', array( $this, 'filter_the_content_amp_atts' ), 10, 1 );
 			add_filter( 'wp_kses_allowed_html', array( $this, 'filter_wp_kses_allowed_html' ), 10, 2 );
 			add_filter( 'rest_pre_echo_response', array( $this, 'filter_rest_pre_echo_response' ), 10, 3 );
+			add_action( 'pre_get_posts', array( $this, 'filter_pre_get_posts' ), 10, 1 );
+		}
+	}
+
+	/**
+	 * Filters search to search adventures by from and to date.
+	 *
+	 * @param WP_Query $query Query.
+	 */
+	public function filter_pre_get_posts( $query ) {
+
+		if ( ! is_admin() && is_search() ) {
+			$meta_query  = array();
+			$start_query = array();
+			$end_query   = array();
+
+			if ( ! empty( $_GET['start'] ) && ! empty( $_GET['end'] ) ) {
+				$start       = esc_attr( $_GET['start'] );
+				$end         = esc_attr( $_GET['end'] );
+				$start_query = array(
+					'relation' => 'OR',
+					array(
+						'relation' => 'AND',
+						array(
+							'relation' => 'OR',
+							array(
+								'key'     => 'amp_travel_end_date',
+								'value'   => $start,
+								'compare' => '>=',
+							),
+							array(
+								'key'     => 'amp_travel_end_date',
+								'value'   => '',
+								'compare' => '=',
+							),
+						),
+						array(
+							'key'     => 'amp_travel_start_date',
+							'value'   => $end,
+							'compare' => '<=',
+						),
+					),
+					array(
+						'relation' => 'AND',
+						array(
+							'key'     => 'amp_travel_start_date',
+							'value'   => '',
+							'compare' => '=',
+						),
+						array(
+							'key'     => 'amp_travel_end_date',
+							'value'   => $start,
+							'compare' => '>=',
+						),
+					),
+				);
+
+				// If we only have start date, only the end date is relevant.
+			} elseif ( ! empty( $_GET['start'] ) ) {
+				$start       = esc_attr( $_GET['start'] );
+				$start_query = array(
+					'relation' => 'OR',
+					array(
+						'key'     => 'amp_travel_end_date',
+						'value'   => '',
+						'compare' => '=',
+					),
+					array(
+						'key'     => 'amp_travel_end_date',
+						'value'   => $start,
+						'compare' => '>=',
+					),
+				);
+			} elseif ( ! empty( $_GET['end'] ) ) {
+				$end       = esc_attr( $_GET['end'] );
+				$end_query = array(
+					'relation' => 'OR',
+					array(
+						'relation' => 'AND',
+						array(
+							'relation' => 'OR',
+							array(
+								'key'     => 'amp_travel_start_date',
+								'value'   => '',
+								'compare' => '=',
+							),
+							array(
+								'key'     => 'amp_travel_end_date',
+								'value'   => $end,
+								'compare' => '<=',
+							),
+						),
+						array(
+							'key'     => 'amp_travel_start_date',
+							'value'   => $end,
+							'compare' => '<=',
+						),
+					),
+					array(
+						'relation' => 'AND',
+						array(
+							'key'     => 'amp_travel_end_date',
+							'value'   => $end,
+							'compare' => '<=',
+						),
+						array(
+							'key'     => 'amp_travel_end_date',
+							'value'   => '',
+							'compare' => '!=',
+						),
+					),
+				);
+			}
+
+			if ( ! empty( $end_query ) && ! empty( $start_query ) ) {
+				$meta_query = array(
+					'relation' => 'AND',
+					$start_query,
+					$end_query,
+				);
+			} elseif ( ! empty( $start_query ) ) {
+				$meta_query = $start_query;
+			} elseif ( ! empty( $end_query ) ) {
+				$meta_query = $end_query;
+			}
+		}
+		if ( ! empty( $meta_query ) ) {
+			$query->set( 'meta_query', $meta_query );
 		}
 	}
 

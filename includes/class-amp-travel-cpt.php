@@ -165,6 +165,7 @@ class AMP_Travel_CPT {
 		<div>
 			<label for='amp_travel_end_date'><?php esc_attr_e( 'Ending date', 'travel' ); ?></label><input placeholder='yyyy-mm-dd' pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}' type='date' id='amp_travel_end_date' name='amp_travel_end_date' value='<?php echo $end_date; ?>'>
 		</div>
+		<?php wp_nonce_field( basename( __FILE__ ), 'amp_travel_adventure_nonce' ); ?>
 		<p class='description'><?php esc_attr_e( 'Leave empty if the adventure is ongoing', 'travel' ); ?></p>
 		<?php
 	}
@@ -176,7 +177,10 @@ class AMP_Travel_CPT {
 		if ( ! empty( $_POST ) ) {
 			global $post;
 
-			// @todo Add nonce.
+			if ( ! wp_verify_nonce( $_POST['amp_travel_adventure_nonce'], basename( __FILE__ ) ) ) {
+				return;
+			}
+
 			if ( isset( $_POST['amp_travel_start_date'] ) ) {
 				update_post_meta( $post->ID, 'amp_travel_start_date', esc_attr( $_POST['amp_travel_start_date'] ) );
 			}
