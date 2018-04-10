@@ -79,7 +79,7 @@ class AMP_Travel_Taxonomies {
 	 *
 	 * @param WP_Term $term Term object.
 	 */
-	function edit_activity_meta_fields( $term ) {
+	public function edit_activity_meta_fields( $term ) {
 		$value = get_term_meta( $term->term_id, 'amp_travel_activity_svg', true );
 		if ( empty( $value ) ) {
 			$value = '';
@@ -106,7 +106,7 @@ class AMP_Travel_Taxonomies {
 	 *
 	 * @param integer $term_id Term ID.
 	 */
-	function save_activity_svg( $term_id ) {
+	public function save_activity_svg( $term_id ) {
 
 		if ( ! wp_verify_nonce( $_POST['travel_activity_svg_nonce'], basename( __FILE__ ) ) ) {
 			return;

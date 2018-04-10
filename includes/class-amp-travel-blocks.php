@@ -45,7 +45,7 @@ class AMP_Travel_Blocks {
 	 * @param array $attributes Block attributes.
 	 * @return string Output.
 	 */
-	function render_block_activity_list( $attributes ) {
+	public function render_block_activity_list( $attributes ) {
 		$activities = get_terms( array(
 			'taxonomy'   => 'activity',
 			'hide_empty' => false,
