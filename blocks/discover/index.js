@@ -1,3 +1,5 @@
+/* eslint-disable space-in-parens */
+
 /**
  * Internal block libraries.
  */
@@ -123,5 +125,5 @@ export default registerBlockType(
 			// Render in PHP.
 			return null;
 		}
-	},
+	}
 );
