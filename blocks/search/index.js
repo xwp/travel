@@ -6,6 +6,8 @@
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
+import { deamplify } from '../amp-transformer';
+
 const renderStaticSearchBlock = () => {
 	const ampValueProp = {
 		'[value]': 'fields_query'
@@ -63,10 +65,10 @@ export default registerBlockType(
 		],
 
 		edit() {
-			return renderStaticSearchBlock();
+			return deamplify( renderStaticSearchBlock() );
 		},
 		save() {
 			return renderStaticSearchBlock();
 		}
-	},
+	}
 );

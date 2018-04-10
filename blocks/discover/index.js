@@ -1,3 +1,4 @@
+
 /**
  * Internal block libraries.
  */
@@ -49,5 +50,5 @@ export default registerBlockType(
 		save() {
 			return renderStaticDiscoverBlock();
 		}
-	},
+	}
 );

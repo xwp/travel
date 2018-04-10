@@ -91,5 +91,5 @@ export default registerBlockType(
 			// Handled in PHP.
 			return null;
 		}
-	},
+	}
 );
