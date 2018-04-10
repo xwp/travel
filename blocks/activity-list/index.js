@@ -1,5 +1,6 @@
 // jscs:disable disallowMultipleLineStrings
 // jscs:disable validateQuoteMarks
+/* eslint-disable space-in-parens */
 
 /**
  * Internal block libraries.
@@ -40,9 +41,7 @@ export default registerBlockType(
 			const hasActivities = Array.isArray( activityResults.data ) && activityResults.data.length;
 			if ( ! hasActivities ) {
 				return (
-					<Placeholder key="placeholder"
-					             icon="admin-post"
-					             label={ __( 'Activities' ) }
+					<Placeholder key="placeholder" icon="admin-post" label={ __( 'Activities' ) }
 					>
 						{ __( 'No activities found, add some to use the block.' ) }
 					</Placeholder>
@@ -68,7 +67,7 @@ export default registerBlockType(
 						<div className='travel-overflow-container'>
 							<div className='flex p1 md-px1 mxn1'>
 								{ activities.map( ( activity, i ) =>
-									<a href={ activity.link } className='travel-activities-activity travel-type-active mx1' target="_blank">
+									<a key='activity' href={ activity.link } className='travel-activities-activity travel-type-active mx1' target="_blank">
 										<div className='travel-shadow circle inline-block'>
 											<div className='travel-activities-activity-icon'>
 												<RawHTML key='html'>{ decodeEntities( activity.svg ) }</RawHTML>

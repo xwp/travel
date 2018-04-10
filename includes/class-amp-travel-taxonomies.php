@@ -1,0 +1,190 @@
+<?php
+/**
+ * Class for Travel taxonomies.
+ *
+ * @package WPAMPTheme
+ */
+
+/**
+ * Class Travel_Taxonomies
+ *
+ * @package WPAMPTheme
+ */
+class AMP_Travel_Taxonomies {
+
+	/**
+	 * AMP_Travel_Taxonomies constructor.
+	 */
+	public function __construct() {
+		add_action( 'init', array( $this, 'register_taxonomies' ) );
+		add_action( 'init', array( $this, 'register_activity_meta' ) );
+		add_action( 'activity_add_form_fields', array( $this, 'add_activity_meta_fields' ) );
+		add_action( 'activity_edit_form_fields', array( $this, 'edit_activity_meta_fields' ) );
+		add_action( 'edit_activity', array( $this, 'save_activity_svg' ) );
+		add_action( 'create_activity', array( $this, 'save_activity_svg' ) );
+	}
+
+	/**
+	 * Register Activity meta.
+	 */
+	public function register_activity_meta() {
+		$args = array(
+			'sanitize_callback' => array( $this, 'sanitize_activity_svg' ),
+			'type'              => 'string',
+			'single'            => true,
+			'show_in_rest'      => true,
+		);
+		register_meta( 'term', 'amp_travel_activity_svg', $args );
+	}
+
+	/**
+	 * Add metafield to Add Activity form page.
+	 */
+	public function add_activity_meta_fields() {
+		?>
+		<div class='form-field form-required term-svg-wrap'>
+			<label for='travel-activity-svg'>SVG</label>
+			<?php wp_nonce_field( basename( __FILE__ ), 'travel_activity_svg_nonce' ); ?>
+			<textarea aria-required='true' name='travel-activity-svg' id='travel-activity-svg'></textarea>
+			<p class="description"><?php esc_attr_e( 'This is for the background icon of the activity term.', 'travel' ); ?></p>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Sanitize the SVG field.
+	 *
+	 * @param string $text Text.
+	 * @return string
+	 */
+	public function sanitize_activity_svg( $text ) {
+		$allowed_html = array(
+			'path' => array(
+				'fill' => true,
+				'd'    => true,
+			),
+			'svg'  => array(
+				'class'   => true,
+				'viewbox' => true,
+			),
+		);
+
+		// Replace ' with " since ' might cause issues with sanitizing.
+		$text = trim( str_replace( "'", '"', $text ) );
+		return wp_kses( $text, $allowed_html );
+	}
+
+	/**
+	 * Add SVG field to Activity term edit view.
+	 *
+	 * @param WP_Term $term Term object.
+	 */
+	function edit_activity_meta_fields( $term ) {
+		$value = get_term_meta( $term->term_id, 'amp_travel_activity_svg', true );
+		if ( empty( $value ) ) {
+			$value = '';
+		}
+		?>
+		<tr class="form-field term-svg-wrap">
+			<th scope="row"><label for="travel-activity-svg"><?php esc_attr_e( 'SVG', 'travel' ); ?></label></th>
+			<td>
+				<?php wp_nonce_field( basename( __FILE__ ), 'travel_activity_svg_nonce' ); ?>
+				<textarea aria-required="true" name="travel-activity-svg" id="travel-activity-svg">
+				<?php
+				// @codingStandardsIgnoreLine
+				echo $this->sanitize_activity_svg( $value );
+				?>
+			</textarea>
+				<p class="description"><?php esc_attr_e( 'This is for the background icon of the activity term.', 'travel' ); ?></p>
+			</td>
+		</tr>
+		<?php
+	}
+
+	/**
+	 * Save Activity SVG value on adding and editing the term.
+	 *
+	 * @param integer $term_id Term ID.
+	 */
+	function save_activity_svg( $term_id ) {
+
+		if ( ! wp_verify_nonce( $_POST['travel_activity_svg_nonce'], basename( __FILE__ ) ) ) {
+			return;
+		}
+
+		$old_value = get_term_meta( $term_id, 'amp_travel_activity_svg', true );
+		$new_value = isset( $_POST['travel-activity-svg'] ) ? $this->sanitize_activity_svg( $_POST['travel-activity-svg'] ) : '';
+		if ( $old_value !== $new_value ) {
+			update_term_meta( $term_id, 'amp_travel_activity_svg', $new_value );
+		}
+	}
+
+	/**
+	 * Register 'activity' and 'location' taxonomy.
+	 */
+	public function register_taxonomies() {
+		register_taxonomy( 'activity', array( 'adventure', 'post' ), array(
+			'hierarchical'          => false,
+			'query_var'             => 'activity',
+			'public'                => true,
+			'show_ui'               => true,
+			'show_admin_column'     => true,
+			'show_in_rest'          => true,
+			'rest_base'             => 'activities',
+			'rest_controller_class' => 'WP_REST_Terms_Controller',
+			'labels'                => array(
+				'name'                       => __( 'Activities', 'travel' ),
+				'singular_name'              => __( 'Activity', 'travel' ),
+				'search_items'               => __( 'Search Activities', 'travel' ),
+				'popular_items'              => __( 'Popular Activities', 'travel' ),
+				'all_items'                  => __( 'All Activities', 'travel' ),
+				'edit_item'                  => __( 'Edit Activity', 'travel' ),
+				'view_item'                  => __( 'View Activity', 'travel' ),
+				'update_item'                => __( 'Update Activity', 'travel' ),
+				'add_new_item'               => __( 'Add New Activity', 'travel' ),
+				'new_item_name'              => __( 'New Activity Name', 'travel' ),
+				'separate_items_with_commas' => __( 'Separate activities with commas', 'travel' ),
+				'add_or_remove_items'        => __( 'Add or remove activities', 'travel' ),
+				'choose_from_most_used'      => __( 'Choose from the most used activities', 'travel' ),
+				'not_found'                  => __( 'No activities found.', 'travel' ),
+				'no_terms'                   => __( 'No activities', 'travel' ),
+				'items_list_navigation'      => __( 'Activities list navigation', 'travel' ),
+				'items_list'                 => __( 'Activities list', 'travel' ),
+				'most_used'                  => __( 'Most Used', 'travel' ),
+				'back_to_items'              => __( '&larr; Back to Activities', 'travel' ),
+			),
+		) );
+
+		register_taxonomy( 'location', array( 'adventure', 'post' ), array(
+			'hierarchical'          => false,
+			'query_var'             => 'location',
+			'public'                => true,
+			'show_ui'               => true,
+			'show_admin_column'     => true,
+			'show_in_rest'          => true,
+			'rest_base'             => 'locations',
+			'rest_controller_class' => 'WP_REST_Terms_Controller',
+			'labels'                => array(
+				'name'                       => __( 'Locations', 'travel' ),
+				'singular_name'              => __( 'Location', 'travel' ),
+				'search_items'               => __( 'Search Locations', 'travel' ),
+				'popular_items'              => __( 'Popular Locations', 'travel' ),
+				'all_items'                  => __( 'All Locations', 'travel' ),
+				'edit_item'                  => __( 'Edit Location', 'travel' ),
+				'view_item'                  => __( 'View Location', 'travel' ),
+				'update_item'                => __( 'Update Location', 'travel' ),
+				'add_new_item'               => __( 'Add New Location', 'travel' ),
+				'new_item_name'              => __( 'New Location Name', 'travel' ),
+				'separate_items_with_commas' => __( 'Separate locations with commas', 'travel' ),
+				'add_or_remove_items'        => __( 'Add or remove locations', 'travel' ),
+				'choose_from_most_used'      => __( 'Choose from the most used locations', 'travel' ),
+				'not_found'                  => __( 'No locations found.', 'travel' ),
+				'no_terms'                   => __( 'No locations', 'travel' ),
+				'items_list_navigation'      => __( 'Locations list navigation', 'travel' ),
+				'items_list'                 => __( 'Locations list', 'travel' ),
+				'most_used'                  => __( 'Most Used', 'travel' ),
+				'back_to_items'              => __( '&larr; Back to Locations', 'travel' ),
+			),
+		) );
+	}
+}
