@@ -160,10 +160,10 @@ class AMP_Travel_CPT {
 		$end_date         = isset( $adventure_custom['amp_travel_end_date'][0] ) ? $adventure_custom['amp_travel_end_date'][0] : '';
 		?>
 		<div>
-			<label for='amp_travel_start_date'><?php esc_attr_e( 'Start date', 'travel' ); ?></label><input placeholder='yyyy-mm-dd' pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}' type='date' id='amp_travel_start_date' name='amp_travel_start_date' value='<?php echo $start_date; ?>'>
+			<label for='amp_travel_start_date'><?php esc_attr_e( 'Start date', 'travel' ); ?></label><input placeholder='yyyy-mm-dd' pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}' type='date' id='amp_travel_start_date' name='amp_travel_start_date' value='<?php echo esc_attr( $start_date ); ?>'>
 		</div>
 		<div>
-			<label for='amp_travel_end_date'><?php esc_attr_e( 'Ending date', 'travel' ); ?></label><input placeholder='yyyy-mm-dd' pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}' type='date' id='amp_travel_end_date' name='amp_travel_end_date' value='<?php echo $end_date; ?>'>
+			<label for='amp_travel_end_date'><?php esc_attr_e( 'Ending date', 'travel' ); ?></label><input placeholder='yyyy-mm-dd' pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}' type='date' id='amp_travel_end_date' name='amp_travel_end_date' value='<?php echo esc_attr( $end_date ); ?>'>
 		</div>
 		<?php wp_nonce_field( basename( __FILE__ ), 'amp_travel_adventure_nonce' ); ?>
 		<p class='description'><?php esc_attr_e( 'Leave empty if the adventure is ongoing', 'travel' ); ?></p>
