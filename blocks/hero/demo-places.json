@@ -1,0 +1,14 @@
+{
+  "items": [
+    {
+      "predictions": [
+        {
+          "description": "Barcelona"
+        },
+        {
+          "description": "Tokyo"
+        }
+      ]
+    }
+  ]
+}

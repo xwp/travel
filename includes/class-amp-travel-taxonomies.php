@@ -13,9 +13,9 @@
 class AMP_Travel_Taxonomies {
 
 	/**
-	 * AMP_Travel_Taxonomies constructor.
+	 * Init AMP_Travel_Taxonomies.
 	 */
-	public function __construct() {
+	public function init() {
 		add_action( 'init', array( $this, 'register_taxonomies' ) );
 	}
 
@@ -88,5 +88,3 @@ class AMP_Travel_Taxonomies {
 		) );
 	}
 }
-
-new AMP_Travel_Taxonomies();

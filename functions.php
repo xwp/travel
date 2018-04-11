@@ -1,9 +1,13 @@
 <?php
 /**
- * Theme functions file.
+ * AMP Travel Theme.
  *
  * @package WPAMPTheme
  */
 
-// Init taxonomy-related functionality.
-require_once get_template_directory() . '/includes/class-amp-travel-taxonomies.php';
+// Load theme.
+require_once get_template_directory() . '/includes/functions.php';
+require_once get_template_directory() . '/includes/class-amp-travel-theme.php';
+
+// Initialize theme.
+amp_travel_theme()->init();
