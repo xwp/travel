@@ -1,8 +1,8 @@
 {
-    "name": "morten/pstt",
-    "description": "A progressive starter theme for WordPress",
+    "name": "travel/theme",
+    "description": "WordPress Travel theme",
     "type": "wordpress-theme",
-    "license": "GPL-2.0",
+    "license": "GPL-2.0+",
     "require-dev": {
         "wp-coding-standards/wpcs": "^0.14.1",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.4.4",

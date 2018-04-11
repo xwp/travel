@@ -1,18 +1,19 @@
 {
-  "name": "ptsk",
-  "version": "1.0.0",
-  "description": "What is this? Wait and find out!",
-  "author": "Morten Rand-Hendriksen",
-  "license": "GPL-3.0",
+  "name": "wp-travel-theme",
+  "version": "0.1.0",
+  "description": "WordPress Travel Theme",
+  "private": true,
   "main": "index.php",
-  "homepage": "https://github.com/mor10/ptsk#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mor10/ptsk.git"
+    "url": "git+https://github.com/xwp/travel.git"
   },
+  "author": "",
+  "license": "GPL-2.0+",
   "bugs": {
-    "url": "https://github.com/mor10/ptsk/issues"
+    "url": "https://github.com/xwp/travel/issues"
   },
+  "homepage": "https://github.com/xwp/travel#readme",
   "dependencies": {},
   "devDependencies": {
     "ajv": "^6.2.0",
