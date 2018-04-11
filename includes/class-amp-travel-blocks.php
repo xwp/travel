@@ -39,7 +39,7 @@ class AMP_Travel_Blocks {
 	 * @return mixed
 	 */
 	public function filter_the_content_amp_atts( $content ) {
-		return preg_replace( '/\sdata-amp-bind-(.+?)=/', ' [$1]=', $content );
+		return preg_replace( '/\data-amp-bind-(.+?)=/', ' [$1]=', $content );
 	}
 
 	/**
