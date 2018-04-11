@@ -6,7 +6,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
- * @package pstt
+ * @package WPAMPTheme
  */
 
 ?>
@@ -20,16 +20,16 @@ if ( ! is_front_page() ) {
 
 <footer id="colophon" class="site-footer">
 	<div class="site-info">
-		<a href="<?php echo esc_url( __( 'https://wordpress.org/', 'pstt' ) ); ?>">
+		<a href="<?php echo esc_url( __( 'https://wordpress.org/', 'travel' ) ); ?>">
 			<?php
 			/* translators: %s: CMS name, i.e. WordPress. */
-			printf( esc_html__( 'Proudly powered by %s', 'pstt' ), 'WordPress' );
+			printf( esc_html__( 'Proudly powered by %s', 'travel' ), 'WordPress' );
 			?>
 		</a>
 		<span class="sep"> | </span>
 		<?php
 			/* translators: 1: Theme name, 2: Theme author. */
-			printf( esc_html__( 'Theme: %1$s by %2$s.', 'pstt' ), '<a href="https://github.com/mor10/pstt/">PSTT</a>', 'the contributors' );
+			printf( esc_html__( 'Theme: %1$s by %2$s.', 'travel' ), '<a href="https://github.com/mor10/travel/">Travel</a>', 'the contributors' );
 		?>
 	</div><!-- .site-info -->
 </footer><!-- #colophon -->

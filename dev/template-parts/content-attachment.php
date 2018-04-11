@@ -4,7 +4,7 @@
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
- * @package pstt
+ * @package WPAMPTheme
  */
 
 ?>
@@ -17,9 +17,9 @@
 		?>
 		<div class="entry-meta">
 			<?php
-				pstt_posted_on();
-				pstt_posted_by();
-				pstt_attachment_in( $post );
+				travel_posted_on();
+				travel_posted_by();
+				travel_attachment_in( $post );
 			?>
 		</div><!-- .entry-meta -->
 
@@ -42,7 +42,7 @@
 	</div><!-- .entry-content -->
 
 	<footer class="entry-footer">
-		<?php pstt_entry_footer(); ?>
+		<?php travel_entry_footer(); ?>
 	</footer><!-- .entry-footer -->
 </article><!-- #post-<?php the_ID(); ?> -->
 
@@ -51,7 +51,7 @@
 
 // If the attachment is attached to a post, try linking to other attachments on the same post.
 if ( ! empty( $post->post_parent ) ) :
-	pstt_the_attachment_navigation();
+	travel_the_attachment_navigation();
 endif;
 
 // If comments are open or we have at least one comment, load up the comment template.

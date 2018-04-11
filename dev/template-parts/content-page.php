@@ -4,7 +4,7 @@
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
- * @package pstt
+ * @package WPAMPTheme
  */
 
 ?>
@@ -14,7 +14,7 @@
 		<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
 	</header><!-- .entry-header -->
 
-	<?php pstt_post_thumbnail(); ?>
+	<?php travel_post_thumbnail(); ?>
 
 	<div class="entry-content">
 		<?php
@@ -22,7 +22,7 @@
 
 			wp_link_pages(
 				array(
-					'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'pstt' ),
+					'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'travel' ),
 					'after'  => '</div>',
 				)
 			);
@@ -36,7 +36,7 @@
 					sprintf(
 						wp_kses(
 							/* translators: %s: Name of current post. Only visible to screen readers */
-							__( 'Edit <span class="screen-reader-text">%s</span>', 'pstt' ),
+							__( 'Edit <span class="screen-reader-text">%s</span>', 'travel' ),
 							array(
 								'span' => array(
 									'class' => array(),

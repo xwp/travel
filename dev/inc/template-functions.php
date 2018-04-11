@@ -2,7 +2,7 @@
 /**
  * Functions which enhance the theme by hooking into WordPress
  *
- * @package pstt
+ * @package WPAMPTheme
  */
 
 /**
@@ -11,7 +11,7 @@
  * @param array $classes Classes for the body element.
  * @return array
  */
-function pstt_body_classes( $classes ) {
+function travel_body_classes( $classes ) {
 	// Adds a class of hfeed to non-singular pages.
 	if ( ! is_singular() ) {
 		$classes[] = 'hfeed';
@@ -26,17 +26,17 @@ function pstt_body_classes( $classes ) {
 
 	return $classes;
 }
-add_filter( 'body_class', 'pstt_body_classes' );
+add_filter( 'body_class', 'travel_body_classes' );
 
 /**
  * Add a pingback url auto-discovery header for singularly identifiable articles.
  */
-function pstt_pingback_header() {
+function travel_pingback_header() {
 	if ( is_singular() && pings_open() ) {
 		echo '<link rel="pingback" href="', esc_url( get_bloginfo( 'pingback_url' ) ), '">';
 	}
 }
-add_action( 'wp_head', 'pstt_pingback_header' );
+add_action( 'wp_head', 'travel_pingback_header' );
 
 /**
  * Adds async/defer attributes to enqueued / registered scripts.
@@ -48,7 +48,7 @@ add_action( 'wp_head', 'pstt_pingback_header' );
  * @param string $handle The script handle.
  * @return array
  */
-function pstt_filter_script_loader_tag( $tag, $handle ) {
+function travel_filter_script_loader_tag( $tag, $handle ) {
 
 	foreach ( array( 'async', 'defer' ) as $attr ) {
 		if ( ! wp_scripts()->get_data( $handle, $attr ) ) {
@@ -67,7 +67,7 @@ function pstt_filter_script_loader_tag( $tag, $handle ) {
 	return $tag;
 }
 
-add_filter( 'script_loader_tag', 'pstt_filter_script_loader_tag', 10, 2 );
+add_filter( 'script_loader_tag', 'travel_filter_script_loader_tag', 10, 2 );
 
 /**
  * Generate stylesheet URI.
@@ -75,7 +75,7 @@ add_filter( 'script_loader_tag', 'pstt_filter_script_loader_tag', 10, 2 );
  * @param object $wp_styles Registered styles.
  * @param string $handle The style handle.
  */
-function pstt_get_preload_stylesheet_uri( $wp_styles, $handle ) {
+function travel_get_preload_stylesheet_uri( $wp_styles, $handle ) {
 	$preload_uri = $wp_styles->registered[ $handle ]->src . '?ver=' . $wp_styles->registered[ $handle ]->ver;
 	return $preload_uri;
 }
@@ -85,34 +85,34 @@ function pstt_get_preload_stylesheet_uri( $wp_styles, $handle ) {
  *
  * @link https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content
  */
-function pstt_add_body_style() {
+function travel_add_body_style() {
 
 	// Get the current template global.
 	global $template;
 
 	// Get registered styles.
 	$wp_styles = wp_styles();
-	// var_dump($wp_styles->registered['pstt-sidebar']);
+	// var_dump($wp_styles->registered['travel-sidebar']);
 
 	$prelods = array();
 
 	// Preload content.css.
-	$preloads['pstt-content'] = pstt_get_preload_stylesheet_uri( $wp_styles, 'pstt-content' );
+	$preloads['travel-content'] = travel_get_preload_stylesheet_uri( $wp_styles, 'travel-content' );
 
 	// Preload sidebar.css and widget.css.
 	if ( is_active_sidebar( 'sidebar-1' ) ) {
-		$preloads['pstt-sidebar'] = pstt_get_preload_stylesheet_uri( $wp_styles, 'pstt-sidebar' );
-		$preloads['pstt-widgets'] = pstt_get_preload_stylesheet_uri( $wp_styles, 'pstt-widgets' );
+		$preloads['travel-sidebar'] = travel_get_preload_stylesheet_uri( $wp_styles, 'travel-sidebar' );
+		$preloads['travel-widgets'] = travel_get_preload_stylesheet_uri( $wp_styles, 'travel-widgets' );
 	}
 
 	// Preload comments.css.
 	if ( ! post_password_required() && is_singular() && ( comments_open() || get_comments_number() ) ) {
-		$preloads['pstt-comments'] = pstt_get_preload_stylesheet_uri( $wp_styles, 'pstt-comments' );
+		$preloads['travel-comments'] = travel_get_preload_stylesheet_uri( $wp_styles, 'travel-comments' );
 	}
 
 	// Preload front-page.css.
 	if ( 'front-page.php' === basename( $template ) ) {
-		$preloads['pstt-front-page'] = pstt_get_preload_stylesheet_uri( $wp_styles, 'pstt-front-page' );
+		$preloads['travel-front-page'] = travel_get_preload_stylesheet_uri( $wp_styles, 'travel-front-page' );
 	}
 
 	// Output the preload markup in <head>.
@@ -122,4 +122,4 @@ function pstt_add_body_style() {
 	}
 
 }
-add_action( 'wp_head', 'pstt_add_body_style' );
+add_action( 'wp_head', 'travel_add_body_style' );

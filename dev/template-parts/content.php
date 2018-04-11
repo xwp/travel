@@ -4,7 +4,7 @@
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
- * @package pstt
+ * @package WPAMPTheme
  */
 
 ?>
@@ -22,8 +22,8 @@
 		?>
 		<div class="entry-meta">
 			<?php
-				pstt_posted_on();
-				pstt_posted_by();
+				travel_posted_on();
+				travel_posted_by();
 			?>
 		</div><!-- .entry-meta -->
 		<?php
@@ -31,7 +31,7 @@
 		?>
 	</header><!-- .entry-header -->
 
-	<?php pstt_post_thumbnail(); ?>
+	<?php travel_post_thumbnail(); ?>
 
 	<div class="entry-content">
 		<?php
@@ -39,7 +39,7 @@
 				sprintf(
 					wp_kses(
 						/* translators: %s: Name of current post. Only visible to screen readers */
-						__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'pstt' ),
+						__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'travel' ),
 						array(
 							'span' => array(
 								'class' => array(),
@@ -52,7 +52,7 @@
 
 			wp_link_pages(
 				array(
-					'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'pstt' ),
+					'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'travel' ),
 					'after'  => '</div>',
 				)
 			);
@@ -60,7 +60,7 @@
 	</div><!-- .entry-content -->
 
 	<footer class="entry-footer">
-		<?php pstt_entry_footer(); ?>
+		<?php travel_entry_footer(); ?>
 	</footer><!-- .entry-footer -->
 </article><!-- #post-<?php the_ID(); ?> -->
 
@@ -68,8 +68,8 @@
 if ( is_singular() ) :
 	the_post_navigation(
 		array(
-			'prev_text' => '<div class="post-navigation-sub"><span>' . esc_html__( 'Previous:', 'pstt' ) . '</span></div>%title',
-			'next_text' => '<div class="post-navigation-sub"><span>' . esc_html__( 'Next:', 'pstt' ) . '</span></div>%title',
+			'prev_text' => '<div class="post-navigation-sub"><span>' . esc_html__( 'Previous:', 'travel' ) . '</span></div>%title',
+			'next_text' => '<div class="post-navigation-sub"><span>' . esc_html__( 'Next:', 'travel' ) . '</span></div>%title',
 		)
 	);
 

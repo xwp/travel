@@ -7,7 +7,7 @@
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
- * @package pstt
+ * @package WPAMPTheme
  */
 
 /*
@@ -20,7 +20,7 @@ if ( post_password_required() ) {
 }
 ?>
 
-<?php wp_print_styles( array( 'pstt-comments' ) ); ?>
+<?php wp_print_styles( array( 'travel-comments' ) ); ?>
 <div id="comments" class="comments-area">
 
 	<?php
@@ -33,13 +33,13 @@ if ( post_password_required() ) {
 			if ( 1 === $comment_count ) {
 				printf(
 					/* translators: 1: title. */
-					esc_html_e( 'One thought on &ldquo;%1$s&rdquo;', 'pstt' ),
+					esc_html_e( 'One thought on &ldquo;%1$s&rdquo;', 'travel' ),
 					'<span>' . get_the_title() . '</span>'
 				);
 			} else {
 				printf( // WPCS: XSS OK.
 					/* translators: 1: comment count number, 2: title. */
-					esc_html( _nx( '%1$s thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', $comment_count, 'comments title', 'pstt' ) ),
+					esc_html( _nx( '%1$s thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', $comment_count, 'comments title', 'travel' ) ),
 					number_format_i18n( $comment_count ),
 					'<span>' . get_the_title() . '</span>'
 				);
@@ -66,7 +66,7 @@ if ( post_password_required() ) {
 		// If comments are closed and there are comments, let's leave a little note, shall we?
 		if ( ! comments_open() ) :
 		?>
-			<p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'pstt' ); ?></p>
+			<p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'travel' ); ?></p>
 		<?php
 		endif;
 

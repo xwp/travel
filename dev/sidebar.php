@@ -12,8 +12,8 @@ if ( ! is_active_sidebar( 'sidebar-1' ) ) {
 }
 ?>
 
-<?php wp_print_styles( array( 'pstt-sidebar' ) ); ?>
-<?php wp_print_styles( array( 'pstt-widgets' ) ); ?>
+<?php wp_print_styles( array( 'travel-sidebar' ) ); ?>
+<?php wp_print_styles( array( 'travel-widgets' ) ); ?>
 <aside id="secondary" class="primary-sidebar widget-area">
 	<?php dynamic_sidebar( 'sidebar-1' ); ?>
 </aside><!-- #secondary -->

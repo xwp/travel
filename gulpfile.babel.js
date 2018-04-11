@@ -123,8 +123,6 @@ export function php() {
     } ) )
     // Log all problems that was found
     .pipe( phpcs.reporter( 'log' ) )
-    .pipe( replace( 'PSTT', config.theme.name ) )
-    .pipe( replace( 'pstt', config.theme.domain ) )
     .pipe( gulp.dest( paths.verbose ) )
     .pipe( gulp.dest( paths.php.dest ) );
 }
@@ -172,8 +170,6 @@ export function styles() {
         }
       } )
     ] ) )
-    .pipe( replace( 'PSTT', config.theme.name ) )
-    .pipe( replace( 'pstt', config.theme.domain ) )
     .pipe( gulp.dest( paths.verbose ) )
     .pipe( gulpif( !config.debug.styles, cssnano() ) )
     .pipe( gulp.dest( paths.styles.dest ) );
@@ -191,8 +187,6 @@ export function scripts() {
     .pipe( babel() )
     .pipe( gulp.dest( paths.verbose ) )
     .pipe( gulpif( !config.debug.styles, uglify() ) )
-    .pipe( replace( 'PSTT', config.theme.name ) )
-    .pipe( replace( 'pstt', config.theme.domain ) )
     .pipe( gulp.dest( paths.scripts.dest ) );
 }
 
