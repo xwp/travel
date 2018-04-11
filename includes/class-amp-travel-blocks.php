@@ -13,9 +13,9 @@
 class AMP_Travel_Blocks {
 
 	/**
-	 * AMP_Travel_Blocks constructor.
+	 * Init Travel Blocks.
 	 */
-	public function __construct() {
+	public function init() {
 		if ( function_exists( 'gutenberg_init' ) ) {
 			add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_editor_scripts' ) );
 			add_filter( 'the_content', array( $this, 'filter_the_content_amp_atts' ), 10, 1 );
@@ -87,7 +87,7 @@ class AMP_Travel_Blocks {
 							<div class="h2 line-height-2 mb1">
 								<span class="travel-results-result-text">' . esc_attr( get_the_title( $adventure->ID ) ) . '</span>
 								<span class="travel-results-result-subtext h3">•</span>
-								<span class="travel-results-result-subtext h3">$&nbsp;</span><span class="black bold">$' . esc_attr( $price ) . '</span>
+								<span class="travel-results-result-subtext h3">$&nbsp;</span><span class="black bold">' . esc_attr( $price ) . '</span>
 							</div>
 							<div class="h4 line-height-2">
 								<div class="inline-block relative mr1 h3 line-height-2">
