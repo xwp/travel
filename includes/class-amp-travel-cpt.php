@@ -118,11 +118,22 @@ class AMP_Travel_CPT {
 		$price    = get_post_meta( $adventure->ID, 'amp_travel_price', true );
 		$rating   = round( (int) get_post_meta( $adventure->ID, 'amp_travel_rating', true ) );
 		$comments = wp_count_comments( $adventure->ID );
+		$terms    = wp_get_post_terms( $adventure->ID, 'location', array(
+			'fields' => 'names',
+		) );
+
+		// is_wp_error can be removed once we have taxonomies merged.
+		if ( ! is_wp_error( $terms ) && ! empty( $terms ) ) {
+			$location = $terms[0];
+		} else {
+			$location = '--';
+		}
 
 		$meta = array(
-			'amp_travel_price'   => $price,
-			'amp_travel_rating'  => $rating,
-			'amp_travel_reviews' => $comments->approved,
+			'amp_travel_price'    => $price,
+			'amp_travel_rating'   => $rating,
+			'amp_travel_reviews'  => $comments->approved,
+			'amp_travel_location' => $location,
 		);
 
 		if ( ! isset( $data['meta'] ) ) {
@@ -228,7 +239,8 @@ class AMP_Travel_CPT {
 		if ( ! empty( $_POST ) ) {
 			global $post;
 
-			if ( ! wp_verify_nonce( $_POST['amp_travel_price_nonce'], basename( __FILE__ ) ) ) {
+			// First check if the amp_travel_price exists at all -- it doesn't in Gutenberg.
+			if ( isset( $_POST['amp_travel_price'] ) && ! wp_verify_nonce( $_POST['amp_travel_price_nonce'], basename( __FILE__ ) ) ) {
 				return;
 			}
 

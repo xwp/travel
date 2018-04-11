@@ -74,7 +74,7 @@ class AMP_Travel_Blocks {
 			if ( is_wp_error( $locations ) || empty( $locations ) ) {
 				$location = '--';
 			} else {
-				$location = $locations[0]->name;
+				$location = $locations[0];
 			}
 
 			$output .= '<div class="m1 mt3 mb2"><div class="travel-popular-tilt-right mb1">
@@ -152,7 +152,7 @@ class AMP_Travel_Blocks {
 		wp_enqueue_script(
 			'travel-editor-blocks-js',
 			get_template_directory_uri() . '/assets/js/editor-blocks.js',
-			array( 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-api' )
+			array( 'underscore', 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-api' )
 		);
 
 		wp_localize_script(
