@@ -6,11 +6,11 @@
  */
 
 /**
- * Class AMP_Travel_CTP
+ * Class AMP_Travel_CPT
  *
  * @package WPAMPTheme
  */
-class AMP_Travel_CTP {
+class AMP_Travel_CPT {
 
 	/**
 	 * The post type single slug.
@@ -27,7 +27,7 @@ class AMP_Travel_CTP {
 	const POST_TYPE_SLUG_PLURAL = 'adventures';
 
 	/**
-	 * AMP_Travel_CTP constructor.
+	 * AMP_Travel_CPT constructor.
 	 */
 	public function __construct() {
 		add_action( 'init', array( $this, 'setup' ) );
@@ -37,7 +37,7 @@ class AMP_Travel_CTP {
 	 * Setup the Custom post type support.
 	 */
 	public function setup() {
-		/*
+		/**
 		 * Enable support for Post Thumbnails on posts and pages.
 		 *
 		 * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
