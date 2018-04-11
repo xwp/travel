@@ -6,7 +6,6 @@
 const { __ } = wp.i18n;
 const { registerBlockType, RichText } = wp.blocks;
 const { Placeholder, withAPIData } = wp.components;
-import { get } from 'lodash';
 
 /**
  * Register block.
