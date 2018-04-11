@@ -27,9 +27,9 @@ class AMP_Travel_CPT {
 	const POST_TYPE_SLUG_PLURAL = 'adventures';
 
 	/**
-	 * AMP_Travel_CPT constructor.
+	 * Initialize the CPT class.
 	 */
-	public function __construct() {
+	public function init() {
 		add_action( 'init', array( $this, 'setup' ) );
 	}
 
