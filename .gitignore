@@ -7,7 +7,7 @@
 
 !.babelrc
 !composer.json
-!composer.lock
+composer.lock
 !.editorconfig
 !.eslintignore
 !.eslintrc.json
@@ -16,7 +16,7 @@
 !LICENSE
 !package-lock.json
 !package.json
-!phpcs.xml.dist
+phpcs.xml.dist
 !README.md
 !screenshot.png
 !.travis.yml
