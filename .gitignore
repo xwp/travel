@@ -14,7 +14,7 @@ composer.lock
 !.gitignore
 !gulpfile.bable.js
 !LICENSE
-!package-lock.json
+package-lock.json
 !package.json
 phpcs.xml.dist
 !README.md
