@@ -13,6 +13,13 @@
 class AMP_Travel_Blocks {
 
 	/**
+	 * Required count for featured locations block.
+	 *
+	 * @var int
+	 */
+	public static $featured_locations_count = 6;
+
+	/**
 	 * AMP_Travel_Blocks constructor.
 	 */
 	public function __construct() {
@@ -20,6 +27,7 @@ class AMP_Travel_Blocks {
 			add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_editor_scripts' ) );
 			add_filter( 'the_content', array( $this, 'filter_the_content_amp_atts' ), 10, 1 );
 			add_filter( 'wp_kses_allowed_html', array( $this, 'filter_wp_kses_allowed_html' ), 10, 2 );
+			add_action( 'init', array( $this, 'register_block_travel_featured' ) );
 		}
 	}
 
@@ -108,6 +116,53 @@ class AMP_Travel_Blocks {
 			$allowed_tags = array_merge( $allowed_tags, $amp_tags );
 		}
 		return $allowed_tags;
+	}
+
+	/**
+	 * Register Travel theme Featured block.
+	 */
+	public function register_block_travel_featured() {
+		if ( function_exists( 'register_block_type' ) ) {
+			register_block_type( 'amp-travel/featured', array(
+				'attributes'      => array(
+					'heading' => array(
+						'type'    => 'string',
+						'default' => __( 'Featured destinations', 'travel' ),
+					),
+				),
+				'render_callback' => array( $this, 'render_block_travel_featured' ),
+			) );
+		}
+	}
+
+	/**
+	 * Frontside render for Featured block.
+	 *
+	 * @param array $attributes Block attributes.
+	 * @return string Output.
+	 */
+	public function render_block_travel_featured( $attributes ) {
+
+		// @todo Featured meta doesn't exist yet actually.
+		$locations = get_terms( array(
+			'taxonomy'   => 'location',
+			'meta_key'   => 'amp_travel_featured',
+			'meta_value' => true,
+			'per_page'   => self::$featured_locations_count,
+		) );
+
+		// The count has to be 6 to fill the grid.
+		if ( 6 !== count( $locations ) ) {
+			return '';
+		}
+
+		// @todo Create the output for the section.
+		$output = "<section className='travel-featured pt3 relative clearfix'>
+						<header className='max-width-2 mx-auto px1 md-px2 relative'>
+							<h3 class='travel-featured-heading h1 bold line-height-2 mb2 center'>" . esc_attr( $attributes['heading'] ) . '</h3>
+						</header>
+					</section>';
+		return $output;
 	}
 }
 

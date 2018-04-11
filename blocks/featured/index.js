@@ -33,10 +33,11 @@ export default registerBlockType(
 
 		edit: withAPIData( () => {
 			return {
-				featuredLocations: 'wp/v2/locations?meta_value=1&meta_key=amp_travel_featured&per_page=6'
+				featuredLocations: 'wp/v2/locations?per_page=6&meta_value=0&meta_key=amp_travel_featured'
 			};
 		} )( ( { featuredLocations, attributes, setAttributes } ) => { // eslint-disable-line
 			const hasLocations = Array.isArray( featuredLocations.data ) && 6 === featuredLocations.data.length;
+
 			if ( ! hasLocations ) {
 				return (
 					<Placeholder key="placeholder"
@@ -51,10 +52,6 @@ export default registerBlockType(
 			const locations = featuredLocations.data;
 			const { heading } = attributes;
 
-			/*
-			The following is almost a copy of the static input with inserted hypothetical untested data.
-			@todo Sort the found terms according to portrait / landscape; loop through the sorted array.
-			*/
 			return (
 				<section className='travel-featured pt3 relative clearfix'>
 					<header className='max-width-2 mx-auto px1 md-px2 relative'>
