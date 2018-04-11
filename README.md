@@ -14,6 +14,21 @@ A WordPress theme showcasing canonical AMP functionality.
 
 Custom theme based on the [AMP Start Travel Theme](https://ampstart-iframes.firebaseapp.com/templates/travel/travel.amp), developed by XWP.
 
+## Developing
+Built on [PSTT theme](https://github.com/mor10/pstt).
+
+1. In command line, run `npm install` to install necessary node packages and dependencies.
+2. In command line, run `composer install` to install necessary PHP packages and dependencies.
+3. In command line, run `npm run build` to generate the theme.
+
+
+Travel uses a [Gulp](https://gulpjs.com/) build process to generate and optimize the code for the theme. All development is done in the `/dev` folder and Gulp preprocesses, transpiles, and compiles the files into the root folder. The root folder files become the active theme. WordPress ignores anything in the `/dev` folder.
+
+JavaScript files are automatically linted using [ESLint](https://eslint.org/) in accordance with [WordPress Codeing Standards](https://make.wordpress.org/core/handbook/best-practices/coding-standards/).
+
+PHP and CSS files are automatically linted using [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) in accordance with [WordPress Codeing Standards](https://make.wordpress.org/core/handbook/best-practices/coding-standards/). To take full advantage of this setup, configure your code editor / IDE to automatically test for the WordPress Coding Standards. More details can be found at the [WordPres Coding Standards Wiki](https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/wiki).
+
+
 ## Installation ##
 
 1. In your admin panel, go to Appearance > Themes and click the Add New button.
@@ -24,4 +39,4 @@ Custom theme based on the [AMP Start Travel Theme](https://ampstart-iframes.fire
 ## Credits ##
 
 * Based on the [AMP Start Travel Theme](https://ampstart-iframes.firebaseapp.com/templates/travel/travel.amp)
-
+* Built with [PSTT theme](https://github.com/mor10/pstt)
