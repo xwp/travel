@@ -7,16 +7,14 @@
 
 !.babelrc
 !composer.json
-composer.lock
 !.editorconfig
 !.eslintignore
 !.eslintrc.json
 !.gitignore
 !gulpfile.bable.js
 !LICENSE
-package-lock.json
 !package.json
-phpcs.xml.dist
+!phpcs.xml.dist
 !README.md
 !screenshot.png
 !.travis.yml
