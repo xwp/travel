@@ -28,6 +28,10 @@ class AMP_Travel_Theme {
 		// Init blocks.
 		$travel_blocks = new AMP_Travel_Blocks();
 		$travel_blocks->init();
+
+		// Init taxonomies.
+		$travel_taxonomies = new AMP_Travel_Taxonomies();
+		$travel_taxonomies->init();
 	}
 
 	/**
@@ -75,6 +79,7 @@ class AMP_Travel_Theme {
 	protected function includes() {
 		$dir = get_template_directory();
 
+		require_once $dir . '/includes/class-amp-travel-taxonomies.php';
 		require_once $dir . '/includes/class-amp-travel-blocks.php';
 	}
 }
