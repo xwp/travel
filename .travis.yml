@@ -35,7 +35,7 @@ env:
   - WP_VERSION=trunk WP_MULTISITE=1
 
 install:
-  - npm install
+  - npm install github:xwp/wp-dev-lib
   - export DEV_LIB_PATH=node_modules/wp-dev-lib
   - source $DEV_LIB_PATH/travis.install.sh
 
