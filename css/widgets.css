@@ -111,7 +111,8 @@
 
 /* Search widget */
 .widget_search input[type="search"] {
-	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
 	width: 100%;
 	padding: .5em 1em;
 	border: 1px solid #c3c3c3;

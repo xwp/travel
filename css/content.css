@@ -24,7 +24,7 @@
 
 .entry-meta,
 .entry-footer {
-	font-family: var(--highlight-font-family);
+	font-family: 'Roboto Condensed', sans-serif;
 	font-size: 80%;
 }
 
@@ -52,8 +52,8 @@
 	padding-right: 1.5rem;
 	padding-left: 24px;
 	padding-left: 1.5rem;
-	max-width: calc(var(--content-width) * 16)px; /* Fallback for older browsers. */
-	max-width: var(--content-width)rem;
+	max-width: 720px; /* Fallback for older browsers. */
+	max-width: 45rem;
 }
 
 .page-title,
@@ -68,11 +68,11 @@
 	padding-right: 1.5rem;
 	padding-left: 24px;
 	padding-left: 1.5rem;
-	max-width: calc(var(--content-width) * 16)px; /* Fallback for older browsers. */
-	max-width: var(--content-width)rem;
+	max-width: 720px; /* Fallback for older browsers. */
+	max-width: 45rem;
 }
 
-@media (--content-query) {
+@media screen and (min-width: 48em) {
 	.page-content > *,
 	.entry-content > *,
 	.entry-summary > *,
@@ -103,7 +103,7 @@
 	border-bottom: 1px solid #111;
 }
 
-@media (--content-query) {
+@media screen and (min-width: 48em) {
 	.entry-footer {
 		padding-right: 0;
 		padding-left: 0;
@@ -129,18 +129,18 @@
 	margin-right: auto;
 }
 
-@media (--content-query) {
+@media screen and (min-width: 48em) {
 
 	.wp-caption.alignright,
 	.wp-block-image.alignright {
-		margin-right: calc((100% - calc(var(--content-width) * 16)px) / 2)px;
-		margin-right: calc((100% - var(--content-width)rem) / 2)rem;
+		margin-right: calc(50% - 360px)px;
+		margin-right: calc(50% - 22.5rem)rem;
 	}
 
 	.wp-caption.alignleft,
 	.wp-block-image.alignleft {
-		margin-right: calc((100% - calc(var(--content-width) * 16)px) / 2)px;
-		margin-left: calc((100% - var(--content-width)rem) / 2)rem;
+		margin-right: calc(50% - 360px)px;
+		margin-left: calc(50% - 22.5rem)rem;
 	}
 
 }
@@ -175,7 +175,7 @@
 	padding-left: 3em;
 }
 
-@media (--content-query) {
+@media screen and (min-width: 48em) {
 	.entry-content ul,
 	.entry-content ol {
 		padding-right: 1.5em;
@@ -184,11 +184,11 @@
 }
 
 .wp-block-video video {
-	max-width: var(--content-width)rem;
+	max-width: 45rem;
 }
 
 .alignwide {
-	max-width: calc(50% + var(--content-width)rem / 2);
+	max-width: calc(50% + 22.5rem);
 }
 
 .alignfull {
@@ -204,7 +204,7 @@
 	padding: 1.5em 1.5em;
 }
 
-@media (--content-query) {
+@media screen and (min-width: 48em) {
 	.wp-block-cover-text p {
 		padding: 1.5em 0;
 	}
@@ -427,8 +427,12 @@ object {
 }
 
 .gallery-icon {
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
-	justify-content: center;
+	-webkit-box-pack: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
 }
 
 .gallery-caption {

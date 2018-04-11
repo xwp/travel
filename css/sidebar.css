@@ -6,7 +6,7 @@
 	padding: 1.5rem;
 }
 
-@media (--sidebar-query) {
+@media screen and (min-width: 60em) {
 	.primary-sidebar {
 		padding: 0;
 	}
