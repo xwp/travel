@@ -103,7 +103,6 @@ if ( ! function_exists( 'travel_setup' ) ) :
 		);
 
 		// customThemeSupports.
-
 		// init custom post type.
 		new AMP_Travel_CPT();
 		// init taxonomies.

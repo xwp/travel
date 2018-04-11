@@ -92,7 +92,6 @@ function travel_add_body_style() {
 
 	// Get registered styles.
 	$wp_styles = wp_styles();
-	// var_dump($wp_styles->registered['travel-sidebar']);
 
 	$prelods = array();
 
