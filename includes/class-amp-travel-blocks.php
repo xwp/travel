@@ -13,9 +13,9 @@
 class AMP_Travel_Blocks {
 
 	/**
-	 * AMP_Travel_Blocks constructor.
+	 * Init Travel Blocks.
 	 */
-	public function __construct() {
+	public function init() {
 		if ( function_exists( 'gutenberg_init' ) ) {
 			add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_editor_scripts' ) );
 			add_filter( 'the_content', array( $this, 'filter_the_content_amp_atts' ), 10, 1 );

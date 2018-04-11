@@ -26,7 +26,8 @@ class AMP_Travel_Theme {
 	protected function instantiate_classes() {
 
 		// Init blocks.
-		new AMP_Travel_Blocks();
+		$travel_blocks = new AMP_Travel_Blocks();
+		$travel_blocks->init();
 	}
 
 	/**
