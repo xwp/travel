@@ -1,15 +1,10 @@
 <?php
 /**
- * The main template file
- *
- * This is the most generic template file in a WordPress theme
- * and one of the two required files for a theme (the other being style.css).
- * It is used to display a page when nothing more specific matches a query.
- * E.g., it puts together the home page when no home.php file exists.
+ * The template for displaying archive pages
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
- * @package Travel
+ * @package pstt
  */
 
 get_header(); ?>
@@ -20,12 +15,9 @@ get_header(); ?>
 	if ( have_posts() ) :
 
 		/* Display the appropriate header when required. */
-		Travel_index_header();
+		pstt_index_header();
 
-		/* Counter to keep track of what post we're on. */
-		$post_count = 1;
-
-		/* Start the Loop. */
+		/* Start the Loop */
 		while ( have_posts() ) :
 			the_post();
 
@@ -34,7 +26,7 @@ get_header(); ?>
 			 * This call runs only once on index and archive pages.
 			 * At some point, override functionality should be built in similar to the template part below.
 			 */
-			wp_print_styles( array( 'Travel-content' ) ); // Note: If this was already done it will be skipped.
+			wp_print_styles( array( 'pstt-content' ) ); // Note: If this was already done it will be skipped.
 
 			/*
 			 * Include the Post-Type-specific template for the content.
@@ -43,14 +35,9 @@ get_header(); ?>
 			 */
 			get_template_part( 'template-parts/content', get_post_type() );
 
-			/* Increment counter. */
-			$post_count++;
-
 		endwhile;
 
-		if ( ! is_singular() ) :
-			the_posts_navigation();
-		endif;
+		the_posts_navigation();
 
 	else :
 

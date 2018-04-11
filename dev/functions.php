@@ -1,13 +1,13 @@
 <?php
 /**
- * Travel functions and definitions
+ * PSTT functions and definitions
  *
  * @link https://developer.wordpress.org/themes/basics/theme-functions/
  *
- * @package travel
+ * @package pstt
  */
 
-if ( ! function_exists( 'travel_setup' ) ) :
+if ( ! function_exists( 'pstt_setup' ) ) :
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.
 	 *
@@ -15,14 +15,14 @@ if ( ! function_exists( 'travel_setup' ) ) :
 	 * runs before the init hook. The init hook is too late for some features, such
 	 * as indicating support for post thumbnails.
 	 */
-	function travel_setup() {
+	function pstt_setup() {
 		/**
 		 * Make theme available for translation.
 		 * Translations can be filed in the /languages/ directory.
-		 * If you're building a theme based on travel, use a find and replace
-		 * to change 'travel' to the name of your theme in all the template files.
+		 * If you're building a theme based on pstt, use a find and replace
+		 * to change 'pstt' to the name of your theme in all the template files.
 		 */
-		load_theme_textdomain( 'travel', get_template_directory() . '/languages' );
+		load_theme_textdomain( 'pstt', get_template_directory() . '/languages' );
 
 		// Add default posts and comments RSS feed links to head.
 		add_theme_support( 'automatic-feed-links' );
@@ -45,7 +45,7 @@ if ( ! function_exists( 'travel_setup' ) ) :
 		// This theme uses wp_nav_menu() in one location.
 		register_nav_menus(
 			array(
-				'menu-1' => esc_html__( 'Primary', 'travel' ),
+				'menu-1' => esc_html__( 'Primary', 'pstt' ),
 			)
 		);
 
@@ -66,7 +66,7 @@ if ( ! function_exists( 'travel_setup' ) ) :
 		// Set up the WordPress core custom background feature.
 		add_theme_support(
 			'custom-background', apply_filters(
-				'travel_custom_background_args', array(
+				'pstt_custom_background_args', array(
 					'default-color' => 'ffffff',
 					'default-image' => '',
 				)
@@ -102,8 +102,7 @@ if ( ! function_exists( 'travel_setup' ) ) :
 			)
 		);
 
-		// Add custom theme supports.
-		add_theme_support( 'amp' );
+		// customThemeSupports.
 
 		// init custom post type.
 		new AMP_Travel_CPT();
@@ -112,7 +111,7 @@ if ( ! function_exists( 'travel_setup' ) ) :
 
 	}
 endif;
-add_action( 'after_setup_theme', 'travel_setup' );
+add_action( 'after_setup_theme', 'pstt_setup' );
 
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
@@ -121,7 +120,7 @@ add_action( 'after_setup_theme', 'travel_setup' );
  *
  * @global int $content_width
  */
-function travel_content_width() {
+function pstt_content_width() {
 
 	if ( isset( $GLOBALS['content_width'] ) ) {
 		$content_width = $GLOBALS['content_width'];
@@ -139,24 +138,24 @@ function travel_content_width() {
 	 *
 	 * @param int $content_width Content width in pixels.
 	 */
-	$GLOBALS['content_width'] = apply_filters( 'travel_content_width', $content_width );
+	$GLOBALS['content_width'] = apply_filters( 'pstt_content_width', $content_width );
 }
-add_action( 'template_redirect', 'travel_content_width', 0 );
+add_action( 'template_redirect', 'pstt_content_width', 0 );
 
 /**
  * Register Google Fonts
  */
-function travel_fonts_url() {
+function pstt_fonts_url() {
 	$fonts_url = '';
 
 	/**
 	 * Translator: If Roboto Sans does not support characters in your language, translate this to 'off'.
 	 */
-	$lora = esc_html_x( 'on', 'Roboto Sans font: on or off', 'travel' );
+	$lora = esc_html_x( 'on', 'Roboto Sans font: on or off', 'pstt' );
 	/**
 	 * Translator: If Crimson Text does not support characters in your language, translate this to 'off'.
 	 */
-	$raleway = esc_html_x( 'on', 'Crimson Text font: on or off', 'travel' );
+	$raleway = esc_html_x( 'on', 'Crimson Text font: on or off', 'pstt' );
 
 	$font_families = array();
 
@@ -190,8 +189,8 @@ function travel_fonts_url() {
  * @param string $relation_type  The relation type the URLs are printed.
  * @return array $urls           URLs to print for resource hints.
  */
-function travel_resource_hints( $urls, $relation_type ) {
-	if ( wp_style_is( 'travel-fonts', 'queue' ) && 'preconnect' === $relation_type ) {
+function pstt_resource_hints( $urls, $relation_type ) {
+	if ( wp_style_is( 'pstt-fonts', 'queue' ) && 'preconnect' === $relation_type ) {
 		$urls[] = array(
 			'href' => 'https://fonts.gstatic.com',
 			'crossorigin',
@@ -200,56 +199,56 @@ function travel_resource_hints( $urls, $relation_type ) {
 
 	return $urls;
 }
-add_filter( 'wp_resource_hints', 'travel_resource_hints', 10, 2 );
+add_filter( 'wp_resource_hints', 'pstt_resource_hints', 10, 2 );
 
 /**
  * Register widget area.
  *
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  */
-function travel_widgets_init() {
+function pstt_widgets_init() {
 	register_sidebar( array(
-		'name'          => esc_html__( 'Sidebar', 'travel' ),
+		'name'          => esc_html__( 'Sidebar', 'pstt' ),
 		'id'            => 'sidebar-1',
-		'description'   => esc_html__( 'Add widgets here.', 'travel' ),
+		'description'   => esc_html__( 'Add widgets here.', 'pstt' ),
 		'before_widget' => '<section id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</section>',
 		'before_title'  => '<h2 class="widget-title">',
 		'after_title'   => '</h2>',
 	) );
 }
-add_action( 'widgets_init', 'travel_widgets_init' );
+add_action( 'widgets_init', 'pstt_widgets_init' );
 
 /**
  * Enqueue styles.
  */
-function travel_styles() {
+function pstt_styles() {
 	// Add custom fonts, used in the main stylesheet.
-	wp_enqueue_style( 'travel-fonts', travel_fonts_url(), array(), null );
+	wp_enqueue_style( 'pstt-fonts', pstt_fonts_url(), array(), null );
 
 	// Enqueue main stylesheet.
-	wp_enqueue_style( 'travelbase-style', get_stylesheet_uri(), array(), '20151215' );
+	wp_enqueue_style( 'psttbase-style', get_stylesheet_uri(), array(), '20151215' );
 
 	// Register component styles that are printed as needed.
-	wp_register_style( 'travel-comments', get_theme_file_uri() . '/css/comments.css', array(), '20151215' );
-	wp_register_style( 'travel-content', get_theme_file_uri() . '/css/content.css', array(), '20151215' );
-	wp_register_style( 'travel-sidebar', get_theme_file_uri() . '/css/sidebar.css', array(), '20151215' );
-	wp_register_style( 'travel-widgets', get_theme_file_uri() . '/css/widgets.css', array(), '20151215' );
-	wp_register_style( 'travel-front-page', get_theme_file_uri() . '/css/front-page.css', array(), '20151215' );
+	wp_register_style( 'pstt-comments', get_theme_file_uri() . '/css/comments.css', array(), '20151215' );
+	wp_register_style( 'pstt-content', get_theme_file_uri() . '/css/content.css', array(), '20151215' );
+	wp_register_style( 'pstt-sidebar', get_theme_file_uri() . '/css/sidebar.css', array(), '20151215' );
+	wp_register_style( 'pstt-widgets', get_theme_file_uri() . '/css/widgets.css', array(), '20151215' );
+	wp_register_style( 'pstt-front-page', get_theme_file_uri() . '/css/front-page.css', array(), '20151215' );
 }
-add_action( 'wp_enqueue_scripts', 'travel_styles' );
+add_action( 'wp_enqueue_scripts', 'pstt_styles' );
 
 /**
  * Enqueue scripts.
  */
-function travel_scripts() {
+function pstt_scripts() {
 
-	if ( ! travel_is_amp() ) {
-		wp_enqueue_script( 'travel-navigation', get_theme_file_uri() . '/js/navigation.js', array(), '20151215', false );
-		wp_script_add_data( 'travel-navigation', 'async', true );
+	if ( ! pstt_is_amp() ) {
+		wp_enqueue_script( 'pstt-navigation', get_theme_file_uri() . '/js/navigation.js', array(), '20151215', false );
+		wp_script_add_data( 'pstt-navigation', 'async', true );
 
-		wp_enqueue_script( 'travel-skip-link-focus-fix', get_theme_file_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', false );
-		wp_script_add_data( 'travel-skip-link-focus-fix', 'defer', true );
+		wp_enqueue_script( 'pstt-skip-link-focus-fix', get_theme_file_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', false );
+		wp_script_add_data( 'pstt-skip-link-focus-fix', 'defer', true );
 
 		if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 			wp_enqueue_script( 'comment-reply' );
@@ -257,7 +256,7 @@ function travel_scripts() {
 	}
 
 }
-add_action( 'wp_enqueue_scripts', 'travel_scripts' );
+add_action( 'wp_enqueue_scripts', 'pstt_scripts' );
 
 /**
  * Bring in Custom Post Type.
