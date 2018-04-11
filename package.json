@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "description": "WordPress Travel Theme",
   "private": true,
-  "main": "index.php",
+  "main": "index.js",
+  "scripts": {
+    "test": "DIFF_BASE=develop ./node_modules/wp-dev-lib/pre-commit"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/xwp/travel.git"
@@ -14,65 +17,9 @@
     "url": "https://github.com/xwp/travel/issues"
   },
   "homepage": "https://github.com/xwp/travel#readme",
-  "dependencies": {},
   "devDependencies": {
-    "ajv": "^6.2.0",
-    "autoprefixer": "^8.0.0",
-    "babel-core": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-register": "^6.26.0",
-    "browser-sync": "^2.23.6",
-    "eslint": "^4.18.1",
-    "eslint-config-gulp": "^2.1.0",
-    "eslint-config-standard": "^11.0.0",
+    "eslint": "^4.13.1",
     "eslint-config-wordpress": "^2.0.0",
-    "eslint-plugin-import": "^2.9.0",
-    "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "esvalidate": "^0.1.3",
-    "fancy-log": "^1.3.2",
-    "gulp": "^4.0.0",
-    "gulp-babel": "^7.0.1",
-    "gulp-cssnano": "^2.1.2",
-    "gulp-eslint": "^4.0.2",
-    "gulp-if": "^2.0.2",
-    "gulp-image": "^4.3.0",
-    "gulp-newer": "^1.4.0",
-    "gulp-phpcs": "^2.1.0",
-    "gulp-postcss": "^7.0.1",
-    "gulp-print": "^5.0.0",
-    "gulp-sass": "^4.0.0",
-    "gulp-sort": "^2.0.0",
-    "gulp-sourcemaps": "^2.6.4",
-    "gulp-string-replace": "^1.0.0",
-    "gulp-tabify": "0.0.2",
-    "gulp-uglify": "^3.0.0",
-    "gulp-wp-pot": "^2.2.0",
-    "gulp-zip": "^4.1.0",
-    "import-fresh": "^2.0.0",
-    "postcss-cssnext": "^3.1.0",
-    "postcss-partial-import": "^4.1.0",
-    "require-uncached": "^1.0.3",
     "wp-dev-lib": "github:xwp/wp-dev-lib"
-  },
-  "babel": {
-    "presets": [
-      "es2015"
-    ]
-  },
-  "eslintConfig": {
-    "extends": "wordpress",
-    "root": true,
-    "env": {
-      "browser": true,
-      "node": true
-    }
-  },
-  "scripts": {
-    "build": "gulp",
-    "translate": "gulp translate",
-    "bundle": "gulp bundleTheme"
   }
 }
