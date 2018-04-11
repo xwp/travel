@@ -1,20 +1,4 @@
-# Ignore everything:
-/*
-
-# Whitelist what you want tracked:
-!/dev/
-!/languages/
-
-!.babelrc
-!composer.json
-!.editorconfig
-!.eslintignore
-!.eslintrc.json
-!.gitignore
-!gulpfile.bable.js
-!LICENSE
-!package.json
-!phpcs.xml.dist
-!README.md
-!screenshot.png
-!.travis.yml
+.DS_Store
+vendor
+node_modules
+.idea
