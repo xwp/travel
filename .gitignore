@@ -12,7 +12,7 @@ composer.lock
 !.eslintignore
 !.eslintrc.json
 !.gitignore
-gulpfile.bable.js
+!gulpfile.bable.js
 !LICENSE
 package-lock.json
 !package.json
