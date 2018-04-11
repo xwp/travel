@@ -53,7 +53,8 @@
     "import-fresh": "^2.0.0",
     "postcss-cssnext": "^3.1.0",
     "postcss-partial-import": "^4.1.0",
-    "require-uncached": "^1.0.3"
+    "require-uncached": "^1.0.3",
+    "wp-dev-lib": "github:xwp/wp-dev-lib"
   },
   "babel": {
     "presets": [

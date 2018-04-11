@@ -129,9 +129,6 @@ export function php() {
     .pipe( gulp.dest( paths.php.dest ) );
 }
 
-
-
-
 /**
  * Sass, if that's being used.
  */
