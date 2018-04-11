@@ -7,7 +7,7 @@
 
 // Include required classes.
 require_once get_template_directory() . '/includes/class-amp-travel-cpt.php';
-
+require_once get_template_directory() . '/includes/class-amp-travel-taxonomies.php';
 
 if ( ! function_exists( 'travel_setup' ) ) :
 	/**
@@ -30,6 +30,9 @@ if ( ! function_exists( 'travel_setup' ) ) :
 
 		// init custom post type.
 		new AMP_Travel_CPT();
+		// init taxonomies.
+		new AMP_Travel_Taxonomies();
+
 	}
 endif;
 
