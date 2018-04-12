@@ -122,8 +122,7 @@ class AMP_Travel_CPT {
 			'fields' => 'names',
 		) );
 
-		// is_wp_error can be removed once we have taxonomies merged.
-		if ( ! is_wp_error( $terms ) && ! empty( $terms ) ) {
+		if ( ! empty( $terms ) ) {
 			$location = $terms[0];
 		} else {
 			$location = '--';
@@ -215,18 +214,17 @@ class AMP_Travel_CPT {
 	 * Adds meta boxes for adventure post type.
 	 */
 	public function add_adventure_meta_boxes() {
-		add_meta_box( 'amp_travel_adventure_meta', __( 'Adventure details' ), array( $this, 'adventure_meta_box_html' ), 'adventure', 'side' );
+		add_meta_box( 'amp_travel_adventure_meta', __( 'Adventure details', 'travel' ), array( $this, 'adventure_meta_box_html' ), 'adventure', 'side' );
 	}
 
 	/**
 	 * Displays meta boxes in admin.
 	 */
 	public function adventure_meta_box_html() {
-		global $post;
-		$adventure_custom = get_post_custom( $post->ID );
+		$adventure_custom = get_post_custom();
 		$price            = isset( $adventure_custom['amp_travel_price'][0] ) ? $adventure_custom['amp_travel_price'][0] : '';
 		?>
-		<label for='amp_travel_price'><?php esc_attr_e( 'Price (USD)', 'travel' ); ?></label>
+		<label for='amp_travel_price'><?php esc_html_e( 'Price (USD)', 'travel' ); ?></label>
 		<input id='amp_travel_price' name='amp_travel_price' value='<?php echo esc_attr( $price ); ?>'>
 		<?php wp_nonce_field( basename( __FILE__ ), 'amp_travel_price_nonce' ); ?>
 		<?php
@@ -236,17 +234,14 @@ class AMP_Travel_CPT {
 	 * Saves the custom meta.
 	 */
 	public function save_adventure_post() {
-		if ( ! empty( $_POST ) ) {
-			global $post;
 
-			// First check if the amp_travel_price exists at all -- it doesn't in Gutenberg.
-			if ( isset( $_POST['amp_travel_price'] ) && ! wp_verify_nonce( $_POST['amp_travel_price_nonce'], basename( __FILE__ ) ) ) {
-				return;
-			}
+		// First check if the amp_travel_price exists at all -- it doesn't in Gutenberg.
+		if ( isset( $_POST['amp_travel_price'] ) && ! wp_verify_nonce( $_POST['amp_travel_price_nonce'], basename( __FILE__ ) ) ) {
+			return;
+		}
 
-			if ( isset( $_POST['amp_travel_price'] ) ) {
-				update_post_meta( $post->ID, 'amp_travel_price', esc_attr( $_POST['amp_travel_price'] ) );
-			}
+		if ( isset( $_POST['amp_travel_price'] ) ) {
+			update_post_meta( get_the_ID(), 'amp_travel_price', esc_attr( $_POST['amp_travel_price'] ) );
 		}
 	}
 
@@ -272,10 +267,9 @@ class AMP_Travel_CPT {
 	 * Filter the REST accepted params to accept ordering by 'rating'.
 	 *
 	 * @param array $query_params Collection params.
-	 * @return mixed Collection params.
+	 * @return array Collection params.
 	 */
 	public function filter_rest_adventure_collection_params( $query_params ) {
-
 		$query_params['orderby']['enum'][] = 'meta_value_num';
 		$query_params['meta_key']          = array(
 			'description'       => __( 'The meta key to query.', 'travel' ),

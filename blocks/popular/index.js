@@ -22,21 +22,14 @@ export default registerBlockType(
 			__( 'Travel' )
 		],
 
-		attributes: {
-			heading: {
-				source: 'children',
-				type: 'array',
-				selector: '.travel-popular h3'
-			}
-		},
-
 		edit: withAPIData( () => {
 			return {
 				popularPosts: '/wp/v2/adventures?per_page=3&orderby=meta_value_num&meta_key=amp_travel_rating&_embed'
 			};
-		} )( ( { popularPosts, attributes, setAttributes } ) => { // eslint-disable-line
+		} )( ( { popularPosts } ) => { // eslint-disable-line
+			const popularPostsCount = 3;
 			const hasAdventures = Array.isArray( popularPosts.data ) && popularPosts.data.length;
-			if ( ! hasAdventures ) {
+			if ( ! hasAdventures || popularPostsCount !== popularPosts.data.length ) {
 				return (
 					<Placeholder key='placeholder' icon='admin-post' label={ __( 'Adventures' ) } >
 						{ __( 'Not enough adventures with ratings found, add at least 3 to use the block.' ) }
@@ -45,25 +38,23 @@ export default registerBlockType(
 			}
 
 			const adventures = popularPosts.data;
-			const { heading } = attributes;
+			const popularClasses = [
+				'travel-popular-tilt-right',
+				'travel-results-result',
+				'travel-popular-tilt-left'
+			];
+
 			return (
 				<section className='travel-popular pb4 pt3 relative'>
 					<header className='max-width-3 mx-auto px1 md-px2'>
-						<RichText
-							key='editable'
-							className='h1 bold line-height-2'
-							tagName='h3'
-							value={ heading }
-							onChange={ ( value ) => setAttributes( { heading: value } ) } // eslint-disable-line
-							placeholder={ __( 'Top Adventures' ) }
-						/>
+						<h3 className='h1 bold line-height-2'>{ __( 'Top Adventures' ) }</h3>
 					</header>
 					<div className='overflow-scroll'>
 						<div className='travel-overflow-container'>
 							<div className='flex px1 md-px2 mxn1'>
 								{ adventures.map( ( adventure, i ) => // eslint-disable-line
 									<div key='adventure' className='m1 mt3 mb2'>
-										<div className='travel-popular-tilt-right mb1'>
+										<div className={ popularClasses[ i ] + ' mb1' }>
 											<div className='relative travel-results-result'>
 												<a className='travel-results-result-link block relative' href={ adventure.link }>
 													<img src={ adventure._embedded['wp:featuredmedia'][0].source_url } className='block rounded' width='346' height='200' ></img>

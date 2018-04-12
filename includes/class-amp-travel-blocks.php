@@ -13,6 +13,13 @@
 class AMP_Travel_Blocks {
 
 	/**
+	 * Number of popular posts to display.
+	 *
+	 * @var int
+	 */
+	public static $popular_posts_count = 3;
+
+	/**
 	 * Init Travel Blocks.
 	 */
 	public function init() {
@@ -37,13 +44,13 @@ class AMP_Travel_Blocks {
 		$adventures = get_posts(
 			array(
 				'post_type'   => 'adventure',
-				'numberposts' => 3,
+				'numberposts' => self::$popular_posts_count,
 				'orderby'     => 'meta_value_num',
 				'meta_key'    => 'amp_travel_rating',
 			)
 		);
 
-		if ( 3 !== count( $adventures ) ) {
+		if ( count( $adventures ) !== self::$popular_posts_count ) {
 			return $output;
 		}
 
@@ -51,8 +58,8 @@ class AMP_Travel_Blocks {
 
 		if ( ! empty( $attributes['heading'] ) ) {
 			$output .= '<header class="max-width-3 mx-auto px1 md-px2">
-				<h3 class="h1 bold line-height-2 md-hide lg-hide" aria-hidden="true">' . esc_attr( $attributes['heading'] ) . '</h3>
-				<h3 class="h1 bold line-height-2 xs-hide sm-hide center">' . esc_attr( $attributes['heading'] ) . '</h3>
+				<h3 class="h1 bold line-height-2 md-hide lg-hide" aria-hidden="true">' . esc_html( $attributes['heading'] ) . '</h3>
+				<h3 class="h1 bold line-height-2 xs-hide sm-hide center">' . esc_html( $attributes['heading'] ) . '</h3>
 			</header>';
 		}
 
@@ -60,7 +67,13 @@ class AMP_Travel_Blocks {
 				<div class="travel-overflow-container">
 					<div class="flex px1 md-px2 mxn1">';
 
-		foreach ( $adventures as $adventure ) {
+		$popular_classes = array(
+			'travel-popular-tilt-right',
+			'travel-results-result',
+			'travel-popular-tilt-left',
+		);
+
+		foreach ( $adventures as $index => $adventure ) {
 			$attachment_id = get_post_thumbnail_id( $adventure->ID );
 			$img_src       = wp_get_attachment_image_url( $attachment_id, 'full' );
 			$img_srcset    = wp_get_attachment_image_srcset( $attachment_id );
@@ -77,7 +90,7 @@ class AMP_Travel_Blocks {
 				$location = $locations[0];
 			}
 
-			$output .= '<div class="m1 mt3 mb2"><div class="travel-popular-tilt-right mb1">
+			$output .= '<div class="m1 mt3 mb2"><div class="' . esc_html( $popular_classes[ $index ] ) . ' mb1">
 								<div class="relative travel-results-result">
 									<a class="travel-results-result-link block relative" href="' . esc_url( get_the_permalink( $adventure->ID ) ) . '">
 										<amp-img class="block rounded" width="346" height="200" noloading="" src="' . esc_url( $img_src ) . '" srcset="' . esc_attr( $img_srcset ) . '"></amp-img>
@@ -85,9 +98,9 @@ class AMP_Travel_Blocks {
 								</div>
 							</div>
 							<div class="h2 line-height-2 mb1">
-								<span class="travel-results-result-text">' . esc_attr( get_the_title( $adventure->ID ) ) . '</span>
+								<span class="travel-results-result-text">' . esc_html( get_the_title( $adventure->ID ) ) . '</span>
 								<span class="travel-results-result-subtext h3">•</span>
-								<span class="travel-results-result-subtext h3">$&nbsp;</span><span class="black bold">' . esc_attr( $price ) . '</span>
+								<span class="travel-results-result-subtext h3">$&nbsp;</span><span class="black bold">' . esc_html( $price ) . '</span>
 							</div>
 							<div class="h4 line-height-2">
 								<div class="inline-block relative mr1 h3 line-height-2">
@@ -99,9 +112,11 @@ class AMP_Travel_Blocks {
 
 			$output .= '</div>
 							</div>
-							<span class="travel-results-result-subtext mr1">' . esc_attr( $comments->approved ) . esc_attr__( ' Reviews' ) . '</span>
+							<span class="travel-results-result-subtext mr1">' .
+				/* translators: %d: The number of reviews */
+				sprintf( esc_html__( '%d Reviews', 'travel' ), esc_html( $comments->approved ) ) . '</span>
 							<span class="travel-results-result-subtext"><svg class="travel-icon" viewBox="0 0 77 100"><g fill="none" fillRule="evenodd"><path stroke="currentColor" strokeWidth="7.5" d="M38.794 93.248C58.264 67.825 68 49.692 68 38.848 68 22.365 54.57 9 38 9S8 22.364 8 38.85c0 10.842 9.735 28.975 29.206 54.398a1 1 0 0 0 1.588 0z"></path><circle cx="38" cy="39" r="10" fill="currentColor"></circle></g></svg>
-							' . esc_attr( $location ) . '</span>
+							' . esc_html( $location ) . '</span>
 						</div>
 						</div>';
 
