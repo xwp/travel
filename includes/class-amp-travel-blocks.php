@@ -20,7 +20,7 @@ class AMP_Travel_Blocks {
 			add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_editor_scripts' ) );
 			add_filter( 'the_content', array( $this, 'filter_the_content_amp_atts' ), 10, 1 );
 			add_filter( 'wp_kses_allowed_html', array( $this, 'filter_wp_kses_allowed_html' ), 10, 2 );
-			add_filter( 'pre_get_posts', array( $this, 'filter_search_pre_get_posts' ), 10, 1 );
+			add_filter( 'pre_get_posts', array( $this, 'filter_search_pre_get_posts' ) );
 		}
 	}
 
@@ -115,9 +115,9 @@ class AMP_Travel_Blocks {
 	/**
 	 * Modify the default search query to include 'adventure' post type.
 	 *
-	 * @param object $query  Original query.
+	 * @param object $query Original query.
 	 */
-	public function travel_filter_search_pre_get_posts( $query ) {
+	public function filter_search_pre_get_posts( $query ) {
 
 		if ( $query->is_search ) {
 			$query->set( 'post_type', array( 'post', 'adventure' ) );

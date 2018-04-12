@@ -70,10 +70,10 @@ export default registerBlockType(
 		},
 		save( { attributes } ) { // eslint-disable-line
 			const ampValueProp = {
-				'[value]': 'fields_query'
+				'[value]': 'search_query.search'
 			};
 			const ampHrefProp = {
-				'[href]': "'" + travelGlobals.siteUrl + "?s=' + fields_query"
+				'[href]': "'" + travelGlobals.siteUrl + "?s=' + search_query.search"
 			};
 			return (
 				<section className='travel-search py4 xs-hide sm-hide relative'>
@@ -82,7 +82,7 @@ export default registerBlockType(
 
 						<div className='flex justify-center pb2'>
 							<div className='travel-input-group flex items-center col-8'>
-								<input className='travel-input travel-input-big line-height-2 block col-12 flex-auto rounded-left' type='text' name='query' placeholder='Search for adventures' on='change:AMP.setState({fields_query: event.value})' value='' { ...ampValueProp } />
+								<input className='travel-input travel-input-big line-height-2 block col-12 flex-auto rounded-left' type='text' name='query' placeholder='Search for adventures' on='input-throttled:AMP.setState({search_query: {search: event.value}})' value='' { ...ampValueProp } />
 								<span className='travel-input-group-sep travel-border-gray relative z1 block'></span>
 								<a href={ travelGlobals.siteUrl + '?s=' } { ...ampHrefProp } className='travel-link travel-input travel-input-big line-height-2 link rounded-right nowrap text-decoration-none'>
 									{ attributes.ctaText }
