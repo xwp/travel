@@ -13,9 +13,9 @@
 class AMP_Travel_Blocks {
 
 	/**
-	 * AMP_Travel_Blocks constructor.
+	 * Init Travel Blocks.
 	 */
-	public function __construct() {
+	public function init() {
 		if ( function_exists( 'gutenberg_init' ) ) {
 			add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_editor_scripts' ) );
 			add_filter( 'the_content', array( $this, 'filter_the_content_amp_atts' ), 10, 1 );
@@ -73,7 +73,7 @@ class AMP_Travel_Blocks {
 							<div class='flex justify-center p1 md-px1 mxn1'>";
 
 		foreach ( $activities as $activity ) {
-			$output .= "<a href='" . get_term_link( $activity ) . "' class='travel-activities-activity travel-type-active mx1'>
+			$output .= "<a href='" . get_term_link( $activity ) . "' class='travel-activities-activity travel-type-" . $activity->slug . " mx1'>
 									<div class='travel-shadow circle inline-block'>
 										<div class='travel-activities-activity-icon'>";
 			$output .= get_term_meta( $activity->term_id, 'amp_travel_activity_svg', true );

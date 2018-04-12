@@ -20,7 +20,7 @@ export default registerBlockType(
 		// Copy from Travel HTML template.
 		edit() {
 
-			// Don't display the travel angels since that will hide the block configure buttons behind an image.
+			// Don't display the travel angles since that will hide the block configure buttons behind an image.
 			return (
 				<div className='travel-angles max-width-3 mx-auto'>
 					--- Placeholder for Travel angles ---

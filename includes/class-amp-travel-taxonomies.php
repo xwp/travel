@@ -13,15 +13,15 @@
 class AMP_Travel_Taxonomies {
 
 	/**
-	 * AMP_Travel_Taxonomies constructor.
+	 * Init AMP_Travel_Taxonomies.
 	 */
-	public function __construct() {
+	public function init() {
 		add_action( 'init', array( $this, 'register_taxonomies' ) );
 		add_action( 'init', array( $this, 'register_activity_meta' ) );
 		add_action( 'activity_add_form_fields', array( $this, 'add_activity_meta_fields' ) );
 		add_action( 'activity_edit_form_fields', array( $this, 'edit_activity_meta_fields' ) );
-		add_action( 'edit_activity', array( $this, 'save_activity_svg' ) );
-		add_action( 'create_activity', array( $this, 'save_activity_svg' ) );
+		add_action( 'edit_activity', array( $this, 'save_activity_meta' ) );
+		add_action( 'create_activity', array( $this, 'save_activity_meta' ) );
 	}
 
 	/**
@@ -46,7 +46,7 @@ class AMP_Travel_Taxonomies {
 			<label for='travel-activity-svg'>SVG</label>
 			<?php wp_nonce_field( basename( __FILE__ ), 'travel_activity_svg_nonce' ); ?>
 			<textarea aria-required='true' name='travel-activity-svg' id='travel-activity-svg'></textarea>
-			<p class="description"><?php esc_attr_e( 'This is for the background icon of the activity term.', 'travel' ); ?></p>
+			<p class="description"><?php esc_html_e( 'This is for the background icon of the activity term. Only <path>, <svg>, <g>, and <circle> elements are allowed', 'travel' ); ?></p>
 		</div>
 		<?php
 	}
@@ -59,13 +59,32 @@ class AMP_Travel_Taxonomies {
 	 */
 	public function sanitize_activity_svg( $text ) {
 		$allowed_html = array(
-			'path' => array(
-				'fill' => true,
-				'd'    => true,
+			'path'   => array(
+				'fill'         => true,
+				'd'            => true,
+				'id'           => true,
+				'stroke'       => true,
+				'stroke-width' => true,
 			),
-			'svg'  => array(
+			'svg'    => array(
 				'class'   => true,
 				'viewbox' => true,
+				'height'  => true,
+				'width'   => true,
+			),
+			'g'      => array(
+				'fill'         => true,
+				'fillRule'     => true,
+				'fill-rule'    => true,
+				'stroke'       => true,
+				'stroke-width' => true,
+			),
+			'circle' => array(
+				'cx'           => true,
+				'cy'           => true,
+				'r'            => true,
+				'stroke'       => true,
+				'stroke-width' => true,
 			),
 		);
 
@@ -90,12 +109,9 @@ class AMP_Travel_Taxonomies {
 			<td>
 				<?php wp_nonce_field( basename( __FILE__ ), 'travel_activity_svg_nonce' ); ?>
 				<textarea aria-required="true" name="travel-activity-svg" id="travel-activity-svg">
-				<?php
-				// @codingStandardsIgnoreLine
-				echo $this->sanitize_activity_svg( $value );
-				?>
+				<?php echo $this->sanitize_activity_svg( $value ); // WPCS: XSS ok. ?>
 			</textarea>
-				<p class="description"><?php esc_attr_e( 'This is for the background icon of the activity term.', 'travel' ); ?></p>
+				<p class="description"><?php esc_html_e( 'This is for the background icon of the activity term. Only <path>, <svg>, <g>, and <circle> elements are allowed', 'travel' ); ?></p>
 			</td>
 		</tr>
 		<?php
@@ -106,15 +122,22 @@ class AMP_Travel_Taxonomies {
 	 *
 	 * @param integer $term_id Term ID.
 	 */
-	public function save_activity_svg( $term_id ) {
+	public function save_activity_meta( $term_id ) {
 
 		if ( ! wp_verify_nonce( $_POST['travel_activity_svg_nonce'], basename( __FILE__ ) ) ) {
 			return;
 		}
 
-		$old_value = get_term_meta( $term_id, 'amp_travel_activity_svg', true );
-		$new_value = isset( $_POST['travel-activity-svg'] ) ? $this->sanitize_activity_svg( $_POST['travel-activity-svg'] ) : '';
+		$old_value      = get_term_meta( $term_id, 'amp_travel_activity_svg', true );
+		$original_value = isset( $_POST['travel-activity-svg'] ) ? trim( $_POST['travel-activity-svg'] ) : '';
+		$new_value      = isset( $_POST['travel-activity-svg'] ) ? $this->sanitize_activity_svg( $_POST['travel-activity-svg'] ) : '';
+
 		if ( $old_value !== $new_value ) {
+
+			// If the stripped new value is completely empty but the intended value was not, don't save it.
+			if ( '' === $new_value && '' !== $original_value ) {
+				return;
+			}
 			update_term_meta( $term_id, 'amp_travel_activity_svg', $new_value );
 		}
 	}
@@ -124,10 +147,7 @@ class AMP_Travel_Taxonomies {
 	 */
 	public function register_taxonomies() {
 		register_taxonomy( 'activity', array( 'adventure', 'post' ), array(
-			'hierarchical'          => false,
 			'query_var'             => 'activity',
-			'public'                => true,
-			'show_ui'               => true,
 			'show_admin_column'     => true,
 			'show_in_rest'          => true,
 			'rest_base'             => 'activities',

@@ -25,19 +25,11 @@ export default registerBlockType(
 			__( 'Travel' )
 		],
 
-		attributes: {
-			heading: {
-				source: 'children',
-				type: 'array',
-				selector: '.travel-activities h3'
-			}
-		},
-
 		edit: withAPIData( () => {
 			return {
 				activityResults: '/wp/v2/activities'
 			};
-		} )( ( { activityResults, attributes, setAttributes } ) => {
+		} )( ( { activityResults } ) => {
 			const hasActivities = Array.isArray( activityResults.data ) && activityResults.data.length;
 			if ( ! hasActivities ) {
 				return (
@@ -49,25 +41,17 @@ export default registerBlockType(
 			}
 
 			const activities = activityResults.data;
-			const { heading } = attributes;
 
 			return (
 				<section className='travel-activities pb4 pt3 relative'>
 					<div className='max-width-3 mx-auto px1 md-px2'>
-						<RichText
-							key='editable'
-							className='bold h1 line-height-2'
-							tagName='h3'
-							value={ heading }
-							onChange={ ( value ) => setAttributes( { heading: value } ) }
-							placeholder={ __( 'Browse by activity' ) }
-						/>
+						<h3 className='bold h1 line-height-2'>{ __( 'Browse by activity' ) }</h3>
 					</div>
 					<div className='overflow-scroll'>
 						<div className='travel-overflow-container'>
 							<div className='flex p1 md-px1 mxn1'>
 								{ activities.map( ( activity, i ) =>
-									<a key='activity' href={ activity.link } className='travel-activities-activity travel-type-active mx1' target="_blank">
+									<a key='activity' href={ activity.link } className={ 'travel-activities-activity mx1 travel-type-' + activity.slug } target="_blank">
 										<div className='travel-shadow circle inline-block'>
 											<div className='travel-activities-activity-icon'>
 												<RawHTML key='html'>{ decodeEntities( activity.svg ) }</RawHTML>
