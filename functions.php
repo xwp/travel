@@ -1,12 +1,13 @@
 <?php
 /**
- * Theme functions file.
+ * AMP Travel Theme.
  *
  * @package WPAMPTheme
  */
 
-// Load taxonomy-related functionality.
-require_once get_template_directory() . '/includes/class-amp-travel-taxonomies.php';
+// Load theme.
+require_once get_template_directory() . '/includes/functions.php';
+require_once get_template_directory() . '/includes/class-amp-travel-theme.php';
 
-// Load blocks-related functionality.
-require_once get_template_directory() . '/includes/class-amp-travel-blocks.php';
+// Initialize theme.
+amp_travel_theme()->init();

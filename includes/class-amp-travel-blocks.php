@@ -20,9 +20,9 @@ class AMP_Travel_Blocks {
 	public static $featured_locations_count = 6;
 
 	/**
-	 * AMP_Travel_Blocks constructor.
+	 * Init Travel Blocks.
 	 */
-	public function __construct() {
+	public function init() {
 		if ( function_exists( 'gutenberg_init' ) ) {
 			add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_editor_scripts' ) );
 			add_filter( 'the_content', array( $this, 'filter_the_content_amp_atts' ), 10, 1 );
@@ -39,7 +39,7 @@ class AMP_Travel_Blocks {
 	 * @return mixed
 	 */
 	public function filter_the_content_amp_atts( $content ) {
-		return preg_replace( '/\data-amp-bind-(.+?)=/', ' [$1]=', $content );
+		return preg_replace( '/\sdata-amp-bind-(.+?)=/', ' [$1]=', $content );
 	}
 
 	/**
@@ -165,5 +165,3 @@ class AMP_Travel_Blocks {
 		return $output;
 	}
 }
-
-new AMP_Travel_Blocks();

@@ -20,9 +20,9 @@ class AMP_Travel_Taxonomies {
 	public static $location_term = 'location';
 
 	/**
-	 * AMP_Travel_Taxonomies constructor.
+	 * Init AMP_Travel_Taxonomies.
 	 */
-	public function __construct() {
+	public function init() {
 		add_action( 'init', array( $this, 'register_taxonomies' ) );
 
 		add_action( 'location_add_form_fields', array( $this, 'add_location_meta_fields' ) );
@@ -309,5 +309,3 @@ class AMP_Travel_Taxonomies {
 		) );
 	}
 }
-
-new AMP_Travel_Taxonomies();
