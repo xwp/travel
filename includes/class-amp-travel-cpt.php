@@ -44,35 +44,6 @@ class AMP_Travel_CPT {
 		 */
 		add_theme_support( 'post-thumbnails' );
 
-		/**
-		 * Filter the image sizes to allow manipulating and adding sizes to be registered.
-		 *
-		 * @param array $sizes The array of sizes to be registered.
-		 */
-		$image_sizes = apply_filters( 'amp_travel_image_sizes', array(
-			'1600x900',
-			'1400x787',
-			'1200x675',
-			'1040x585',
-			'768x432',
-			'727x409',
-			'600x338',
-			'500x281',
-			'375x211',
-			'335x188',
-			'320x180',
-			'280x158',
-			'240x135',
-			'160x90',
-			'122x67',
-		) );
-
-		// Custom image sizes.
-		foreach ( $image_sizes as $size ) {
-			$dimensions = explode( 'x', $size );
-			add_image_size( 'travel-' . $size, $dimensions[0], $dimensions[1], true );
-		}
-
 		// Register the post type.
 		$this->register_post_type();
 	}
@@ -113,15 +84,8 @@ class AMP_Travel_CPT {
 			'description'           => __( 'Adventure Custom Post Type for travel theme.', 'travel' ),
 			'public'                => true,
 			'exclude_from_search'   => true,
-			'publicly_queryable'    => true,
-			'show_ui'               => true,
-			'show_in_nav_menus'     => true,
-			'show_in_menu'          => true,
-			'show_in_admin_bar'     => true,
 			'menu_position'         => 20,
 			'menu_icon'             => 'dashicons-location-alt',
-			'capability_type'       => 'post',
-			'hierarchical'          => false,
 			'supports'              => array(
 				'title',
 				'editor',
@@ -131,11 +95,8 @@ class AMP_Travel_CPT {
 			'rewrite'               => array(
 				'slug' => self::POST_TYPE_SLUG_SINGLE,
 			),
-			'query_var'             => true,
-			'can_export'            => true,
 			'show_in_rest'          => true,
 			'rest_base'             => self::POST_TYPE_SLUG_PLURAL,
-			'rest_controller_class' => 'WP_REST_Posts_Controller',
 		);
 
 		register_post_type( self::POST_TYPE_SLUG_SINGLE, $args );
