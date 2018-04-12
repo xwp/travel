@@ -13,40 +13,6 @@
 class AMP_Travel_Theme {
 
 	/**
-	 * AMP_Travel_Theme constructor.
-	 */
-	protected function __construct() {
-		$this->includes();
-		$this->instantiate_classes();
-	}
-
-	/**
-	 * Init classes.
-	 */
-	protected function instantiate_classes() {
-
-		// Init blocks.
-		$travel_blocks = new AMP_Travel_Blocks();
-		$travel_blocks->init();
-
-		// Init taxonomies.
-		$travel_taxonomies = new AMP_Travel_Taxonomies();
-		$travel_taxonomies->init();
-
-		// Init CPT.
-		new AMP_Travel_CPT();
-	}
-
-	/**
-	 * Init.
-	 */
-	public function init() {
-
-		// Hook into theme after setup.
-		add_action( 'after_setup_theme', array( $this, 'setup' ) );
-	}
-
-	/**
 	 * Get theme instance.
 	 *
 	 * @return object $instance Theme instance.
@@ -59,6 +25,37 @@ class AMP_Travel_Theme {
 		}
 
 		return $instance;
+	}
+
+	/**
+	 * Init.
+	 */
+	public function init() {
+		$this->includes();
+		$this->instantiate_classes();
+		add_action( 'after_setup_theme', array( $this, 'setup' ) );
+	}
+
+	/**
+	 * Theme includes.
+	 */
+	public function includes() {
+		$dir = get_template_directory();
+		require_once $dir . '/includes/class-amp-travel-blocks.php';
+		require_once $dir . '/includes/class-amp-travel-cpt.php';
+		require_once $dir . '/includes/class-amp-travel-taxonomies.php';
+	}
+
+	/**
+	 * Init classes.
+	 */
+	public function instantiate_classes() {
+		$travel_blocks = new AMP_Travel_Blocks();
+		$travel_blocks->init();
+		$travel_cpt = new AMP_Travel_CPT();
+		$travel_cpt->init();
+		$travel_taxonomies = new AMP_Travel_Taxonomies();
+		$travel_taxonomies->init();
 	}
 
 	/**
@@ -76,14 +73,4 @@ class AMP_Travel_Theme {
 		add_theme_support( 'amp', array() );
 	}
 
-	/**
-	 * Theme includes.
-	 */
-	protected function includes() {
-		$dir = get_template_directory();
-
-		require_once $dir . '/includes/class-amp-travel-taxonomies.php';
-		require_once $dir . '/includes/class-amp-travel-blocks.php';
-		require_once $dir . '/includes/class-amp-travel-cpt.php';
-	}
 }
