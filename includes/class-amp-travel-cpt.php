@@ -160,13 +160,13 @@ class AMP_Travel_CPT {
 		$end_date         = isset( $adventure_custom['amp_travel_end_date'][0] ) ? $adventure_custom['amp_travel_end_date'][0] : '';
 		?>
 		<div>
-			<label for='amp_travel_start_date'><?php esc_attr_e( 'Start date', 'travel' ); ?></label><input placeholder='yyyy-mm-dd' pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}' type='date' id='amp_travel_start_date' name='amp_travel_start_date' value='<?php echo esc_attr( $start_date ); ?>'>
+			<label for='amp_travel_start_date'><?php esc_html_e( 'Start date', 'travel' ); ?></label><input placeholder='yyyy-mm-dd' pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}' type='date' id='amp_travel_start_date' name='amp_travel_start_date' value='<?php echo esc_attr( $start_date ); ?>'>
 		</div>
 		<div>
-			<label for='amp_travel_end_date'><?php esc_attr_e( 'Ending date', 'travel' ); ?></label><input placeholder='yyyy-mm-dd' pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}' type='date' id='amp_travel_end_date' name='amp_travel_end_date' value='<?php echo esc_attr( $end_date ); ?>'>
+			<label for='amp_travel_end_date'><?php esc_html_e( 'Ending date', 'travel' ); ?></label><input placeholder='yyyy-mm-dd' pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}' type='date' id='amp_travel_end_date' name='amp_travel_end_date' value='<?php echo esc_attr( $end_date ); ?>'>
 		</div>
 		<?php wp_nonce_field( basename( __FILE__ ), 'amp_travel_adventure_nonce' ); ?>
-		<p class='description'><?php esc_attr_e( 'Leave empty if the adventure is ongoing', 'travel' ); ?></p>
+		<p class='description'><?php esc_html_e( 'Leave empty if the adventure is ongoing', 'travel' ); ?></p>
 		<?php
 	}
 
@@ -174,7 +174,9 @@ class AMP_Travel_CPT {
 	 * Saves the custom meta.
 	 */
 	public function save_adventure_post() {
-		if ( ! empty( $_POST ) ) {
+
+		// This check is needed since otherwise Gutenberg save will fail -- it uses different saving logic.
+		if ( isset( $_POST['amp_travel_start_date'] ) || isset( $_POST['amp_travel_end_date'] ) ) {
 			global $post;
 
 			if ( ! wp_verify_nonce( $_POST['amp_travel_adventure_nonce'], basename( __FILE__ ) ) ) {
