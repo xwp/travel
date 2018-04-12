@@ -22,3 +22,18 @@ html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-t
 .travel-discover-subheading {
     font-size: 1.4rem;
 }
+.travel-search .travel-input {
+    line-height: 1.225rem;
+}
+
+.travel-search .travel-link {
+    color: #8b58e3
+}
+
+.travel-input-group {
+    font-size: 14px;
+}
+
+.travel-search-input.blocks-rich-text {
+    width: 100%;
+}

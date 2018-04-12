@@ -30,6 +30,7 @@ class AMP_Travel_Blocks {
 			add_action( 'init', array( $this, 'register_block_travel_popular' ) );
 			add_action( 'init', array( $this, 'register_block_activity_list' ) );
 			add_action( 'init', array( $this, 'register_block_discover' ) );
+			add_action( 'pre_get_posts', array( $this, 'filter_search_pre_get_posts' ) );
 		}
 	}
 
@@ -244,6 +245,7 @@ class AMP_Travel_Blocks {
 			'travelGlobals',
 			array(
 				'themeUrl' => esc_url( get_template_directory_uri() ),
+				'siteUrl'  => site_url(),
 			)
 		);
 
@@ -301,6 +303,17 @@ class AMP_Travel_Blocks {
 			$allowed_tags = array_merge( $allowed_tags, $amp_tags );
 		}
 		return $allowed_tags;
+	}
+
+	/**
+	 * Modify the default search query to include 'adventure' post type.
+	 *
+	 * @param object $query Original query.
+	 */
+	public function filter_search_pre_get_posts( $query ) {
+		if ( $query->is_search ) {
+			$query->set( 'post_type', array( 'post', 'adventure' ) );
+		}
 	}
 
 	/**
@@ -388,6 +401,6 @@ class AMP_Travel_Blocks {
 			</section>';
 
 		return $output;
-
 	}
+
 }
