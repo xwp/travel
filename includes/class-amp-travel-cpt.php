@@ -147,7 +147,7 @@ class AMP_Travel_CPT {
 	 * Adds meta boxes for adventure post type.
 	 */
 	public function add_adventure_meta_boxes() {
-		add_meta_box( 'amp_travel_adventure_meta', __( 'Adventure details' ), array( $this, 'adventure_meta_box_html' ), 'adventure', 'side' );
+		add_meta_box( 'amp_travel_adventure_meta', __( 'Adventure details', 'travel' ), array( $this, 'adventure_meta_box_html' ), 'adventure', 'side' );
 	}
 
 	/**
