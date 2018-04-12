@@ -4,6 +4,16 @@ html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-t
     padding-left: 0px;
     padding-right: 0px;
 }
+
 .travel-activities-activity-icon {
     line-height: 1;
+}
+
+.travel-discover-heading {
+    line-height: 1.3;
+    font-size: 3rem;
+}
+
+.travel-discover-subheading {
+    font-size: 1.4rem;
 }
