@@ -43,7 +43,6 @@ class AMP_Travel_Theme {
 		$dir = get_template_directory();
 		require_once $dir . '/includes/class-amp-travel-blocks.php';
 		require_once $dir . '/includes/class-amp-travel-cpt.php';
-		require_once $dir . '/includes/class-amp-travel-taxonomies.php';
 	}
 
 	/**
@@ -54,8 +53,6 @@ class AMP_Travel_Theme {
 		$travel_blocks->init();
 		$travel_cpt = new AMP_Travel_CPT();
 		$travel_cpt->init();
-		$travel_taxonomies = new AMP_Travel_Taxonomies();
-		$travel_taxonomies->init();
 	}
 
 	/**
