@@ -23,28 +23,13 @@ export default registerBlockType(
 			__( 'Travel' )
 		],
 
-		attributes: {
-			heading: {
-				source: 'children',
-				type: 'array',
-				selector: 'h2.travel-discover-heading'
-			},
-			subheading: {
-				source: 'children',
-				type: 'array',
-				selector: '.travel-discover-subheading'
-			}
-		},
-
 		edit: withAPIData( () => {
 			return {
 				posts: '/wp/v2/posts?per_page=1'
 			};
-		} )( ( { posts, attributes, setAttributes } ) => {
-			const { heading, subheading } = attributes;
-
+		} )( ( { posts } ) => {
 			if ( ! posts.data ) {
-				return __( 'Loading' );
+				return __( 'Loading...' );
 			}
 
 			const content = 0 === posts.data.length ?
@@ -69,22 +54,8 @@ export default registerBlockType(
 					<div className='max-width-3 mx-auto'>
 						<div className='flex justify-between items-center'>
 							<header>
-								<RichText
-									key='editable'
-									className='travel-discover-heading bold line-height-2 xs-hide sm-hide'
-									tagName='h2'
-									value={ heading }
-									onChange={ ( value ) => setAttributes( { heading: value } ) }
-									placeholder={ __( 'Discover Adventures' ) }
-								/>
-								<RichText
-									key='editable'
-									className='travel-discover-subheading h2 xs-hide sm-hide'
-									tagName='div'
-									value={ subheading }
-									onChange={ ( value ) => setAttributes( { subheading: value } ) }
-									placeholder={ __( 'Get inspired and find your next big trip' ) }
-								/>
+								<h2 className='travel-discover-heading bold line-height-2 xs-hide sm-hide'>{ __( 'Discover Adventures' ) }</h2>
+								<div className='travel-discover-subheading h2 xs-hide sm-hide'>{ __( 'Get inspired and find your next big trip' ) }</div>
 							</header>
 							{ content }
 						</div>
