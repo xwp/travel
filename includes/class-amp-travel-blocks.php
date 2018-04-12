@@ -157,41 +157,43 @@ class AMP_Travel_Blocks {
 		// If there's no post, return.
 		if ( empty( $posts ) ) {
 			return '';
-		} else {
-			$discover_post = $posts[0];
-			$title         = get_the_title( $discover_post['ID'] );
-			$link          = get_permalink( $discover_post['ID'] );
-
-			// Use the wp_trim_words directly since otherwise the_content will run endlessly due to wp_trim_excerpt() using the global post.
-			if ( empty( $discover_post['post_excerpt'] ) ) {
-				$excerpt_length = apply_filters( 'excerpt_length', 15 );
-				$excerpt_more   = apply_filters( 'excerpt_more', ' ...' );
-				$excerpt        = wp_trim_words( $discover_post['post_content'], $excerpt_length, $excerpt_more );
-			} else {
-				$excerpt = get_the_excerpt( $discover_post['ID'] );
-			}
 		}
 
-		$output = "<section class='travel-discover py4 mb3 relative xs-hide sm-hide'>
-					<div class='max-width-3 mx-auto px1 md-px2'>
-						<div class='flex justify-between items-center'>
-							<header>
-								<h2 class='travel-discover-heading bold line-height-2 xs-hide sm-hide'>" . esc_attr( $heading ) . "</h2>
-								<div class='travel-discover-subheading h2 xs-hide sm-hide'>" . esc_attr( $subheading ) . "</div>
-							</header>
+		$discover_post = $posts[0];
+		$title         = get_the_title( $discover_post['ID'] );
+		$link          = get_permalink( $discover_post['ID'] );
 
-							<div class='travel-discover-panel travel-shadow-hover px3 py2 ml1 mr3 myn3 xs-hide sm-hide'>
-								<div class='bold h2 line-height-2 my1'>" . esc_html( $title ) . "</div>
-								<p class='travel-discover-panel-subheading h3 my1 line-height-2'>
-									" . esc_html( $excerpt ) . "
-								</p>
-								<p class='my1'>
-									<a class='travel-link' href=' " . $link . "'>Read more</a>
-								</p>
-							</div>
+		// Use the wp_trim_words directly since otherwise the_content will run endlessly due to wp_trim_excerpt() using the global post.
+		if ( empty( $discover_post['post_excerpt'] ) ) {
+
+			/** This filter is documented in wp-includes/formatting.php */
+			$excerpt_length = apply_filters( 'excerpt_length', 15 );
+			/** This filter is documented in wp-includes/formatting.php */
+			$excerpt_more = apply_filters( 'excerpt_more', ' ...' );
+			$excerpt      = wp_trim_words( $discover_post['post_content'], $excerpt_length, $excerpt_more );
+		} else {
+			$excerpt = get_the_excerpt( $discover_post['ID'] );
+		}
+
+		$output = '<section class="travel-discover py4 mb3 relative xs-hide sm-hide">
+				<div class="max-width-3 mx-auto px1 md-px2">
+					<div class="flex justify-between items-center">
+						<header>
+							<h2 class="travel-discover-heading bold line-height-2 xs-hide sm-hide">' . esc_html( $heading ) . '</h2>
+							<div class="travel-discover-subheading h2 xs-hide sm-hide">' . esc_html( $subheading ) . '</div>
+						</header>
+						<div class="travel-discover-panel travel-shadow-hover px3 py2 ml1 mr3 myn3 xs-hide sm-hide">
+							<div class="bold h2 line-height-2 my1">' . esc_html( $title ) . '</div>
+							<p class="travel-discover-panel-subheading h3 my1 line-height-2">
+								' . esc_html( $excerpt ) . '
+							</p>
+							<p class="my1">
+								<a class="travel-link" href=" ' . esc_url( $link ) . '">' . esc_html__( 'Read more', 'travel' ) . '</a>
+							</p>
 						</div>
 					</div>
-				</section>";
+				</div>
+			</section>';
 
 		return $output;
 
