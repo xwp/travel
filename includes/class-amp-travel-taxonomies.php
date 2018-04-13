@@ -24,6 +24,11 @@ class AMP_Travel_Taxonomies {
 	 */
 	public function init() {
 		add_action( 'init', array( $this, 'register_taxonomies' ) );
+		add_action( 'init', array( $this, 'register_activity_meta' ) );
+		add_action( 'activity_add_form_fields', array( $this, 'add_activity_meta_fields' ) );
+		add_action( 'activity_edit_form_fields', array( $this, 'edit_activity_meta_fields' ) );
+		add_action( 'edit_activity', array( $this, 'save_activity_meta' ) );
+		add_action( 'create_activity', array( $this, 'save_activity_meta' ) );
 
 		add_action( 'location_add_form_fields', array( $this, 'add_location_meta_fields' ) );
 		add_action( 'location_edit_form_fields', array( $this, 'edit_location_meta_fields' ) );
@@ -35,7 +40,6 @@ class AMP_Travel_Taxonomies {
 		add_filter( 'rest_location_query', array( $this, 'filter_rest_location_query' ), 10, 2 );
 		add_filter( 'rest_post_dispatch', array( $this, 'filter_rest_post_response' ), 10, 3 );
 		add_filter( 'rest_prepare_location', array( $this, 'add_location_rest_data' ), 10, 3 );
-
 	}
 
 	/**
@@ -87,7 +91,7 @@ class AMP_Travel_Taxonomies {
 			<label for='location-is-featured'><?php esc_html_e( 'Featured destination' ); ?></label>
 			<input type="checkbox" name="location-featured-destination" value="1" />
 		</div>
-<?php
+		<?php
 	}
 
 	/**
@@ -258,14 +262,129 @@ class AMP_Travel_Taxonomies {
 	}
 
 	/**
+	 * Register Activity meta.
+	 */
+	public function register_activity_meta() {
+		$args = array(
+			'sanitize_callback' => array( $this, 'sanitize_activity_svg' ),
+			'type'              => 'string',
+			'single'            => true,
+			'show_in_rest'      => true,
+		);
+		register_meta( 'term', 'amp_travel_activity_svg', $args );
+	}
+
+	/**
+	 * Add metafield to Add Activity form page.
+	 */
+	public function add_activity_meta_fields() {
+		?>
+		<div class='form-field form-required term-svg-wrap'>
+			<label for='travel-activity-svg'>SVG</label>
+			<?php wp_nonce_field( basename( __FILE__ ), 'travel_activity_svg_nonce' ); ?>
+			<textarea aria-required='true' name='travel-activity-svg' id='travel-activity-svg'></textarea>
+			<p class="description"><?php esc_html_e( 'This is for the background icon of the activity term. Only <path>, <svg>, <g>, and <circle> elements are allowed', 'travel' ); ?></p>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Sanitize the SVG field.
+	 *
+	 * @param string $text Text.
+	 * @return string
+	 */
+	public function sanitize_activity_svg( $text ) {
+		$allowed_html = array(
+			'path'   => array(
+				'fill'         => true,
+				'd'            => true,
+				'id'           => true,
+				'stroke'       => true,
+				'stroke-width' => true,
+			),
+			'svg'    => array(
+				'class'   => true,
+				'viewbox' => true,
+				'height'  => true,
+				'width'   => true,
+			),
+			'g'      => array(
+				'fill'         => true,
+				'fillRule'     => true,
+				'fill-rule'    => true,
+				'stroke'       => true,
+				'stroke-width' => true,
+			),
+			'circle' => array(
+				'cx'           => true,
+				'cy'           => true,
+				'r'            => true,
+				'stroke'       => true,
+				'stroke-width' => true,
+			),
+		);
+
+		// Replace ' with " since ' might cause issues with sanitizing.
+		$text = trim( str_replace( "'", '"', $text ) );
+		return wp_kses( $text, $allowed_html );
+	}
+
+	/**
+	 * Add SVG field to Activity term edit view.
+	 *
+	 * @param WP_Term $term Term object.
+	 */
+	public function edit_activity_meta_fields( $term ) {
+		$value = get_term_meta( $term->term_id, 'amp_travel_activity_svg', true );
+		if ( empty( $value ) ) {
+			$value = '';
+		}
+		?>
+		<tr class="form-field term-svg-wrap">
+			<th scope="row"><label for="travel-activity-svg"><?php esc_attr_e( 'SVG', 'travel' ); ?></label></th>
+			<td>
+				<?php wp_nonce_field( basename( __FILE__ ), 'travel_activity_svg_nonce' ); ?>
+				<textarea aria-required="true" name="travel-activity-svg" id="travel-activity-svg">
+				<?php echo $this->sanitize_activity_svg( $value ); // WPCS: XSS ok. ?>
+			</textarea>
+				<p class="description"><?php esc_html_e( 'This is for the background icon of the activity term. Only <path>, <svg>, <g>, and <circle> elements are allowed', 'travel' ); ?></p>
+			</td>
+		</tr>
+		<?php
+	}
+
+	/**
+	 * Save Activity SVG value on adding and editing the term.
+	 *
+	 * @param integer $term_id Term ID.
+	 */
+	public function save_activity_meta( $term_id ) {
+
+		if ( ! wp_verify_nonce( $_POST['travel_activity_svg_nonce'], basename( __FILE__ ) ) ) {
+			return;
+		}
+
+		$old_value      = get_term_meta( $term_id, 'amp_travel_activity_svg', true );
+		$original_value = isset( $_POST['travel-activity-svg'] ) ? trim( $_POST['travel-activity-svg'] ) : '';
+		$new_value      = isset( $_POST['travel-activity-svg'] ) ? $this->sanitize_activity_svg( $_POST['travel-activity-svg'] ) : '';
+
+		if ( $old_value !== $new_value ) {
+
+			// If the stripped new value is completely empty but the intended value was not, don't save it.
+			if ( '' === $new_value && '' !== $original_value ) {
+				return;
+			}
+			update_term_meta( $term_id, 'amp_travel_activity_svg', $new_value );
+		}
+	}
+
+	/**
 	 * Register 'activity' and 'location' taxonomy.
 	 */
 	public function register_taxonomies() {
 		register_taxonomy( 'activity', array( 'adventure', 'post' ), array(
-			'hierarchical'          => false,
 			'query_var'             => 'activity',
-			'public'                => true,
-			'show_ui'               => true,
 			'show_admin_column'     => true,
 			'show_in_rest'          => true,
 			'rest_base'             => 'activities',
