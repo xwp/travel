@@ -662,7 +662,7 @@ class AMP_Travel_Blocks {
 		}
 
 		$data = $response->get_data();
-		if ( empty( $data ) || count( $data ) !== AMP_Travel_Blocks::$featured_locations_count ) {
+		if ( empty( $data ) || count( $data ) !== self::$featured_locations_count ) {
 			return $response;
 		}
 
