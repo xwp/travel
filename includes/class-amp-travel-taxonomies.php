@@ -17,7 +17,7 @@ class AMP_Travel_Taxonomies {
 	 *
 	 * @var string
 	 */
-	public static $location_term = 'location';
+	const LOCATION_TERM = 'location';
 
 	/**
 	 * Init AMP_Travel_Taxonomies.
@@ -36,10 +36,6 @@ class AMP_Travel_Taxonomies {
 		add_action( 'create_location', array( $this, 'save_location_meta' ) );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
-
-		add_filter( 'rest_location_query', array( $this, 'filter_rest_location_query' ), 10, 2 );
-		add_filter( 'rest_post_dispatch', array( $this, 'filter_rest_post_response' ), 10, 3 );
-		add_filter( 'rest_prepare_location', array( $this, 'add_location_rest_data' ), 10, 3 );
 	}
 
 	/**
@@ -50,29 +46,12 @@ class AMP_Travel_Taxonomies {
 			return;
 		}
 		wp_enqueue_media();
+
 		wp_enqueue_script(
 			'amp-travel-term-controls',
 			get_template_directory_uri() . '/assets/js/term-controls.js',
-			array( 'jquery' )
+			array( 'underscore', 'jquery' )
 		);
-	}
-
-	/**
-	 * Filter REST location query to filter by featured posts.
-	 *
-	 * @param array           $args Query args.
-	 * @param WP_REST_Request $request Request object.
-	 * @return mixed
-	 */
-	public function filter_rest_location_query( $args, $request ) {
-		$meta_key   = $request->get_param( 'meta_key' );
-		$meta_value = $request->get_param( 'meta_value' );
-
-		if ( 'amp_travel_featured' === $meta_key && null !== $meta_value ) {
-			$args['meta_key']   = $meta_key;
-			$args['meta_value'] = (bool) $meta_value;
-		}
-		return $args;
 	}
 
 	/**
@@ -152,113 +131,6 @@ class AMP_Travel_Taxonomies {
 		if ( $old_is_featured_value !== $new_is_featured_value ) {
 			update_term_meta( $term_id, 'amp_travel_featured', $new_is_featured_value );
 		}
-	}
-
-	/**
-	 * Add location image links to REST response.
-	 *
-	 * @param WP_REST_Response $response Response.
-	 * @param WP_Term          $location Term object.
-	 * @param WP_REST_Request  $request Request.
-	 * @return mixed
-	 */
-	public function add_location_rest_data( $response, $location, $request ) {
-		$data = $response->get_data();
-
-		if ( 'view' !== $request['context'] || is_wp_error( $response ) ) {
-			return $response;
-		}
-
-		$location_img_id = get_term_meta( $location->term_id, 'amp_travel_location_img', true );
-
-		if ( ! $location_img_id ) {
-			return $response;
-		}
-
-		$location_img_src = wp_get_attachment_image_src( $location_img_id, 'full' );
-		if ( empty( $location_img_src ) ) {
-			return $response;
-		}
-
-		$meta = array(
-			'amp_travel_location_img' => $location_img_src[0],
-		);
-
-		if ( ! isset( $data['meta'] ) ) {
-			$data['meta'] = $meta;
-		} else {
-			$data['meta'] = array_merge( $data['meta'], $meta );
-		}
-
-		$response->set_data( $data );
-
-		return $response;
-	}
-
-	/**
-	 * Sort featured terms for the grid.
-	 *
-	 * @param array $terms Array of terms.
-	 * @return array
-	 */
-	public static function sort_terms_for_grid( $terms ) {
-		$portrait_spots  = array( 0, 4, 5 );
-		$landscape_spots = array( 1, 2, 3 );
-		$sorted_terms    = array();
-
-		foreach ( $terms as $term_array ) {
-			if ( empty( $term_array['meta']['amp_travel_location_img'] ) ) {
-				continue;
-			}
-
-			$term_image = wp_get_attachment_metadata( $term_array['meta']['amp_travel_location_img'] );
-
-			// If it's portrait, first try to fill portrait slots.
-			if ( $term_image['height'] > $term_image['width'] ) {
-				if ( ! empty( $portrait_spots ) ) {
-					$sorted_terms[ $portrait_spots[0] ] = $term_array;
-				} elseif ( ! empty( $landscape_spots ) ) {
-					$sorted_terms[ $landscape_spots[0] ] = $term_array;
-				}
-
-				// If it's landscape, first try to fill landscape slots.
-			} else {
-				if ( ! empty( $landscape_spots ) ) {
-					$sorted_terms[ $landscape_spots[0] ] = $term_array;
-				} elseif ( ! empty( $portrait_spots ) ) {
-					$sorted_terms[ $portrait_spots[0] ] = $term_array;
-				}
-			}
-		}
-		return $sorted_terms;
-
-	}
-
-	/**
-	 * Filter locations response to sort the terms.
-	 *
-	 * @param WP_REST_Response $response Response.
-	 * @param WP_REST_Server   $server REST Server.
-	 * @param WP_REST_Request  $request Request.
-	 * @return mixed
-	 */
-	public function filter_rest_post_response( $response, $server, $request ) {
-		if ( '/wp/v2/' . self::$location_term !== $request->get_route() ) {
-			return $response;
-		}
-
-		$data = $response->get_data();
-		if ( empty( $data ) || count( $data ) !== AMP_Travel_Blocks::$featured_locations_count ) {
-			return $response;
-		}
-
-		$sorted_terms = self::sort_terms_for_grid( $data );
-
-		if ( ! empty( $sorted_terms ) ) {
-			$response->set_data( $sorted_terms );
-		}
-
-		return $response;
 	}
 
 	/**
