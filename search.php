@@ -98,18 +98,19 @@
                 AMP.setState({fields_query: event.value}),
                 AMP.setState({query_query: event.value})
             " value="<?php echo esc_attr( $_GET['s'] ); ?>">
-									<span class="travel-icon travel-img-icon-map-pin-transparent"></span>
 								</label>
 								<label class="travel-date-input travel-input-dark travel-date-input-touched bold relative rounded ml2">
-									<input class="block relative p0 z1" type="date" placeholder="yyyy-mm-dd" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" title="yyyy-mm-dd" name="departure" value="<?php echo esc_attr( $_GET['start'] ); ?>">
-									<span class="travel-icon travel-img-icon-plane-taking-off-transparent"></span>
+									<input class="block relative p0 z1" type="date" placeholder="yyyy-mm-dd" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" title="yyyy-mm-dd" name="departure"
+                                           value="<?php echo isset( $_GET['start'] ) ? esc_attr( $_GET['start'] ) : ''; ?>">
+
 									<div class="travel-date-input-label">
 										Departure
 									</div>
 								</label>
 								<label class="travel-date-input travel-input-dark travel-date-input-touched bold relative rounded ml2">
-									<input class="block relative p0 z1" type="date" placeholder="yyyy-mm-dd" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" title="yyyy-mm-dd" name="return" value="<?php echo esc_attr( $_GET['end'] ); ?>">
-									<span class="travel-icon travel-img-icon-plane-landing-transparent"></span>
+									<input class="block relative p0 z1" type="date" placeholder="yyyy-mm-dd" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" title="yyyy-mm-dd" name="return"
+                                           value="<?php echo isset( $_GET['end'] ) ? esc_attr( $_GET['end'] ) : ''; ?>">
+
 									<div class="travel-date-input-label">
 										Return
 									</div>
@@ -167,19 +168,10 @@
 								</div>
 								<div class="h4 line-height-2">
 									<div class="inline-block relative mr1 h3 line-height-2">
-										<div>
-					                        <span class="travel-icon travel-img-icon-star-silver">
-					                        </span><span class="travel-icon travel-img-icon-star-silver">
-					                        </span><span class="travel-icon travel-img-icon-star-silver">
-					                        </span><span class="travel-icon travel-img-icon-star-silver">
-					                        </span><span class="travel-icon travel-img-icon-star-silver"></span>
-										</div>
-										<div class="absolute top-0">
-										</div>
+
 									</div>
 									<span class="travel-results-result-subtext mr1">Not Yet Reviewed</span>
 									<span class="nowrap">
-		                                 <span class="travel-icon travel-img-icon-map-pin-outline-gray"></span>
 		                                    --
 		                                </span>
 								</div>
