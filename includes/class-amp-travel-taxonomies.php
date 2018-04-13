@@ -77,11 +77,15 @@ class AMP_Travel_Taxonomies {
 	public function add_location_meta_fields() {
 		?>
 		<div class='form-field form-required location-cover-image-wrap'>
-			<label for='location-cover-image'><?php esc_attr_e( 'Activity Cover Image' ); ?></label>
+			<label for='location-cover-image'><?php esc_html_e( 'Activity Cover Image' ); ?></label>
 			<input type='hidden' id='location-cover-image-value' class='small-text' name='location-cover-image-value' value='' />
-			<input type='button' id='location-cover-image' class='button location-cover-image-upload-button' value='<?php esc_attr_e( 'Upload' ); ?>' />
-			<input type='button' id='location-cover-image-remove' class='button location-cover-image-upload-button-remove' value='<?php esc_attr_e( 'Remove' ); ?>' />
+			<input type='button' id='location-cover-image' class='button location-cover-image-upload-button' value='<?php esc_html_e( 'Upload' ); ?>' />
+			<input type='button' id='location-cover-image-remove' class='button location-cover-image-upload-button-remove' value='<?php esc_html_e( 'Remove' ); ?>' />
 			<div id='location-cover-image-preview'></div>
+		</div>
+		<div class='form-field form-required location-is-featured-wrape'>
+			<label for='location-is-featured'><?php esc_html_e( 'Featured destination' ); ?></label>
+			<input type="checkbox" name="location-featured-destination" value="1" />
 		</div>
 <?php
 	}
@@ -99,16 +103,24 @@ class AMP_Travel_Taxonomies {
 			$img_src = wp_get_attachment_image_src( $cover_img_id );
 		}
 
+		$is_featured = get_term_meta( $term->term_id, 'amp_travel_featured', true );
+
 		?>
 		<tr class='form-field form-required location-cover-image-wrap'>
-			<th scope="row"><label for='location-cover-image'><?php esc_attr_e( 'Activity Cover Image' ); ?></label></th>
+			<th scope="row"><label for='location-cover-image'><?php esc_html_e( 'Activity Cover Image' ); ?></label></th>
 			<td>
 				<?php wp_nonce_field( basename( __FILE__ ), 'travel_location_meta_nonce' ); ?>
 
 				<input type='hidden' id='location-cover-image-value' class='small-text' name='location-cover-image-value' value='<?php esc_attr( $cover_img_id ); ?>' />
-				<input type='button' id='location-cover-image' class='button location-cover-image-upload-button' value='<?php esc_attr_e( 'Upload' ); ?>' />
-				<input type='button' id='location-cover-image-remove' class='button location-cover-image-upload-button-remove' value='<?php esc_attr_e( 'Remove' ); ?>' />
+				<input type='button' id='location-cover-image' class='button location-cover-image-upload-button' value='<?php esc_html_e( 'Upload' ); ?>' />
+				<input type='button' id='location-cover-image-remove' class='button location-cover-image-upload-button-remove' value='<?php esc_html_e( 'Remove' ); ?>' />
 				<div id='location-cover-image-preview'><?php echo empty( $img_src ) ? '' : '<img src="' . esc_url( $img_src[0] ) . '" style="max-width: 100%;" />'; ?></div>
+			</td>
+		</tr>
+		<tr class='form-field form-required'>
+			<th scope="row"><label for='location-is-featured'><?php esc_html_e( 'Featured destination' ); ?></label></th>
+			<td>
+				<input type="checkbox" name="location-is-featured" value="1" <?php echo $is_featured ? esc_html( 'checked' ) : ''; ?> />
 			</td>
 		</tr>
 		<?php
@@ -121,15 +133,20 @@ class AMP_Travel_Taxonomies {
 	 */
 	public function save_location_meta( $term_id ) {
 
-		// Check if it's set too, save could have been via Gutenberg.
-		if ( ! isset( $_POST['location-cover-image-value'] ) || ! wp_verify_nonce( $_POST['travel_location_meta_nonce'], basename( __FILE__ ) ) ) {
+		if ( ! wp_verify_nonce( $_POST['travel_location_meta_nonce'], basename( __FILE__ ) ) ) {
 			return;
 		}
 
-		$old_value = get_term_meta( $term_id, 'amp_travel_location_img', true );
-		$new_value = isset( $_POST['location-cover-image-value'] ) ? sanitize_text_field( absint( $_POST['location-cover-image-value'] ) ) : '';
-		if ( $old_value !== $new_value ) {
-			update_term_meta( $term_id, 'amp_travel_location_img', $new_value );
+		$old_img_value = get_term_meta( $term_id, 'amp_travel_location_img', true );
+		$new_img_value = isset( $_POST['location-cover-image-value'] ) ? sanitize_text_field( absint( $_POST['location-cover-image-value'] ) ) : '';
+		if ( $old_img_value !== $new_img_value ) {
+			update_term_meta( $term_id, 'amp_travel_location_img', $new_img_value );
+		}
+
+		$old_is_featured_value = get_term_meta( $term_id, 'amp_travel_featured', true );
+		$new_is_featured_value = isset( $_POST['location-is-featured'] ) ? sanitize_text_field( absint( $_POST['location-is-featured'] ) ) : 0;
+		if ( $old_is_featured_value !== $new_is_featured_value ) {
+			update_term_meta( $term_id, 'amp_travel_featured', $new_is_featured_value );
 		}
 	}
 

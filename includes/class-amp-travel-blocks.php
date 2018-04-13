@@ -147,19 +147,20 @@ class AMP_Travel_Blocks {
 		$locations = get_terms( array(
 			'taxonomy'   => 'location',
 			'meta_key'   => 'amp_travel_featured',
-			'meta_value' => true,
+			'meta_value' => 1,
 			'per_page'   => self::$featured_locations_count,
+			'hide_empty' => false,
 		) );
 
 		// The count has to be 6 to fill the grid.
-		if ( 6 !== count( $locations ) ) {
+		if ( count( $locations ) !== self::$featured_locations_count ) {
 			return '';
 		}
 
 		// @todo Create the output for the section.
 		$output = "<section className='travel-featured pt3 relative clearfix'>
 						<header className='max-width-2 mx-auto px1 md-px2 relative'>
-							<h3 class='travel-featured-heading h1 bold line-height-2 mb2 center'>" . esc_attr( $attributes['heading'] ) . '</h3>
+							<h3 class='travel-featured-heading h1 bold line-height-2 mb2 center'>" . esc_html( $attributes['heading'] ) . '</h3>
 						</header>
 					</section>';
 		return $output;

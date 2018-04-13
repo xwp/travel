@@ -5,7 +5,7 @@
  * Internal block libraries.
  */
 const { __ } = wp.i18n;
-const { registerBlockType, RichText } = wp.blocks;
+const { registerBlockType } = wp.blocks;
 const { Placeholder, withAPIData } = wp.components;
 
 /**
@@ -33,9 +33,9 @@ export default registerBlockType(
 
 		edit: withAPIData( () => {
 			return {
-				featuredLocations: 'wp/v2/locations?per_page=6&meta_value=0&meta_key=amp_travel_featured'
+				featuredLocations: 'wp/v2/locations?per_page=6&meta_value=1&meta_key=amp_travel_featured'
 			};
-		} )( ( { featuredLocations, attributes, setAttributes } ) => { // eslint-disable-line
+		} )( ( { featuredLocations } ) => { // eslint-disable-line
 			const hasLocations = Array.isArray( featuredLocations.data ) && 6 === featuredLocations.data.length;
 
 			if ( ! hasLocations ) {
@@ -50,19 +50,11 @@ export default registerBlockType(
 			}
 
 			const locations = featuredLocations.data;
-			const { heading } = attributes;
 
 			return (
 				<section className='travel-featured pt3 relative clearfix'>
 					<header className='max-width-2 mx-auto px1 md-px2 relative'>
-						<RichText
-							key='editable'
-							className='travel-featured-heading h1 bold line-height-2 mb2 center'
-							tagName='h3'
-							value={ heading }
-							onChange={ ( value ) => setAttributes( { heading: value } ) } // eslint-disable-line
-							placeholder={ __( 'Featured Destinations' ) }
-						/>
+						<h3 className='travel-featured-heading h1 bold line-height-2 mb2 center'>{ __( 'Featured Destinations' ) }</h3>
 					</header>
 					<div className='max-width-3 mx-auto relative'>
 						<div className='travel-featured-grid flex flex-wrap items-stretch'>
