@@ -3,3 +3,41 @@ html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-t
 .travel-hero {
     background-color: #f7f7f7;
 }
+
+.travel-overflow-container {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.travel-activities .travel-overflow-container {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.travel-activities-activity-icon {
+    line-height: 1;
+}
+
+.travel-discover-heading {
+    line-height: 1.3;
+    font-size: 3rem;
+}
+
+.travel-discover-subheading {
+    font-size: 1.4rem;
+}
+.travel-search .travel-input {
+    line-height: 1.225rem;
+}
+
+.travel-search .travel-link {
+    color: #8b58e3
+}
+
+.travel-input-group {
+    font-size: 14px;
+}
+
+.travel-search-input.blocks-rich-text {
+    width: 100%;
+}

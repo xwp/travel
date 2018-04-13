@@ -45,11 +45,13 @@
 </head>
 <body>
 
-
-<amp-state id="ui_hero"><script type="application/json">true</script></amp-state>
-<amp-state id="ui_reset"><script type="application/json">false</script></amp-state>
-<amp-state id="ui_filterPane"><script type="application/json">false</script></amp-state>
-<amp-state id="ui_sortPane"><script type="application/json">false</script></amp-state>
+<amp-state id="search_query">
+    <script type="application/json">
+        {
+            "search": ""
+        }
+    </script>
+</amp-state>
 
 <amp-state id="fields_query"><script type="application/json">""</script></amp-state>
 <amp-state id="fields_query_initial"><script type="application/json">""</script></amp-state>
@@ -66,27 +68,6 @@
 <amp-state id="fields_return_initial"><script type="application/json">""</script></amp-state>
 <amp-state id="fields_return_edited"><script type="application/json">false</script></amp-state>
 <amp-state id="query_return"><script type="application/json">""</script></amp-state>
-
-<amp-state id="fields_type"><script type="application/json">[]</script></amp-state>
-<amp-state id="fields_type_initial"><script type="application/json">[]</script></amp-state>
-<amp-state id="fields_type_edited"><script type="application/json">false</script></amp-state>
-<amp-state id="query_type"><script type="application/json">[]</script></amp-state>
-
-<amp-state id="fields_city"><script type="application/json">[]</script></amp-state>
-<amp-state id="fields_city_initial"><script type="application/json">[]</script></amp-state>
-<amp-state id="fields_city_edited"><script type="application/json">false</script></amp-state>
-<amp-state id="query_city"><script type="application/json">[]</script></amp-state>
-
-<amp-state id="fields_sort"><script type="application/json">"popularity-desc"</script></amp-state>
-<amp-state id="fields_sort_initial"><script type="application/json">"popularity-desc"</script></amp-state>
-<amp-state id="fields_sort_edited"><script type="application/json">false</script></amp-state>
-<amp-state id="query_sort"><script type="application/json">"popularity-desc"</script></amp-state>
-
-<amp-state id="fields_maxPrice"><script type="application/json">801</script></amp-state>
-<amp-state id="fields_maxPrice_initial"><script type="application/json">801</script></amp-state>
-<amp-state id="fields_maxPrice_live"><script type="application/json">801</script></amp-state>
-<amp-state id="fields_maxPrice_edited"><script type="application/json">false</script></amp-state>
-<amp-state id="query_maxPrice"><script type="application/json">801</script></amp-state>
 <section class="travel-main-wrapper overflow-hidden" role="main">
 
 	<section class="relative z2">
