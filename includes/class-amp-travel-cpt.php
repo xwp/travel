@@ -220,15 +220,15 @@ class AMP_Travel_CPT {
 			}
 
 			if ( isset( $_POST['amp_travel_price'] ) ) {
-				update_post_meta( get_the_ID(), 'amp_travel_price', esc_attr( $_POST['amp_travel_price'] ) );
+				update_post_meta( get_the_ID(), 'amp_travel_price', sanitize_text_field( wp_unslash( $_POST['amp_travel_price'] ) ) );
 			}
 
 			if ( isset( $_POST['amp_travel_start_date'] ) ) {
-				update_post_meta( $post->ID, 'amp_travel_start_date', esc_attr( $_POST['amp_travel_start_date'] ) );
+				update_post_meta( $post->ID, 'amp_travel_start_date', sanitize_text_field( wp_unslash( $_POST['amp_travel_start_date'] ) ) );
 			}
 
 			if ( isset( $_POST['amp_travel_end_date'] ) ) {
-				update_post_meta( $post->ID, 'amp_travel_end_date', esc_attr( $_POST['amp_travel_end_date'] ) );
+				update_post_meta( $post->ID, 'amp_travel_end_date', sanitize_text_field( wp_unslash( $_POST['amp_travel_end_date'] ) ) );
 			}
 		}
 	}
