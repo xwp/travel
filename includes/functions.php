@@ -18,6 +18,8 @@ function amp_travel_theme() {
 
 /**
  * Display similar adventures.
+ *
+ * @return string Output.
  */
 function amp_travel_render_similar_adventures() {
 	$terms = wp_get_post_terms( null, 'location', array(
@@ -44,7 +46,7 @@ function amp_travel_render_similar_adventures() {
 		'heading' => __( 'Similar Adventures', 'travel' ),
 	);
 
-	echo amp_travel_get_popular_adventures( $adventures, $args );
+	return amp_travel_get_popular_adventures( $adventures, $args );
 }
 
 /**

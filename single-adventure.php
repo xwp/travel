@@ -103,7 +103,7 @@ get_header();
 	<div class="travel-footer-wrapper">
 
 		<!-- Popular -->
-		<?php amp_travel_render_similar_adventures(); // WPCS: XSS ok. ?>
+		<?php echo amp_travel_render_similar_adventures(); // WPCS: XSS ok. ?>
 		<!--/ Popular -->
 
 		<!-- Search -->
