@@ -444,6 +444,11 @@ class AMP_Travel_Blocks {
 		// Sort the terms and get back sorted term arrays.
 		$locations = $this->sort_terms_for_featured_grid( $locations );
 
+		// Check again the count, if some image is missing, it won't be 6.
+		if ( count( $locations ) !== self::FEATURED_LOCATIONS_COUNT ) {
+			return '';
+		}
+
 		$output = '<section class="travel-featured pt3 relative clearfix">
 						<header class="max-width-2 mx-auto px1 md-px2 relative">
 							<h3 class="travel-featured-heading h1 bold line-height-2 mb2 center">' . esc_html( $attributes['heading'] ) . '</h3>
