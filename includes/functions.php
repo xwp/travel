@@ -5,12 +5,7 @@
  * @package WPAMPTheme
  */
 
-/**
- * Live list poll interval.
- *
- * @var integer
- */
-const AMP_TRAVEL_LIVE_LIST_POLL_INTERVAL = 15000;
+define( 'AMP_TRAVEL_LIVE_LIST_POLL_INTERVAL', 15000 );
 
 /**
  * Init theme.
@@ -25,21 +20,22 @@ function amp_travel_theme() {
  * Display similar adventures.
  */
 function amp_travel_render_similar_adventures() {
-	/*$terms = wp_get_post_terms( null, 'location', array(
+	$terms = wp_get_post_terms( null, 'location', array(
 		'fields' => 'names',
-	) );*/
+	) );
+
 	$adventures = get_posts(
 		array(
 			'post_type'   => 'adventure',
 			'numberposts' => 3,
 			'meta_key'    => '_thumbnail_id',
-			/*'tax_query'   => array(
+			'tax_query'   => array(
 				array(
 					'taxonomy' => 'location',
 					'field'    => 'slug',
 					'terms'    => $terms,
 				),
-			),*/
+			),
 			'exclude'     => array( get_the_ID() ),
 		)
 	);
@@ -61,7 +57,7 @@ function amp_travel_render_similar_adventures() {
 function amp_travel_get_popular_adventures( $adventures, $attributes ) {
 	$output = '';
 
-	if ( AMP_Travel_Blocks::$popular_posts_count !== count( $adventures ) ) {
+	if ( count( $adventures ) !== AMP_Travel_Blocks::$popular_posts_count ) {
 		return $output;
 	}
 

@@ -5,6 +5,9 @@
  *  @package WPAMPTheme
  */
 
+// Ignore the issues of this file since that's just a copied HTML placeholder and requires creating dynamical version.
+// @codingStandardsIgnoreFile
+
 /*
  * If the current post is protected by a password and
  * the visitor has not yet entered the password we will
