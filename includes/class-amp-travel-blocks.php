@@ -30,8 +30,151 @@ class AMP_Travel_Blocks {
 			add_action( 'init', array( $this, 'register_block_travel_popular' ) );
 			add_action( 'init', array( $this, 'register_block_activity_list' ) );
 			add_action( 'init', array( $this, 'register_block_discover' ) );
-			add_action( 'pre_get_posts', array( $this, 'filter_search_pre_get_posts' ) );
+			add_filter( 'rest_pre_echo_response', array( $this, 'filter_rest_pre_echo_response' ), 10, 3 );
+			add_action( 'pre_get_posts', array( $this, 'filter_pre_get_posts' ), 10, 1 );
 		}
+	}
+
+	/**
+	 * Filters search to search adventures by from and to date.
+	 *
+	 * @param WP_Query $query Query.
+	 */
+	public function filter_pre_get_posts( $query ) {
+
+		if ( ! is_admin() && is_search() ) {
+			$meta_query = array();
+
+			if ( ! empty( $_GET['start'] ) && ! empty( $_GET['end'] ) ) {
+				$start      = sanitize_text_field( wp_unslash( $_GET['start'] ) );
+				$end        = sanitize_text_field( wp_unslash( $_GET['end'] ) );
+				$meta_query = array(
+					'relation' => 'OR',
+					array(
+						'relation' => 'AND',
+						array(
+							'relation' => 'OR',
+							array(
+								'key'     => 'amp_travel_end_date',
+								'value'   => $start,
+								'compare' => '>=',
+							),
+							array(
+								'key'     => 'amp_travel_end_date',
+								'value'   => '',
+								'compare' => '=',
+							),
+						),
+						array(
+							'key'     => 'amp_travel_start_date',
+							'value'   => $end,
+							'compare' => '<=',
+						),
+					),
+					array(
+						'relation' => 'AND',
+						array(
+							'key'     => 'amp_travel_start_date',
+							'value'   => '',
+							'compare' => '=',
+						),
+						array(
+							'key'     => 'amp_travel_end_date',
+							'value'   => $start,
+							'compare' => '>=',
+						),
+					),
+				);
+
+				// If we only have start date, only the end date is relevant.
+			} elseif ( ! empty( $_GET['start'] ) ) {
+				$start      = sanitize_text_field( wp_unslash( $_GET['start'] ) );
+				$meta_query = array(
+					'relation' => 'OR',
+					array(
+						'key'     => 'amp_travel_end_date',
+						'value'   => '',
+						'compare' => '=',
+					),
+					array(
+						'key'     => 'amp_travel_end_date',
+						'value'   => $start,
+						'compare' => '>=',
+					),
+				);
+			} elseif ( ! empty( $_GET['end'] ) ) {
+				$end        = sanitize_text_field( wp_unslash( $_GET['end'] ) );
+				$meta_query = array(
+					'relation' => 'OR',
+					array(
+						'relation' => 'AND',
+						array(
+							'relation' => 'OR',
+							array(
+								'key'     => 'amp_travel_start_date',
+								'value'   => '',
+								'compare' => '=',
+							),
+							array(
+								'key'     => 'amp_travel_end_date',
+								'value'   => $end,
+								'compare' => '<=',
+							),
+						),
+						array(
+							'key'     => 'amp_travel_start_date',
+							'value'   => $end,
+							'compare' => '<=',
+						),
+					),
+					array(
+						'relation' => 'AND',
+						array(
+							'key'     => 'amp_travel_end_date',
+							'value'   => $end,
+							'compare' => '<=',
+						),
+						array(
+							'key'     => 'amp_travel_end_date',
+							'value'   => '',
+							'compare' => '!=',
+						),
+					),
+				);
+			}
+		}
+		if ( ! empty( $meta_query ) ) {
+			$query->set( 'meta_query', $meta_query );
+		}
+	}
+
+	/**
+	 * Filters the rest_pre_echo_response for amp-list adventures.
+	 *
+	 * @param array           $result  Response data to send to the client.
+	 * @param WP_REST_Server  $server  Server instance.
+	 * @param WP_REST_Request $request Request used to generate the response.
+	 * @return array
+	 */
+	public function filter_rest_pre_echo_response( $result, $server, $request ) {
+
+		// Make sure that request is from AMP.
+		$amp_origin = $request->get_param( '__amp_source_origin' );
+		if ( empty( $amp_origin ) ) {
+			return $result;
+		}
+
+		// Amp-list is processing JSON in a specific way, also requires items array.
+		if ( false !== strpos( $request->get_route(), 'adventures' ) ) {
+			return array(
+				'items' => array(
+					array(
+						'adventures' => $result,
+					),
+				),
+			);
+		}
+		return $result;
 	}
 
 	/**
@@ -62,7 +205,7 @@ class AMP_Travel_Blocks {
 
 		$adventures = get_posts(
 			array(
-				'post_type'   => 'adventure',
+				'post_type'   => AMP_TRAVEL_CPT::POST_TYPE_SLUG_SINGLE,
 				'numberposts' => self::$popular_posts_count,
 				'orderby'     => 'meta_value_num',
 				'meta_key'    => 'amp_travel_rating',
@@ -134,7 +277,7 @@ class AMP_Travel_Blocks {
 							<span class="travel-results-result-subtext mr1">' .
 								/* translators: %d: The number of reviews */
 								sprintf( esc_html__( '%d Reviews', 'travel' ), esc_html( $comments->approved ) ) . '</span>
-							<span class="travel-results-result-subtext"><svg class="travel-icon" viewBox="0 0 77 100"><g fill="none" fillRule="evenodd"><path stroke="currentColor" strokeWidth="7.5" d="M38.794 93.248C58.264 67.825 68 49.692 68 38.848 68 22.365 54.57 9 38 9S8 22.364 8 38.85c0 10.842 9.735 28.975 29.206 54.398a1 1 0 0 0 1.588 0z"></path><circle cx="38" cy="39" r="10" fill="currentColor"></circle></g></svg>
+							<span class="travel-results-result-subtext"><svg class="travel-icon" viewBox="0 0 77 100"><g fill="none" fill-rule="evenodd"><path stroke="currentColor" stroke-width="7.5" d="M38.794 93.248C58.264 67.825 68 49.692 68 38.848 68 22.365 54.57 9 38 9S8 22.364 8 38.85c0 10.842 9.735 28.975 29.206 54.398a1 1 0 0 0 1.588 0z"></path><circle cx="38" cy="39" r="10" fill="currentColor"></circle></g></svg>
 							' . esc_html( $location ) . '</span>
 						</div>
 						</div>';
@@ -237,7 +380,7 @@ class AMP_Travel_Blocks {
 		wp_enqueue_script(
 			'travel-editor-blocks-js',
 			get_template_directory_uri() . '/assets/js/editor-blocks.js',
-			array( 'underscore', 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-api' )
+			array( 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-api' )
 		);
 
 		wp_localize_script(
@@ -246,6 +389,7 @@ class AMP_Travel_Blocks {
 			array(
 				'themeUrl' => esc_url( get_template_directory_uri() ),
 				'siteUrl'  => site_url(),
+				'apiUrl'   => get_rest_url(),
 			)
 		);
 
@@ -303,17 +447,6 @@ class AMP_Travel_Blocks {
 			$allowed_tags = array_merge( $allowed_tags, $amp_tags );
 		}
 		return $allowed_tags;
-	}
-
-	/**
-	 * Modify the default search query to include 'adventure' post type.
-	 *
-	 * @param object $query Original query.
-	 */
-	public function filter_search_pre_get_posts( $query ) {
-		if ( $query->is_search ) {
-			$query->set( 'post_type', array( 'post', 'adventure' ) );
-		}
 	}
 
 	/**

@@ -74,7 +74,6 @@ class AMP_Travel_Taxonomies {
 			),
 			'g'      => array(
 				'fill'         => true,
-				'fillRule'     => true,
 				'fill-rule'    => true,
 				'stroke'       => true,
 				'stroke-width' => true,
@@ -146,7 +145,7 @@ class AMP_Travel_Taxonomies {
 	 * Register 'activity' and 'location' taxonomy.
 	 */
 	public function register_taxonomies() {
-		register_taxonomy( 'activity', array( 'adventure', 'post' ), array(
+		register_taxonomy( 'activity', array( AMP_TRAVEL_CPT::POST_TYPE_SLUG_SINGLE, 'post' ), array(
 			'query_var'             => 'activity',
 			'show_admin_column'     => true,
 			'show_in_rest'          => true,
@@ -175,7 +174,7 @@ class AMP_Travel_Taxonomies {
 			),
 		) );
 
-		register_taxonomy( 'location', array( 'adventure', 'post' ), array(
+		register_taxonomy( 'location', array( AMP_TRAVEL_CPT::POST_TYPE_SLUG_SINGLE, 'post' ), array(
 			'hierarchical'          => false,
 			'query_var'             => 'location',
 			'public'                => true,
