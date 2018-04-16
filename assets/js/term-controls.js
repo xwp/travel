@@ -18,10 +18,12 @@
 			uploadButton: $( '#location-cover-image' ),
 			removeButton: $( '#location-cover-image-remove' ),
 			imgContainer: $( '#location-cover-image-preview' ),
-			imgIdInput: $( '#location-cover-image-value' )
+			imgIdInput: $( '#location-cover-image-value' ),
+			saveNewTermButton: $( '#addtag #submit' )
 		} );
 
 		component.setupLocationMediaUploader();
+		component.setupAddTerm();
 	};
 
 	/**
@@ -44,9 +46,9 @@
 
 			// Create the media frame.
 			component.fileFrame[ id ] = wp.media.frames.fileFrame = wp.media( {
-				title: self.data( 'uploader_title' ),
+				title: wp.i18n.__( 'Select Location Cover Image' ),
 				button: {
-					text: self.data( 'uploader_button_text' )
+					text: wp.i18n.__( 'Select Image' )
 				},
 				multiple: false
 			} );
@@ -58,6 +60,7 @@
 				// Set input value.
 				component.imgIdInput.val( attachment.id );
 				component.imgContainer.html( '<img src="' + attachment.url + '" style="max-width: 100%;" />' );
+				component.removeButton.removeClass( 'hidden' );
 
 			} );
 
@@ -67,11 +70,33 @@
 		} );
 
 		component.removeButton.on( 'click', function( event ) {
-
 			event.preventDefault();
 			component.imgIdInput.val( '' );
 			component.imgContainer.html( '' );
+			component.removeButton.addClass( 'hidden' );
 
+		} );
+	};
+
+	/**
+	 * Set up events when adding new term.
+	 */
+	component.setupAddTerm = function() {
+		component.saveNewTermButton.on( 'click', function() {
+
+			if ( ! validateForm( $( this ).parents( 'form' ) ) ) {
+				return;
+			}
+
+			// Wait for ajax save stopping.
+			$( document ).ajaxStop( function() {
+				if ( 0 === $( '#ajax-response .error' ).length ) {
+					component.imgIdInput.val( '' );
+					component.imgContainer.html( '' );
+					component.removeButton.addClass( 'hidden' );
+					$( '.location-is-featured-wrap input[type="checkbox"]' ).prop( 'checked', false );
+				}
+			} );
 		} );
 	};
 

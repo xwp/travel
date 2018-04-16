@@ -17,14 +17,14 @@ class AMP_Travel_Blocks {
 	 *
 	 * @var int
 	 */
-	public static $featured_locations_count = 6;
+	const FEATURED_LOCATIONS_COUNT = 6;
 
 	/**
 	 * Number of popular posts to display.
 	 *
 	 * @var int
 	 */
-	public static $popular_posts_count = 3;
+	const POPULAR_POSTS_COUNT = 3;
 
 	/**
 	 * Init Travel Blocks.
@@ -75,13 +75,13 @@ class AMP_Travel_Blocks {
 		$adventures = get_posts(
 			array(
 				'post_type'   => 'adventure',
-				'numberposts' => self::$popular_posts_count,
+				'numberposts' => self::POPULAR_POSTS_COUNT,
 				'orderby'     => 'meta_value_num',
 				'meta_key'    => 'amp_travel_rating',
 			)
 		);
 
-		if ( count( $adventures ) !== self::$popular_posts_count ) {
+		if ( count( $adventures ) !== self::POPULAR_POSTS_COUNT ) {
 			return $output;
 		}
 
@@ -430,14 +430,14 @@ class AMP_Travel_Blocks {
 	public function render_block_travel_featured( $attributes ) {
 		$locations = get_terms( array(
 			'taxonomy'   => 'location',
-			'meta_key'   => 'amp_travel_featured',
+			'meta_key'   => AMP_Travel_Taxonomies::LOCATION_FEATURED_META_FIELD,
 			'meta_value' => 1,
-			'per_page'   => self::$featured_locations_count,
+			'number'     => self::FEATURED_LOCATIONS_COUNT,
 			'hide_empty' => false,
 		) );
 
 		// The count has to be 6 to fill the grid.
-		if ( count( $locations ) !== self::$featured_locations_count ) {
+		if ( count( $locations ) !== self::FEATURED_LOCATIONS_COUNT ) {
 			return '';
 		}
 
@@ -501,15 +501,15 @@ class AMP_Travel_Blocks {
 						<div class="flex flex-column items-stretch flex-auto">';
 			}
 
-			$location_img_id     = get_term_meta( $location['term_id'], 'amp_travel_location_img', true );
+			$location_img_id     = get_term_meta( $location['term_id'], AMP_Travel_Taxonomies::LOCATION_IMG_META_FIELD, true );
 			$location_img_src    = wp_get_attachment_image_src( $location_img_id, 'full' );
 			$location_img_srcset = wp_get_attachment_image_srcset( $location_img_id, 'full' );
 
 			$output .= '<a href="' . esc_url( get_term_link( $location['term_id'] ) ) . '" class="travel-featured-tile flex flex-auto relative travel-featured-color-' .
-							esc_html( $location_params[ $i ]['color'] ) . '">
+							esc_attr( $location_params[ $i ]['color'] ) . '">
 							<amp-img class="travel-object-cover flex-auto" layout="responsive" width="' .
-							esc_html( $location_params[ $i ]['width'] ) . '" height="' .
-							esc_html( $location_params[ $i ]['height'] ) . '" srcset="' . esc_html( $location_img_srcset ) . '" src="' . esc_url( $location_img_src[0] ) . '""></amp-img>
+							esc_attr( $location_params[ $i ]['width'] ) . '" height="' .
+							esc_attr( $location_params[ $i ]['height'] ) . '" srcset="' . esc_attr( $location_img_srcset ) . '" src="' . esc_url( $location_img_src[0] ) . '""></amp-img>
 							<div class="travel-featured-overlay absolute z1 center top-0 right-0 bottom-0 left-0 white p2">
 								<div class="travel-featured-tile-heading caps bold line-height-2 h3">' . esc_html( $location['name'] ) . '</div>
 								<div class="h5">' .
@@ -546,7 +546,7 @@ class AMP_Travel_Blocks {
 		$meta_key   = $request->get_param( 'meta_key' );
 		$meta_value = $request->get_param( 'meta_value' );
 
-		if ( 'amp_travel_featured' === $meta_key && null !== $meta_value ) {
+		if ( AMP_Travel_Taxonomies::LOCATION_FEATURED_META_FIELD === $meta_key && null !== $meta_value ) {
 			$args['meta_key']   = $meta_key;
 			$args['meta_value'] = (bool) $meta_value;
 		}
@@ -568,7 +568,7 @@ class AMP_Travel_Blocks {
 			return $response;
 		}
 
-		$location_img_id = get_term_meta( $location->term_id, 'amp_travel_location_img', true );
+		$location_img_id = get_term_meta( $location->term_id, AMP_Travel_Taxonomies::LOCATION_IMG_META_FIELD, true );
 
 		if ( ! $location_img_id ) {
 			return $response;
@@ -580,7 +580,7 @@ class AMP_Travel_Blocks {
 		}
 
 		$meta = array(
-			'amp_travel_location_img' => $location_img_src[0],
+			AMP_Travel_Taxonomies::LOCATION_IMG_META_FIELD => $location_img_src[0],
 		);
 
 		if ( ! isset( $data['meta'] ) ) {
@@ -605,40 +605,40 @@ class AMP_Travel_Blocks {
 		$landscape_slots = array( 1, 2, 3 );
 		$sorted_terms    = array();
 
-		foreach ( $terms as $term_array ) {
+		foreach ( $terms as $term ) {
 
 			// If the input might be as objects as well.
-			if ( ! is_array( $term_array ) ) {
-				$term_array = (array) $term_array;
+			if ( ! is_array( $term ) ) {
+				$term = (array) $term;
 
-				if ( ! isset( $term_array['meta']['amp_travel_location_img'] ) ) {
-					$term_array['meta']['amp_travel_location_img'] = get_term_meta( $term_array['term_id'], 'amp_travel_location_img', true );
+				if ( ! isset( $term['meta'][ AMP_Travel_Taxonomies::LOCATION_IMG_META_FIELD ] ) ) {
+					$term['meta'][ AMP_Travel_Taxonomies::LOCATION_IMG_META_FIELD ] = get_term_meta( $term['term_id'], AMP_Travel_Taxonomies::LOCATION_IMG_META_FIELD, true );
 				}
 			}
 
-			if ( empty( $term_array['meta']['amp_travel_location_img'] ) ) {
+			if ( empty( $term['meta'][ AMP_Travel_Taxonomies::LOCATION_IMG_META_FIELD ] ) ) {
 				continue;
 			}
 
-			$term_image = wp_get_attachment_metadata( $term_array['meta']['amp_travel_location_img'] );
+			$term_image = wp_get_attachment_metadata( $term['meta'][ AMP_Travel_Taxonomies::LOCATION_IMG_META_FIELD ] );
 
 			// If it's portrait, first try to fill portrait slots.
 			if ( $term_image['height'] > $term_image['width'] ) {
 				if ( ! empty( $portrait_slots ) ) {
-					$sorted_terms[ $portrait_slots[0] ] = $term_array;
+					$sorted_terms[ $portrait_slots[0] ] = $term;
 					array_shift( $portrait_slots );
 				} elseif ( ! empty( $landscape_slots ) ) {
-					$sorted_terms[ $landscape_slots[0] ] = $term_array;
+					$sorted_terms[ $landscape_slots[0] ] = $term;
 					array_shift( $landscape_slots );
 				}
 
 				// If it's landscape, first try to fill landscape slots.
 			} else {
 				if ( ! empty( $landscape_slots ) ) {
-					$sorted_terms[ $landscape_slots[0] ] = $term_array;
+					$sorted_terms[ $landscape_slots[0] ] = $term;
 					array_shift( $landscape_slots );
 				} elseif ( ! empty( $portrait_slots ) ) {
-					$sorted_terms[ $portrait_slots[0] ] = $term_array;
+					$sorted_terms[ $portrait_slots[0] ] = $term;
 					array_shift( $portrait_slots );
 				}
 			}
@@ -662,7 +662,7 @@ class AMP_Travel_Blocks {
 		}
 
 		$data = $response->get_data();
-		if ( empty( $data ) || count( $data ) !== self::$featured_locations_count ) {
+		if ( empty( $data ) || count( $data ) !== self::FEATURED_LOCATIONS_COUNT ) {
 			return $response;
 		}
 
