@@ -19,12 +19,12 @@
 	<!-- / product-details -->
 
 	<div class="product-cta lg-col-2 lg-right-align">
-		<h4 class="product-cta-title mb2 line-height-1">$<?php echo esc_html( get_post_meta( get_the_ID(), 'amp_travel_price', true ) ); ?></h4>
-
-		<select class="select-arr mb1 rounded" name="count">
+		<h4 class="product-cta-title mb2 line-height-1" [text]="'$' + adventure_current_price">$<?php echo esc_html( get_post_meta( get_the_ID(), 'amp_travel_price', true ) ); ?></h4>
+		<select class="select-arr mb1 rounded" name="count" on="change:AMP.setState({ adventure_current_price: event.value * adventure_price })">
+			<option value="1"><?php esc_html_e( 'For 1' ); ?></option>
 			<?php for ( $i = 2; $i <= 8; $i += 2 ) : ?>
 				<?php /* translators: %d: The number of people */ ?>
-				<option value="<?php echo esc_html( $i ); ?>"><?php echo sprintf( esc_html__( 'For %d', 'travel' ), esc_html( $i ) ); ?></option>
+				<option value="<?php echo esc_attr( $i ); ?>"><?php echo sprintf( esc_html__( 'For %d', 'travel' ), esc_html( $i ) ); ?></option>
 			<?php endfor; ?>
 		</select>
 

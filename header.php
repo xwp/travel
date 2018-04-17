@@ -23,6 +23,11 @@
 	</script>
 </amp-state>
 
+<?php
+echo '<amp-state id="adventure_price"><script type="application/json">"' . esc_html( get_post_meta( get_the_ID(), 'amp_travel_price', true ) ) . '"</script></amp-state>
+    <amp-state id="adventure_current_price"><script type="application/json">"' . esc_html( get_post_meta( get_the_ID(), 'amp_travel_price', true ) ) . '"</script></amp-state>';
+?>
+
 <amp-state id="fields_query"><script type="application/json">""</script></amp-state>
 <amp-state id="query_query"><script type="application/json">""</script></amp-state>
 
