@@ -154,7 +154,8 @@ add_action( 'wp_enqueue_scripts', 'amp_travel_enqueue_styles' );
  */
 function amp_travel_comment_rating_field() {
 	echo '<p class="comment-form-rating"><label for="rating">' . esc_html( 'Your rating' ) . '</label>
-			<select class="select-arr rounded" name="rating" id="rating" [disabled]="commentform_post_' . esc_attr( get_the_ID() ) . '.submitting" on=\'change:AMP.setState( { commentform_post_' . esc_attr( get_the_ID() ) . ': { values: { "rating": event.value } } } )\'>';
+			<select required="required" class="select-arr rounded" name="rating" id="rating" [disabled]="commentform_post_' . esc_attr( get_the_ID() ) . '.submitting" on=\'change:AMP.setState( { commentform_post_' . esc_attr( get_the_ID() ) . ': { values: { "rating": event.value } } } )\'>
+			<option value="">--</option>';
 
 	for ( $i = 5; $i >= 1; $i-- ) {
 		echo '<option value="' . esc_attr( $i ) . '">' . sprintf( '%d star(s)', esc_attr( $i ) ) . '</option>';
@@ -171,6 +172,16 @@ add_action( 'comment_form_after_fields', 'amp_travel_comment_rating_field' );
  * @param integer $comment_id Comment ID.
  */
 function amp_travel_save_comment_meta_data( $comment_id ) {
+
+	$comment = get_comment( $comment_id );
+	if ( current_user_can( 'unfiltered_html' ) ) {
+		if ( ! isset( $_POST['_wp_unfiltered_html_comment'] )
+			|| ! wp_verify_nonce( $_POST['_wp_unfiltered_html_comment'], 'unfiltered-html-comment_' . $comment->comment_post_ID )
+		) {
+			kses_remove_filters(); // Start with a clean slate.
+			kses_init_filters(); // Set up the filters.
+		}
+	}
 
 	if ( ( isset( $_POST['rating'] ) ) && ( '' !== $_POST['rating'] ) ) {
 		$rating = absint( wp_filter_nohtml_kses( $_POST['rating'] ) );
