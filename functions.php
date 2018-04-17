@@ -250,12 +250,6 @@ function travel_scripts() {
 add_action( 'wp_enqueue_scripts', 'travel_scripts' );
 
 /**
- * Bring in theme features bootstrap
- */
-require_once get_template_directory() . '/inc/features-bootstrap.php';
-
-
-/**
  * Implement the Custom Header feature.
  */
 require get_template_directory() . '/pluggable/custom-header.php';
@@ -281,3 +275,8 @@ require get_template_directory() . '/inc/customizer.php';
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
+
+/**
+ * Bring in theme features bootstrap
+ */
+require_once get_template_directory() . '/inc/features-bootstrap.php';
