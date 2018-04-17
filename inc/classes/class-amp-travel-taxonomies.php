@@ -45,7 +45,7 @@ class AMP_Travel_Taxonomies {
 		<div class='form-field form-required term-svg-wrap'>
 			<label for='travel-activity-svg'>SVG</label>
 			<?php wp_nonce_field( basename( __FILE__ ), 'travel_activity_svg_nonce' ); ?>
-			<textarea aria-required='true' name='travel-activity-svg' id='travel-activity-svg'></textarea>
+			<textarea aria-required='true' name='travel_activity_svg' id='travel-activity-svg'></textarea>
 			<p class="description"><?php esc_html_e( 'This is for the background icon of the activity term. Only <path>, <svg>, <g>, and <circle> elements are allowed', 'travel' ); ?></p>
 		</div>
 		<?php
@@ -107,9 +107,7 @@ class AMP_Travel_Taxonomies {
 			<th scope="row"><label for="travel-activity-svg"><?php esc_attr_e( 'SVG', 'travel' ); ?></label></th>
 			<td>
 				<?php wp_nonce_field( basename( __FILE__ ), 'travel_activity_svg_nonce' ); ?>
-				<textarea aria-required="true" name="travel-activity-svg" id="travel-activity-svg">
-				<?php echo $this->sanitize_activity_svg( $value ); // WPCS: XSS ok. ?>
-			</textarea>
+				<textarea aria-required="true" name="travel_activity_svg" id="travel-activity-svg"><?php echo $this->sanitize_activity_svg( $value ); // WPCS: XSS ok. ?></textarea>
 				<p class="description"><?php esc_html_e( 'This is for the background icon of the activity term. Only <path>, <svg>, <g>, and <circle> elements are allowed', 'travel' ); ?></p>
 			</td>
 		</tr>
@@ -122,14 +120,20 @@ class AMP_Travel_Taxonomies {
 	 * @param integer $term_id Term ID.
 	 */
 	public function save_activity_meta( $term_id ) {
+		$vars = array(
+			'travel_activity_svg'       => 'FILTER_UNSAFE_RAW',
+			'travel_activity_svg_nonce' => 'FILTER_SANITIZE_STRING',
+		);
 
-		if ( ! wp_verify_nonce( $_POST['travel_activity_svg_nonce'], basename( __FILE__ ) ) ) {
+		$data = filter_input_array( INPUT_POST, $vars, false );
+
+		if ( ! wp_verify_nonce( $data['travel_activity_svg_nonce'], basename( __FILE__ ) ) ) {
 			return;
 		}
 
 		$old_value      = get_term_meta( $term_id, 'amp_travel_activity_svg', true );
-		$original_value = isset( $_POST['travel-activity-svg'] ) ? trim( $_POST['travel-activity-svg'] ) : '';
-		$new_value      = isset( $_POST['travel-activity-svg'] ) ? $this->sanitize_activity_svg( $_POST['travel-activity-svg'] ) : '';
+		$original_value = isset( $data['travel_activity_svg'] ) ? trim( $data['travel_activity_svg'] ) : '';
+		$new_value      = isset( $data['travel_activity_svg'] ) ? $this->sanitize_activity_svg( $data['travel_activity_svg'] ) : '';
 
 		if ( $old_value !== $new_value ) {
 

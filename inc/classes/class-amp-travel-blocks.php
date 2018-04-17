@@ -45,9 +45,16 @@ class AMP_Travel_Blocks {
 		if ( ! is_admin() && is_search() ) {
 			$meta_query = array();
 
-			if ( ! empty( $_GET['start'] ) && ! empty( $_GET['end'] ) ) {
-				$start      = sanitize_text_field( wp_unslash( $_GET['start'] ) );
-				$end        = sanitize_text_field( wp_unslash( $_GET['end'] ) );
+			$vars = array(
+				'start' => 'FILTER_SANITIZE_STRING',
+				'end'   => 'FILTER_SANITIZE_STRING',
+			);
+
+			$data = wp_unslash( filter_input_array( INPUT_GET, $vars, false ) );
+
+			if ( ! empty( $data['start'] ) && ! empty( $data['end'] ) ) {
+				$start      = sanitize_text_field( $data['start'] );
+				$end        = sanitize_text_field( $data['end'] );
 				$meta_query = array(
 					'relation' => 'OR',
 					array(
@@ -87,8 +94,8 @@ class AMP_Travel_Blocks {
 				);
 
 				// If we only have start date, only the end date is relevant.
-			} elseif ( ! empty( $_GET['start'] ) ) {
-				$start      = sanitize_text_field( wp_unslash( $_GET['start'] ) );
+			} elseif ( ! empty( $data['start'] ) ) {
+				$start      = sanitize_text_field( $data['start'] );
 				$meta_query = array(
 					'relation' => 'OR',
 					array(
@@ -102,8 +109,8 @@ class AMP_Travel_Blocks {
 						'compare' => '>=',
 					),
 				);
-			} elseif ( ! empty( $_GET['end'] ) ) {
-				$end        = sanitize_text_field( wp_unslash( $_GET['end'] ) );
+			} elseif ( ! empty( $data['end'] ) ) {
+				$end        = sanitize_text_field( $data['end'] );
 				$meta_query = array(
 					'relation' => 'OR',
 					array(

@@ -204,31 +204,39 @@ class AMP_Travel_CPT {
 	 * Saves the custom meta.
 	 */
 	public function save_adventure_post() {
+		$vars = array(
+			'amp_travel_start_date'      => 'FILTER_SANITIZE_STRING',
+			'amp_travel_end_date'        => 'FILTER_SANITIZE_STRING',
+			'amp_travel_price'           => 'FILTER_SANITIZE_STRING',
+			'amp_travel_adventure_nonce' => 'FILTER_SANITIZE_STRING',
+		);
+
+		$data = filter_input_array( INPUT_POST, $vars );
 
 		// This check is needed since otherwise Gutenberg save will fail -- it uses different saving logic.
 		if (
-			isset( $_POST['amp_travel_start_date'] )
+			isset( $data['amp_travel_start_date'] )
 			||
-			isset( $_POST['amp_travel_end_date'] )
+			isset( $data['amp_travel_end_date'] )
 			||
-			isset( $_POST['amp_travel_price'] )
+			isset( $data['amp_travel_price'] )
 		) {
 			global $post;
 
-			if ( ! wp_verify_nonce( $_POST['amp_travel_adventure_nonce'], basename( __FILE__ ) ) ) {
+			if ( ! wp_verify_nonce( $data['amp_travel_adventure_nonce'], basename( __FILE__ ) ) ) {
 				return;
 			}
 
-			if ( isset( $_POST['amp_travel_price'] ) ) {
-				update_post_meta( get_the_ID(), 'amp_travel_price', sanitize_text_field( wp_unslash( $_POST['amp_travel_price'] ) ) );
+			if ( isset( $data['amp_travel_price'] ) ) {
+				update_post_meta( get_the_ID(), 'amp_travel_price', sanitize_text_field( wp_unslash( $data['amp_travel_price'] ) ) );
 			}
 
-			if ( isset( $_POST['amp_travel_start_date'] ) ) {
-				update_post_meta( $post->ID, 'amp_travel_start_date', sanitize_text_field( wp_unslash( $_POST['amp_travel_start_date'] ) ) );
+			if ( isset( $data['amp_travel_start_date'] ) ) {
+				update_post_meta( $post->ID, 'amp_travel_start_date', sanitize_text_field( wp_unslash( $data['amp_travel_start_date'] ) ) );
 			}
 
-			if ( isset( $_POST['amp_travel_end_date'] ) ) {
-				update_post_meta( $post->ID, 'amp_travel_end_date', sanitize_text_field( wp_unslash( $_POST['amp_travel_end_date'] ) ) );
+			if ( isset( $data['amp_travel_end_date'] ) ) {
+				update_post_meta( $post->ID, 'amp_travel_end_date', sanitize_text_field( wp_unslash( $data['amp_travel_end_date'] ) ) );
 			}
 		}
 	}
