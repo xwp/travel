@@ -138,3 +138,130 @@ function amp_travel_get_popular_adventures( $adventures, $attributes ) {
 
 	return $output;
 }
+
+/**
+ * Enqueues styles.
+ */
+function amp_travel_enqueue_styles() {
+	if ( is_singular( 'adventure' ) ) {
+		wp_enqueue_style( 'amp_travel_adventure', get_template_directory_uri() . '/assets/css/adventure.css' );
+	}
+}
+add_action( 'wp_enqueue_scripts', 'amp_travel_enqueue_styles' );
+
+/**
+ * Add rating field to comments.
+ */
+function amp_travel_comment_rating_field() {
+	echo '<p class="comment-form-rating"><label for="rating">' . esc_html( 'Your rating' ) . '</label>
+			<select class="select-arr rounded" name="rating" id="rating" [disabled]="commentform_post_' . esc_attr( get_the_ID() ) . '.submitting" on=\'change:AMP.setState( { commentform_post_' . esc_attr( get_the_ID() ) . ': { values: { "rating": event.value } } } )\'>';
+
+	for ( $i = 5; $i >= 1; $i-- ) {
+		echo '<option value="' . esc_attr( $i ) . '">' . sprintf( '%d star(s)', esc_attr( $i ) ) . '</option>';
+	}
+	echo '</select>
+		</p>';
+}
+add_action( 'comment_form_logged_in_after', 'amp_travel_comment_rating_field' );
+add_action( 'comment_form_after_fields', 'amp_travel_comment_rating_field' );
+
+/**
+ * Save custom fields meta.
+ *
+ * @param integer $comment_id Comment ID.
+ */
+function amp_travel_save_comment_meta_data( $comment_id ) {
+
+	if ( ( isset( $_POST['rating'] ) ) && ( '' !== $_POST['rating'] ) ) {
+		$rating = absint( wp_filter_nohtml_kses( $_POST['rating'] ) );
+		add_comment_meta( $comment_id, 'rating', $rating );
+	}
+}
+add_action( 'comment_post', 'amp_travel_save_comment_meta_data' );
+
+/**
+ * Update adventure rating.
+ *
+ * @param integer $comment_id Comment ID.
+ */
+function amp_travel_update_adventure_rating( $comment_id ) {
+	$comment = get_comment( $comment_id );
+	$post    = get_post( $comment->comment_post_ID );
+
+	if ( AMP_Travel_CPT::POST_TYPE_SLUG_SINGLE === $post->post_type ) {
+		$rating = amp_travel_calculate_adventure_rating( $post->ID );
+		update_post_meta( $post->ID, 'amp_travel_rating', $rating );
+	}
+}
+
+/**
+ * Update rating on comment status transition if it was approved before
+ *
+ * @param string     $new_status New status.
+ * @param string     $old_status Old status.
+ * @param WP_Comment $comment Comment.
+ */
+function amp_travel_transition_comment_status( $new_status, $old_status, $comment ) {
+	if ( 'approved' === $old_status || 'approved' === $new_status ) {
+		amp_travel_update_adventure_rating( $comment->comment_ID );
+	}
+}
+
+// Update rating when a comment is inserted.
+add_action( 'wp_insert_comment', 'amp_travel_update_adventure_rating', 10, 1 );
+add_action( 'transition_comment_status', 'amp_travel_transition_comment_status', 10, 3 );
+
+/**
+ * Calculate average rating for adventure.
+ *
+ * @param integer $adventure_id Adventure ID.
+ * @return float|int|string
+ */
+function amp_travel_calculate_adventure_rating( $adventure_id = null ) {
+	if ( ! $adventure_id ) {
+		$adventure_id = get_the_ID();
+	}
+
+	$approved_comments = get_approved_comments( $adventure_id );
+	$rating            = 0;
+	$divider           = count( $approved_comments );
+
+	foreach ( $approved_comments as $comment ) {
+		$comment_rating = get_comment_meta( $comment->comment_ID, 'rating', true );
+		if ( $comment_rating ) {
+			$rating += $comment_rating;
+		} else {
+			$divider--;
+		}
+	}
+
+	if ( 0 === $divider || 0 === $rating ) {
+		return '';
+	}
+
+	return $rating / $divider;
+}
+
+/**
+ * Display rating in the comment.
+ *
+ * @param string $text Comment's content.
+ * @return string
+ */
+function amp_travel_modify_comment_display( $text ) {
+	$rating = get_comment_meta( get_comment_ID(), 'rating', true );
+	if ( $rating ) {
+		$rating_html = '<div style="width:100%;" class="inline-block relative h3 line-height-2">
+							<div class="travel-results-result-stars green">';
+
+		for ( $i = 0; $i < round( $rating ); $i++ ) {
+			$rating_html .= '★';
+		}
+		$rating_html .= '</div></div>';
+		$text         = $rating_html . $text;
+		return $text;
+	} else {
+		return $text;
+	}
+}
+add_filter( 'comment_text', 'amp_travel_modify_comment_display' );
