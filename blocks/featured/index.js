@@ -139,7 +139,9 @@ export default registerBlockType(
 			);
 		} ), // eslint-disable-line
 		save() {
-			return renderStaticFeaturedBlock();
+
+			// Render in PHP.
+			return null;
 		}
 	}
 );
