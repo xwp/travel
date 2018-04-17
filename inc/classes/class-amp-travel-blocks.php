@@ -50,7 +50,7 @@ class AMP_Travel_Blocks {
 				'end'   => 'FILTER_SANITIZE_STRING',
 			);
 
-			$data = wp_unslash( filter_input_array( INPUT_GET, $vars, false ) );
+			$data = wp_unslash( filter_input_array( INPUT_GET, $vars ) );
 
 			if ( ! empty( $data['start'] ) && ! empty( $data['end'] ) ) {
 				$start      = sanitize_text_field( $data['start'] );
