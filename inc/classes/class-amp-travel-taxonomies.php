@@ -125,7 +125,7 @@ class AMP_Travel_Taxonomies {
 			'travel_activity_svg_nonce' => 'FILTER_SANITIZE_STRING',
 		);
 
-		$data = filter_input_array( INPUT_POST, $vars, false );
+		$data = filter_input_array( INPUT_POST, $vars );
 
 		if ( ! wp_verify_nonce( $data['travel_activity_svg_nonce'], basename( __FILE__ ) ) ) {
 			return;

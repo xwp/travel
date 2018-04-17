@@ -211,7 +211,7 @@ class AMP_Travel_CPT {
 			'amp_travel_adventure_nonce' => 'FILTER_SANITIZE_STRING',
 		);
 
-		$data = filter_input_array( INPUT_POST, $vars );
+		$data = wp_unslash( filter_input_array( INPUT_POST, $vars ) );
 
 		// This check is needed since otherwise Gutenberg save will fail -- it uses different saving logic.
 		if (
@@ -228,15 +228,15 @@ class AMP_Travel_CPT {
 			}
 
 			if ( isset( $data['amp_travel_price'] ) ) {
-				update_post_meta( get_the_ID(), 'amp_travel_price', sanitize_text_field( wp_unslash( $data['amp_travel_price'] ) ) );
+				update_post_meta( get_the_ID(), 'amp_travel_price', sanitize_text_field( $data['amp_travel_price'] ) );
 			}
 
 			if ( isset( $data['amp_travel_start_date'] ) ) {
-				update_post_meta( $post->ID, 'amp_travel_start_date', sanitize_text_field( wp_unslash( $data['amp_travel_start_date'] ) ) );
+				update_post_meta( $post->ID, 'amp_travel_start_date', sanitize_text_field( $data['amp_travel_start_date'] ) );
 			}
 
 			if ( isset( $data['amp_travel_end_date'] ) ) {
-				update_post_meta( $post->ID, 'amp_travel_end_date', sanitize_text_field( wp_unslash( $data['amp_travel_end_date'] ) ) );
+				update_post_meta( $post->ID, 'amp_travel_end_date', sanitize_text_field( $data['amp_travel_end_date'] ) );
 			}
 		}
 	}
