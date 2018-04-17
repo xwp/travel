@@ -79,14 +79,12 @@
 		</header>
 	</section>
 
-
 	<!-- Hero -->
 	<div class="travel-hero-bg absolute col-12">
 		<amp-img class="travel-hero-bg-img absolute" src="..&#x2F;wp-content/themes/travel&#x2F;img&#x2F;hero-2.jpg" height="80vmax" noloading=""></amp-img>
 		<amp-img class="travel-hero-bg-img absolute" src="..&#x2F;wp-content/themes/travel&#x2F;img&#x2F;hero-3.jpg" height="80vmax" noloading=""></amp-img>
 		<amp-img class="travel-hero-bg-img absolute" src="..&#x2F;wp-content/themes/travel&#x2F;img&#x2F;hero-1.jpg" height="80vmax" noloading=""></amp-img>
 	</div>
-
 <?php
 if ( have_posts() ) :
 
