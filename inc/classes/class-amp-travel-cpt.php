@@ -27,10 +27,16 @@ class AMP_Travel_CPT {
 	const POST_TYPE_SLUG_PLURAL = 'adventures';
 
 	/**
-	 * AMP_Travel_CPT constructor.
+	 * Initialize the CPT class.
 	 */
-	public function __construct() {
+	public function init() {
 		add_action( 'init', array( $this, 'setup' ) );
+		add_action( 'add_meta_boxes_adventure', array( $this, 'add_adventure_meta_boxes' ) );
+		add_action( 'save_post_adventure', array( $this, 'save_adventure_post' ) );
+		add_filter( 'rest_prepare_adventure', array( $this, 'add_adventure_rest_data' ), 10, 3 );
+
+		add_filter( 'rest_adventure_collection_params', array( $this, 'filter_rest_adventure_collection_params' ), 10, 1 );
+		add_filter( 'rest_adventure_query', array( $this, 'filter_rest_adventure_query' ), 10, 2 );
 	}
 
 	/**
@@ -44,37 +50,71 @@ class AMP_Travel_CPT {
 		 */
 		add_theme_support( 'post-thumbnails' );
 
-		/**
-		 * Filter the image sizes to allow manipulating and adding sizes to be registered.
-		 *
-		 * @param array $sizes The array of sizes to be registered.
-		 */
-		$image_sizes = apply_filters( 'amp_travel_image_sizes', array(
-			'1600x900',
-			'1400x787',
-			'1200x675',
-			'1040x585',
-			'768x432',
-			'727x409',
-			'600x338',
-			'500x281',
-			'375x211',
-			'335x188',
-			'320x180',
-			'280x158',
-			'240x135',
-			'160x90',
-			'122x67',
-		) );
-
-		// Custom image sizes.
-		foreach ( $image_sizes as $size ) {
-			$dimensions = explode( 'x', $size );
-			add_image_size( 'travel-' . $size, $dimensions[0], $dimensions[1], true );
-		}
-
 		// Register the post type.
 		$this->register_post_type();
+
+		// Register adventure mta.
+		$this->register_meta();
+	}
+
+	/**
+	 * Register Adventure meta.
+	 */
+	private function register_meta() {
+		$args = array(
+			'sanitize_callback' => 'sanitize_attr',
+			'type'              => 'integer',
+			'description'       => __( 'Adventure Price', 'travel' ),
+			'single'            => true,
+			'show_in_rest'      => true,
+		);
+		register_meta( 'post', 'amp_travel_price', $args );
+	}
+
+	/**
+	 * Add adventure meta.
+	 *
+	 * @param WP_REST_Response $response Response.
+	 * @param WP_POST          $adventure Adventure post.
+	 * @param WP_REST_Request  $request Request.
+	 * @return mixed
+	 */
+	public function add_adventure_rest_data( $response, $adventure, $request ) {
+		$data = $response->get_data();
+
+		if ( 'view' !== $request['context'] || is_wp_error( $response ) ) {
+			return $response;
+		}
+
+		$price    = get_post_meta( $adventure->ID, 'amp_travel_price', true );
+		$rating   = round( (int) get_post_meta( $adventure->ID, 'amp_travel_rating', true ) );
+		$comments = wp_count_comments( $adventure->ID );
+		$terms    = wp_get_post_terms( $adventure->ID, 'location', array(
+			'fields' => 'names',
+		) );
+
+		if ( ! empty( $terms ) ) {
+			$location = $terms[0];
+		} else {
+			$location = '--';
+		}
+
+		$meta = array(
+			'amp_travel_price'    => $price,
+			'amp_travel_rating'   => $rating,
+			'amp_travel_reviews'  => $comments->approved,
+			'amp_travel_location' => $location,
+		);
+
+		if ( ! isset( $data['meta'] ) ) {
+			$data['meta'] = $meta;
+		} else {
+			$data['meta'] = array_merge( $data['meta'], $meta );
+		}
+
+		$response->set_data( $data );
+
+		return $response;
 	}
 
 	/**
@@ -109,35 +149,122 @@ class AMP_Travel_CPT {
 		);
 
 		$args = array(
-			'labels'                => $labels,
-			'description'           => __( 'Adventure Custom Post Type for travel theme.', 'travel' ),
-			'public'                => true,
-			'exclude_from_search'   => true,
-			'publicly_queryable'    => true,
-			'show_ui'               => true,
-			'show_in_nav_menus'     => true,
-			'show_in_menu'          => true,
-			'show_in_admin_bar'     => true,
-			'menu_position'         => 20,
-			'menu_icon'             => 'dashicons-location-alt',
-			'capability_type'       => 'post',
-			'hierarchical'          => false,
-			'supports'              => array(
+			'labels'        => $labels,
+			'description'   => __( 'Adventure Custom Post Type for travel theme.', 'travel' ),
+			'public'        => true,
+			'menu_position' => 20,
+			'menu_icon'     => 'dashicons-location-alt',
+			'supports'      => array(
 				'title',
 				'editor',
 				'thumbnail',
 			),
-			'has_archive'           => true,
-			'rewrite'               => array(
+			'has_archive'   => true,
+			'rewrite'       => array(
 				'slug' => self::POST_TYPE_SLUG_SINGLE,
 			),
-			'query_var'             => true,
-			'can_export'            => true,
-			'show_in_rest'          => true,
-			'rest_base'             => self::POST_TYPE_SLUG_PLURAL,
-			'rest_controller_class' => 'WP_REST_Posts_Controller',
+			'show_in_rest'  => true,
+			'rest_base'     => self::POST_TYPE_SLUG_PLURAL,
 		);
 
 		register_post_type( self::POST_TYPE_SLUG_SINGLE, $args );
+	}
+
+	/**
+	 * Adds meta boxes for adventure post type.
+	 */
+	public function add_adventure_meta_boxes() {
+		add_meta_box( 'amp_travel_adventure_meta', __( 'Adventure details', 'travel' ), array( $this, 'adventure_meta_box_html' ), 'adventure', 'side' );
+	}
+
+	/**
+	 * Displays meta boxes in admin.
+	 */
+	public function adventure_meta_box_html() {
+		$adventure_custom = get_post_custom();
+		$price            = isset( $adventure_custom['amp_travel_price'][0] ) ? $adventure_custom['amp_travel_price'][0] : '';
+		$start_date       = isset( $adventure_custom['amp_travel_start_date'][0] ) ? $adventure_custom['amp_travel_start_date'][0] : '';
+		$end_date         = isset( $adventure_custom['amp_travel_end_date'][0] ) ? $adventure_custom['amp_travel_end_date'][0] : '';
+		?>
+		<div>
+			<label for='amp_travel_start_date'><?php esc_html_e( 'Start date', 'travel' ); ?></label><input placeholder='yyyy-mm-dd' pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}' type='date' id='amp_travel_start_date' name='amp_travel_start_date' value='<?php echo esc_attr( $start_date ); ?>'>
+		</div>
+		<div>
+			<label for='amp_travel_end_date'><?php esc_html_e( 'Ending date', 'travel' ); ?></label><input placeholder='yyyy-mm-dd' pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}' type='date' id='amp_travel_end_date' name='amp_travel_end_date' value='<?php echo esc_attr( $end_date ); ?>'>
+		</div>
+		<?php wp_nonce_field( basename( __FILE__ ), 'amp_travel_adventure_nonce' ); ?>
+		<p class='description'><?php esc_html_e( 'Leave empty if the adventure is ongoing', 'travel' ); ?></p>
+
+		<label for='amp_travel_price'><?php esc_html_e( 'Price (USD)', 'travel' ); ?></label>
+		<input id='amp_travel_price' name='amp_travel_price' value='<?php echo esc_attr( $price ); ?>'>
+		<?php
+	}
+
+	/**
+	 * Saves the custom meta.
+	 */
+	public function save_adventure_post() {
+
+		// This check is needed since otherwise Gutenberg save will fail -- it uses different saving logic.
+		if (
+			isset( $_POST['amp_travel_start_date'] )
+			||
+			isset( $_POST['amp_travel_end_date'] )
+			||
+			isset( $_POST['amp_travel_price'] )
+		) {
+			global $post;
+
+			if ( ! wp_verify_nonce( $_POST['amp_travel_adventure_nonce'], basename( __FILE__ ) ) ) {
+				return;
+			}
+
+			if ( isset( $_POST['amp_travel_price'] ) ) {
+				update_post_meta( get_the_ID(), 'amp_travel_price', sanitize_text_field( wp_unslash( $_POST['amp_travel_price'] ) ) );
+			}
+
+			if ( isset( $_POST['amp_travel_start_date'] ) ) {
+				update_post_meta( $post->ID, 'amp_travel_start_date', sanitize_text_field( wp_unslash( $_POST['amp_travel_start_date'] ) ) );
+			}
+
+			if ( isset( $_POST['amp_travel_end_date'] ) ) {
+				update_post_meta( $post->ID, 'amp_travel_end_date', sanitize_text_field( wp_unslash( $_POST['amp_travel_end_date'] ) ) );
+			}
+		}
+	}
+
+	/**
+	 * Change query args to include meta_key and meta_type.
+	 *
+	 * @param array           $args Query args.
+	 * @param WP_REST_Request $request Request object.
+	 * @return array
+	 */
+	public function filter_rest_adventure_query( $args, $request ) {
+		$order_key = $request->get_param( 'orderby' );
+		$meta_key  = $request->get_param( 'meta_key' );
+		if ( ! empty( $order_key ) && 'meta_value_num' === $order_key && 'amp_travel_rating' === $meta_key ) {
+			$args['meta_key']  = $meta_key;
+			$args['meta_type'] = 'DECIMAL';
+		}
+
+		return $args;
+	}
+
+	/**
+	 * Filter the REST accepted params to accept ordering by 'rating'.
+	 *
+	 * @param array $query_params Collection params.
+	 * @return array Collection params.
+	 */
+	public function filter_rest_adventure_collection_params( $query_params ) {
+		$query_params['orderby']['enum'][] = 'meta_value_num';
+		$query_params['meta_key']          = array(
+			'description'       => __( 'The meta key to query.', 'travel' ),
+			'type'              => 'string',
+			'enum'              => array( 'amp_travel_rating' ),
+			'validate_callback' => 'rest_validate_request_arg',
+		);
+		return $query_params;
 	}
 }

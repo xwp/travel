@@ -1,8 +1,6 @@
 <?php
 /**
- * Travel functions and definitions
- *
- * @link https://developer.wordpress.org/themes/basics/theme-functions/
+ * AMP Travel Theme.
  *
  * @package WPAMPTheme
  */
@@ -101,13 +99,6 @@ if ( ! function_exists( 'travel_setup' ) ) :
 				),
 			)
 		);
-
-		// Add custom theme supports.
-		add_theme_support( 'amp' );
-		// init custom post type.
-		new AMP_Travel_CPT();
-		// init taxonomies.
-		new AMP_Travel_Taxonomies();
 
 	}
 endif;
@@ -259,14 +250,10 @@ function travel_scripts() {
 add_action( 'wp_enqueue_scripts', 'travel_scripts' );
 
 /**
- * Bring in Custom Post Type.
+ * Bring in theme features bootstrap
  */
-require_once get_template_directory() . '/inc/classes/class-amp-travel-cpt.php';
+require_once get_template_directory() . '/inc/features-bootstrap.php';
 
-/**
- * Bring in Taxonomies.
- */
-require_once get_template_directory() . '/inc/classes/class-amp-travel-taxonomies.php';
 
 /**
  * Implement the Custom Header feature.
