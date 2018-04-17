@@ -149,23 +149,22 @@ class AMP_Travel_CPT {
 		);
 
 		$args = array(
-			'labels'                => $labels,
-			'description'           => __( 'Adventure Custom Post Type for travel theme.', 'travel' ),
-			'public'                => true,
-			'exclude_from_search'   => true,
-			'menu_position'         => 20,
-			'menu_icon'             => 'dashicons-location-alt',
-			'supports'              => array(
+			'labels'        => $labels,
+			'description'   => __( 'Adventure Custom Post Type for travel theme.', 'travel' ),
+			'public'        => true,
+			'menu_position' => 20,
+			'menu_icon'     => 'dashicons-location-alt',
+			'supports'      => array(
 				'title',
 				'editor',
 				'thumbnail',
 			),
-			'has_archive'           => true,
-			'rewrite'               => array(
+			'has_archive'   => true,
+			'rewrite'       => array(
 				'slug' => self::POST_TYPE_SLUG_SINGLE,
 			),
-			'show_in_rest'          => true,
-			'rest_base'             => self::POST_TYPE_SLUG_PLURAL,
+			'show_in_rest'  => true,
+			'rest_base'     => self::POST_TYPE_SLUG_PLURAL,
 		);
 
 		register_post_type( self::POST_TYPE_SLUG_SINGLE, $args );
@@ -184,10 +183,20 @@ class AMP_Travel_CPT {
 	public function adventure_meta_box_html() {
 		$adventure_custom = get_post_custom();
 		$price            = isset( $adventure_custom['amp_travel_price'][0] ) ? $adventure_custom['amp_travel_price'][0] : '';
+		$start_date       = isset( $adventure_custom['amp_travel_start_date'][0] ) ? $adventure_custom['amp_travel_start_date'][0] : '';
+		$end_date         = isset( $adventure_custom['amp_travel_end_date'][0] ) ? $adventure_custom['amp_travel_end_date'][0] : '';
 		?>
+		<div>
+			<label for='amp_travel_start_date'><?php esc_html_e( 'Start date', 'travel' ); ?></label><input placeholder='yyyy-mm-dd' pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}' type='date' id='amp_travel_start_date' name='amp_travel_start_date' value='<?php echo esc_attr( $start_date ); ?>'>
+		</div>
+		<div>
+			<label for='amp_travel_end_date'><?php esc_html_e( 'Ending date', 'travel' ); ?></label><input placeholder='yyyy-mm-dd' pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}' type='date' id='amp_travel_end_date' name='amp_travel_end_date' value='<?php echo esc_attr( $end_date ); ?>'>
+		</div>
+		<?php wp_nonce_field( basename( __FILE__ ), 'amp_travel_adventure_nonce' ); ?>
+		<p class='description'><?php esc_html_e( 'Leave empty if the adventure is ongoing', 'travel' ); ?></p>
+
 		<label for='amp_travel_price'><?php esc_html_e( 'Price (USD)', 'travel' ); ?></label>
 		<input id='amp_travel_price' name='amp_travel_price' value='<?php echo esc_attr( $price ); ?>'>
-		<?php wp_nonce_field( basename( __FILE__ ), 'amp_travel_price_nonce' ); ?>
 		<?php
 	}
 
@@ -196,13 +205,31 @@ class AMP_Travel_CPT {
 	 */
 	public function save_adventure_post() {
 
-		// First check if the amp_travel_price exists at all -- it doesn't in Gutenberg.
-		if ( isset( $_POST['amp_travel_price'] ) && ! wp_verify_nonce( $_POST['amp_travel_price_nonce'], basename( __FILE__ ) ) ) {
-			return;
-		}
+		// This check is needed since otherwise Gutenberg save will fail -- it uses different saving logic.
+		if (
+			isset( $_POST['amp_travel_start_date'] )
+			||
+			isset( $_POST['amp_travel_end_date'] )
+			||
+			isset( $_POST['amp_travel_price'] )
+		) {
+			global $post;
 
-		if ( isset( $_POST['amp_travel_price'] ) ) {
-			update_post_meta( get_the_ID(), 'amp_travel_price', esc_attr( $_POST['amp_travel_price'] ) );
+			if ( ! wp_verify_nonce( $_POST['amp_travel_adventure_nonce'], basename( __FILE__ ) ) ) {
+				return;
+			}
+
+			if ( isset( $_POST['amp_travel_price'] ) ) {
+				update_post_meta( get_the_ID(), 'amp_travel_price', sanitize_text_field( wp_unslash( $_POST['amp_travel_price'] ) ) );
+			}
+
+			if ( isset( $_POST['amp_travel_start_date'] ) ) {
+				update_post_meta( $post->ID, 'amp_travel_start_date', sanitize_text_field( wp_unslash( $_POST['amp_travel_start_date'] ) ) );
+			}
+
+			if ( isset( $_POST['amp_travel_end_date'] ) ) {
+				update_post_meta( $post->ID, 'amp_travel_end_date', sanitize_text_field( wp_unslash( $_POST['amp_travel_end_date'] ) ) );
+			}
 		}
 	}
 
