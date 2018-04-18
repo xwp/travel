@@ -3,6 +3,7 @@
  * Display navbar with search.
  *
  * @package WPAMPTheme
+ * @todo Note that this is copied from HTML and requires extra work together with the search.php.
  */
 
 ?>
