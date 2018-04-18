@@ -240,7 +240,7 @@ class AMP_Travel_Blocks {
 
 		$output .= '<div class="overflow-scroll">
 				<div class="travel-overflow-container">
-					<div class="overflow-wrap flex px1 md-px2 mxn1">';
+					<div class="travel-overflow-wrap flex px1 md-px2 mxn1">';
 
 		$popular_classes = array(
 			'travel-popular-tilt-right',

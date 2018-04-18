@@ -6,7 +6,7 @@
     display: none;
 }
 
-.travel-overflow-container > .overflow-wrap {
+.travel-overflow-container > .travel-overflow-wrap {
     max-width: 75rem;
     margin: 0 auto;
 }
