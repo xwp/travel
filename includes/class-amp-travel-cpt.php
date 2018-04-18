@@ -86,10 +86,10 @@ class AMP_Travel_CPT {
 			return $response;
 		}
 
-		$price    = get_post_meta( $adventure->ID, 'amp_travel_price', true );
-		$rating   = round( (int) get_post_meta( $adventure->ID, 'amp_travel_rating', true ) );
-		$comments = wp_count_comments( $adventure->ID );
-		$terms    = wp_get_post_terms( $adventure->ID, 'location', array(
+		$price   = get_post_meta( $adventure->ID, 'amp_travel_price', true );
+		$rating  = round( (int) get_post_meta( $adventure->ID, 'amp_travel_rating', true ) );
+		$reviews = wp_count_comments( $adventure->ID );
+		$terms   = wp_get_post_terms( $adventure->ID, 'location', array(
 			'fields' => 'names',
 		) );
 
@@ -102,7 +102,7 @@ class AMP_Travel_CPT {
 		$meta = array(
 			'amp_travel_price'    => $price,
 			'amp_travel_rating'   => $rating,
-			'amp_travel_reviews'  => $comments->approved,
+			'amp_travel_reviews'  => $reviews->approved,
 			'amp_travel_location' => $location,
 		);
 
@@ -158,6 +158,7 @@ class AMP_Travel_CPT {
 				'title',
 				'editor',
 				'thumbnail',
+				'comments',
 			),
 			'has_archive'   => true,
 			'rewrite'       => array(
