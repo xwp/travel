@@ -3,3 +3,6 @@ vendor
 /node_modules
 .idea
 package-lock.json
+
+# Built files
+assets/js/editor-blocks.js
