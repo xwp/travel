@@ -8,4 +8,4 @@
 $reviews = wp_count_comments( get_the_ID() );
 ?>
 <?php /* translators: %d: Number of reviews. */ ?>
-<p class="travel-results-result-subtext"><?php echo sprintf( esc_html__( '%d Reviews', 'travel' ), esc_html( $reviews->approved ) ); ?></p>
+<p class="travel-results-result-subtext"><?php printf( esc_html__( '%d Reviews', 'travel' ), esc_html( $reviews->approved ) ); ?></p>

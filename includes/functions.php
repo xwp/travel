@@ -22,7 +22,7 @@ function amp_travel_theme() {
  * @return string Output.
  */
 function amp_travel_render_similar_adventures() {
-	$terms = wp_get_post_terms( null, 'location', array(
+	$terms = wp_get_post_terms( get_the_ID(), 'location', array(
 		'fields' => 'names',
 	) );
 
@@ -31,14 +31,14 @@ function amp_travel_render_similar_adventures() {
 			'post_type'   => 'adventure',
 			'numberposts' => 3,
 			'meta_key'    => '_thumbnail_id',
+			'exclude'     => array( get_the_ID() ),
 			'tax_query'   => array(
 				array(
 					'taxonomy' => 'location',
-					'field'    => 'slug',
+					'field'    => 'name',
 					'terms'    => $terms,
 				),
 			),
-			'exclude'     => array( get_the_ID() ),
 		)
 	);
 
@@ -59,7 +59,7 @@ function amp_travel_render_similar_adventures() {
 function amp_travel_get_popular_adventures( $adventures, $attributes ) {
 	$output = '';
 
-	if ( count( $adventures ) !== AMP_Travel_Blocks::$popular_posts_count ) {
+	if ( count( $adventures ) !== AMP_Travel_Blocks::POPULAR_POSTS_COUNT ) {
 		return $output;
 	}
 
@@ -88,7 +88,7 @@ function amp_travel_get_popular_adventures( $adventures, $attributes ) {
 		$img_srcset    = wp_get_attachment_image_srcset( $attachment_id );
 		$price         = get_post_meta( $adventure->ID, 'amp_travel_price', true );
 		$rating        = round( (int) get_post_meta( $adventure->ID, 'amp_travel_rating', true ) );
-		$comments      = wp_count_comments( $adventure->ID );
+		$reviews       = wp_count_comments( $adventure->ID );
 		$locations     = wp_get_post_terms( $adventure->ID, 'location', array(
 			'fields' => 'names',
 		) );
@@ -123,8 +123,8 @@ function amp_travel_get_popular_adventures( $adventures, $attributes ) {
 			</div>
 			<span class="travel-results-result-subtext mr1">' .
 			/* translators: %d: The number of reviews */
-			sprintf( esc_html__( '%d Reviews', 'travel' ), esc_html( $comments->approved ) ) . '</span>
-				<span class="travel-results-result-subtext"><svg class="travel-icon" viewBox="0 0 77 100"><g fill="none" fillRule="evenodd"><path stroke="currentColor" strokeWidth="7.5" d="M38.794 93.248C58.264 67.825 68 49.692 68 38.848 68 22.365 54.57 9 38 9S8 22.364 8 38.85c0 10.842 9.735 28.975 29.206 54.398a1 1 0 0 0 1.588 0z"></path><circle cx="38" cy="39" r="10" fill="currentColor"></circle></g></svg>
+			sprintf( esc_html__( '%d Reviews', 'travel' ), esc_html( $reviews->approved ) ) . '</span>
+				<span class="travel-results-result-subtext"><svg class="travel-icon" viewBox="0 0 77 100"><g fill="none" fill-rule="evenodd"><path stroke="currentColor" stroke-width="7.5" d="M38.794 93.248C58.264 67.825 68 49.692 68 38.848 68 22.365 54.57 9 38 9S8 22.364 8 38.85c0 10.842 9.735 28.975 29.206 54.398a1 1 0 0 0 1.588 0z"></path><circle cx="38" cy="39" r="10" fill="currentColor"></circle></g></svg>
 				' . esc_html( $location ) . '</span>
 			</div>
 			</div>';
@@ -158,7 +158,8 @@ function amp_travel_comment_rating_field() {
 			<option value="">--</option>';
 
 	for ( $i = 5; $i >= 1; $i-- ) {
-		echo '<option value="' . esc_attr( $i ) . '">' . sprintf( '%d star(s)', esc_attr( $i ) ) . '</option>';
+		/* translators: %d: Rating */
+		echo '<option value="' . esc_attr( $i ) . '">' . sprintf( esc_html( _n( '%d star', '%d stars', $i, 'travel' ) ), number_format_i18n( $i ) ) . '</option>';
 	}
 	echo '</select>
 		</p>';
@@ -260,6 +261,9 @@ function amp_travel_calculate_adventure_rating( $adventure_id = null ) {
  * @return string
  */
 function amp_travel_modify_comment_display( $text ) {
+	if ( ! get_comment() ) {
+		return $text;
+	}
 	$rating = get_comment_meta( get_comment_ID(), 'rating', true );
 	if ( $rating ) {
 		$rating_html = '<div style="width:100%;" class="inline-block relative h3 line-height-2">
