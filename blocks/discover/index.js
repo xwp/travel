@@ -17,7 +17,7 @@ export default registerBlockType(
 	{
 		title: __( 'Discover block' ),
 		category: 'common',
-		icon: 'wordpress-alt',
+		icon: 'palmtree',
 		keywords: [
 			__( 'Adventures' ),
 			__( 'Travel' )

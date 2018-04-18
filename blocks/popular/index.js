@@ -15,7 +15,7 @@ export default registerBlockType(
 	{
 		title: __( 'Popular Adventures' ),
 		category: 'common',
-		icon: 'wordpress-alt',
+		icon: 'universal-access',
 		keywords: [
 			__( 'Top rated' ),
 			__( 'Best' ),
