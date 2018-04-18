@@ -161,7 +161,6 @@ endif;
 		</div>
 	</footer>
 	<!--/ Footer  -->
-
 </section>
 </body>
 </html>
