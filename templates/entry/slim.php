@@ -9,7 +9,7 @@
 <div class="col-12 sm-col-6 lg-col-4 p1 travel-results-result" style="float:left;">
 	<div class="relative travel-results-result">
 		<a class="travel-results-result-link" href="<?php the_permalink(); ?>">
-			<amp-img class="rounded bg-silver mb1" width="2" height="1" noloading="" layout="responsive" src="<?php echo wp_get_attachment_url( get_post_thumbnail_id() ); ?>" ></amp-img>
+			<amp-img class="rounded bg-silver mb1" width="2" height="1" noloading="" layout="responsive" src="<?php echo esc_url( wp_get_attachment_url( get_post_thumbnail_id() ) ); ?>" ></amp-img>
 		</a>
 	</div>
 	<div class="h2 line-height-2 mb1">
