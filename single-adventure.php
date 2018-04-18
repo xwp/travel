@@ -30,8 +30,8 @@ get_header();
 <div id="travel-landing-content" class="travel-landing-content relative">
 
 	<div class="travel-footer-wrapper">
-		<?php get_template_part( 'templates/footer-search' ); ?>
 		<?php get_template_part( 'templates/similar-adventures' ); ?>
+		<?php get_template_part( 'templates/footer-search' ); ?>
 	</div>
 </div>
 <?php get_footer(); ?>
