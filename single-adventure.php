@@ -7,9 +7,7 @@
 
 get_header();
 ?>
-
-<!-- CAROUSEL -->
-<h1>TODO: Carousel</h1>
+<?php get_template_part( 'templates/gallery-hero' ); ?>
 
 <!-- Product Wrap -->
 <div class="product-wrap pb4 pt3 relative">

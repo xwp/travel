@@ -59,7 +59,7 @@ function amp_travel_render_similar_adventures() {
 function amp_travel_get_popular_adventures( $adventures, $attributes ) {
 	$output = '';
 
-	if ( count( $adventures ) !== AMP_Travel_Blocks::$popular_posts_count ) {
+	if ( count( $adventures ) !== AMP_Travel_Blocks::POPULAR_POSTS_COUNT ) {
 		return $output;
 	}
 

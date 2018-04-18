@@ -8,17 +8,17 @@
 ?>
 <h1 class="line-height-2 center product-title mb3"><?php echo esc_html( get_the_title() ); ?></h1>
 <div class="lg-flex justify-between">
-	<div class="product-details lg-col-2">
-		<div class="h4 line-height-2">
-			<?php get_template_part( 'templates/entry/meta/location' ); ?>
-			<?php get_template_part( 'templates/entry/meta/reviews-count' ); ?>
-			<?php get_template_part( 'templates/entry/meta/rating' ); ?>
-			<?php get_template_part( 'templates/social-share' ); ?>
-		</div>
+    <div class="product-details lg-col-2 mb1">
+        <?php get_template_part( 'templates/entry/meta/location' ); ?>
+        <div class="h4 line-height-2">
+            <?php get_template_part( 'templates/entry/meta/reviews-count' ); ?>
+            <?php get_template_part( 'templates/entry/meta/rating' ); ?>
+        </div>
+        <?php get_template_part( 'templates/social-share' ); ?>
 	</div>
 	<!-- / product-details -->
 
-	<div class="product-cta lg-col-2 lg-right-align">
+	<div class="product-cta lg-col-2 lg-right-align mb3">
 		<h4 class="product-cta-title mb2 line-height-1" [text]="'$' + adventure_current_price">$<?php echo esc_html( get_post_meta( get_the_ID(), 'amp_travel_price', true ) ); ?></h4>
 		<select class="select-arr mb1 rounded" name="count" on="change:AMP.setState({ adventure_current_price: event.value * adventure_price })">
 			<option value="1"><?php esc_html_e( 'For 1' ); ?></option>
