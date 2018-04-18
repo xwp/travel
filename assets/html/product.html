@@ -19,6 +19,8 @@
 
 	<script custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js" async=""></script>
 
+	<script custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js" async=""></script>
+
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet">
 
 	<link rel="stylesheet" href="/wp-content/themes/ampstart/dist/css/templates/travel/product.css">
@@ -64,7 +66,28 @@
 	<!--/ Results Navbar -->
 
 	<!-- CAROUSEL -->
-	<h1>TODO: Carousel</h1>
+	<div class="hero-carousel">
+		<amp-carousel layout="responsive" type="slides" height="230" autoplay loop>
+			<amp-img
+				src="https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?filter=grayscale&w=1000"
+				srcset="https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?filter=grayscale&w=1000 1x, https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?filter=grayscale&w=2000 2x"
+				width="1000"
+				height="560"
+			></amp-img>
+			<amp-img
+							src="https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?filter=grayscale&w=1000"
+							srcset="https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?w=1000 1x, https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?w=2000 2x"
+							width="1000"
+							height="560"
+			></amp-img>
+			<amp-img
+							src="https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?filter=sepia&w=1000"
+							srcset="https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?filter=sepia&w=1000 1x, https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?filter=sepia&w=2000 2x"
+							width="1000"
+							height="560"
+			></amp-img>
+		</amp-carousel>
+	</div>
 
 	<!-- Product Wrap -->
 	<div class="product-wrap pb4 pt3 relative">
