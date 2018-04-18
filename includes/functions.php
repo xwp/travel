@@ -252,6 +252,9 @@ function amp_travel_calculate_adventure_rating( $adventure_id = null ) {
  * @return string
  */
 function amp_travel_modify_comment_display( $text ) {
+	if ( ! get_comment() ) {
+		return $text;
+	}
 	$rating = get_comment_meta( get_comment_ID(), 'rating', true );
 	if ( $rating ) {
 		$rating_html = '<div style="width:100%;" class="inline-block relative h3 line-height-2">
