@@ -1,0 +1,487 @@
+<!doctype html>
+<html ⚡="">
+
+<head>
+	<meta charset="utf-8">
+	<title>Travel Template</title>
+	<link rel="canonical" href="https://www.ampstart.com/templates/travel/travel-results.amp">
+	<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+	<script async="" src="https://cdn.ampproject.org/v0.js"></script>
+
+	<style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+
+	<script custom-element="amp-selector" src="https://cdn.ampproject.org/v0/amp-selector-0.1.js" async=""></script>
+	<script custom-element="amp-bind" src="https://cdn.ampproject.org/v0/amp-bind-0.1.js" async=""></script>
+	<script custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js" async=""></script>
+
+	<script custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.1.js" async=""></script>
+
+	<script custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js" async=""></script>
+
+	<script custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js" async=""></script>
+
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet">
+
+	<link rel="stylesheet" href="/wp-content/themes/ampstart/dist/css/templates/travel/product.css">
+</head>
+<body>
+
+<amp-state id="fields_query"><script type="application/json">""</script></amp-state>
+<amp-state id="query_query"><script type="application/json">""</script></amp-state>
+
+<div class="travel-main-wrapper overflow-hidden" role="main">
+
+	<!-- Results Navbar -->
+	<header class="travel-results-navbar pt4 pr4 pl4">
+		<div class="px1 md-px2 flex justify-between items-stretch">
+			<div class="flex items-stretch">
+				<a href="travel.amp" class="travel-results-navbar-icon h2 circle my1 md-my2">
+					<svg class="travel-icon travel-icon-logo h2" viewBox="0 0 100 100"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-width="7.5"><circle cx="50" cy="50" r="45"></circle><path d="M20.395 83.158c-2.37-10.263-.79-18.553 4.737-24.87 8.29-9.472 17.763-1.183 26.052-9.472 8.29-8.29 2.37-18.948 10.658-26.053 5.526-4.737 12.237-6.316 20.132-4.737M39.084 95c-2.788-10.2-1.912-17.304 2.627-21.316 6.808-6.017 14.956-.68 24.088-9.623 9.13-8.94 3.062-17.133 10.255-23.534 4.795-4.267 10.282-5.668 16.46-4.203"></path></g></svg>      </a>
+				<div class="ml3 flex items-center xs-hide sm-hide">
+					<amp-list class="travel-block-list flex items-center" layout="flex-item" noloading="" src="/api/search?maxPrice=800&query=&sort=popularity-desc" [src]="
+  '/api/search?maxPrice=' + (query_maxPrice < 801 ? query_maxPrice : 0) +
+  '&query=' + query_query +
+  (query_city.length ? '&cities[]=' + query_city.join('&cities[]=') : '') +
+  (query_type.length ? '&types[]=' + query_type.join('&types[]=') : '') +
+  '&sort=' + query_sort
+">
+						<template type="amp-mustache">
+							<div class="flex items-center">
+								<label class="travel-input-icon relative">
+									<input class="travel-input travel-input-dark rounded" type="text" name="query" placeholder="Location" on="
+                      change:
+                        AMP.setState({fields_query: event.value}),
+                        AMP.setState({query_query: event.value})
+                    " value="{{stats.location}}">
+									<span class="travel-icon travel-img-icon-map-pin-transparent"></span>
+								</label>
+							</div>
+						</template>
+					</amp-list>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!--/ Results Navbar -->
+
+	<!-- CAROUSEL -->
+	<div class="hero-carousel">
+		<amp-carousel layout="responsive" type="slides" height="50vw" width="100vw" autoplay loop>
+			<amp-img
+				src="https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?filter=grayscale&w=1000"
+				srcset="https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?filter=grayscale&w=1000 1x, https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?filter=grayscale&w=2000 2x"
+				width="1000"
+				height="560"
+			></amp-img>
+			<amp-img
+							src="https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?filter=grayscale&w=1000"
+							srcset="https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?w=1000 1x, https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?w=2000 2x"
+							width="1000"
+							height="560"
+			></amp-img>
+			<amp-img
+							src="https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?filter=sepia&w=1000"
+							srcset="https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?filter=sepia&w=1000 1x, https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?filter=sepia&w=2000 2x"
+							width="1000"
+							height="560"
+			></amp-img>
+		</amp-carousel>
+	</div>
+
+	<!-- Product Wrap -->
+	<div class="product-wrap pb4 pt3 relative">
+		<div class="max-width-3 mx-auto px1 md-px2">
+			<h1 class="line-height-2 center product-title mb3">Surf Day. Board and Wetsuits Included in Price!</h1>
+
+			<div class="lg-flex justify-between">
+
+				<div class="product-details lg-col-2 mb1">
+					<div class="h4 line-height-2">
+						<p class="travel-results-result-subtext mb1">Oaxaca</p>
+					</div>
+					<div class="h4 line-height-2">
+						<p class="travel-results-result-subtext">241 Reviews</p>
+						<div class="relative h2 line-height-2 mb1">
+							<div class="travel-results-result-stars green">★★★★★</div>
+						</div>
+					</div>
+					<div class="h4 line-height-2">
+						<p class="travel-results-result-subtext">Share</p>
+						<div class="ampstart-social-box mb1">
+							<amp-social-share type="facebook"
+																aria-label="Share this on Facebook"
+																data-param-text="Hello world"
+																data-param-href="https://example.com/?ref=URL"
+																data-param-app_id="145634995501895"></amp-social-share>
+							<amp-social-share type="gplus" aria-label="Share this on Google Plus"></amp-social-share>
+							<amp-social-share type="twitter" aria-label="Share this on Twitter"></amp-social-share>
+						</div>
+					</div>
+				</div>
+				<!-- / product-details -->
+
+				<div class="product-cta-sticky-wrap md-hide lg-hide">
+					<div class="product-cta-sticky">
+						<h4 class="product-cta-sticky-title"><strong>$100</strong> - For 2</h4>
+						<a href="#" class="product-cta-btn ampstart-btn rounded center bold white block">Call to Book</a>
+					</div>
+				</div>
+				<!-- / product-cta-sticky-wrap -->
+
+				<div class="product-cta lg-col-2 lg-right-align mb3">
+					<h4 class="product-cta-title mb2 line-height-1">$100</h4>
+
+					<select class="select-arr mb1 rounded" name="count">
+						<option value="2">For 2</option>
+						<option value="4">For 4</option>
+						<option value="6">For 6</option>
+						<option value="8">For 8</option>
+					</select>
+
+					<a href="#" class="product-cta-btn ampstart-btn rounded center bold white block col-12">Call to Book</a>
+				</div>
+				<!-- / product-cta -->
+
+				<div class="product-main lg-col-7">
+
+					<section class="product-content">
+						<h2>About your host, Stephen</h2>
+						<p>I've been surfing for over a decade and I'm really passionate about it. It's something that inspires me and makes me move forward. My goal is for you to have fun and take a great experience on board.</p>
+						<p>I'm licensed and permitted by LA Department of Beaches and Harbors to teach in this area.</p>
+						<p>Attention! Any other schools/instructors that are operating in the same part of the beach (south of Venice Pier) are doing it illegally and their lessons can be terminated by lifeguards or police</p>
+						<h2>What we'll do</h2>
+						<p>Our goal is for you to have an excellent experience surfing, whether it's your first time trying surfing or you are trying to advance your skills. For the first 15 minutes we’ll be training on the beach—then it’s 45 minutes with an instructor in the ocean. The remaining time is yours to practice your skills and have fun with the surfboards that we provide you.</p>
+						<p>I also have a Photography service for those who want to have some visual memories from the experience. The cost is $30 per person.</p>
+					</section>
+
+					<div class="product-reviews">
+
+						<h2 class="mb3">Reviews</h2>
+
+						<div class="comments wrap__item">
+
+							<amp-live-list id="amp-live-comments-list-106" class="live-list" layout="container" data-poll-interval="15000" data-max-items-per-page="10000"><ol items class="comments__list">
+								<li data-sort-time="1519880447" data-update-time="1519880447" id="comment-32" class="comment byuser comment-author-ryan-kienstra even thread-even depth-1">
+									<article id="div-comment-32" class="comment-body"><footer class="comment-meta"><div class="comment-author vcard">
+										<amp-img alt="" src="https://secure.gravatar.com/avatar/ea4feefa34607a9eda9d5478dac38a1e?s=32&amp;d=mm&amp;r=g" srcset="https://secure.gravatar.com/avatar/ea4feefa34607a9eda9d5478dac38a1e?s=64&amp;d=mm&amp;r=g 2x" class="avatar avatar-32 photo amp-wp-enforced-sizes" height="32" width="32" layout="intrinsic"></amp-img><strong class="fn">Ryan Kienstra</strong>
+										<div class="inline-block relative ml1 h3 line-height-2">
+											<div class="travel-results-result-stars green">★★★★★</div>
+										</div>
+									</div>
+										<!-- .comment-author -->
+
+										<div class="comment-metadata">
+											<time datetime="2018-03-01T05:00:47+00:00">March 1, 2018 at 5:00 am</time>
+										</div>
+										<!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta --><div class="comment-content">
+										<p>This is a test comment.</p>
+									</div>
+										<!-- .comment-content -->
+
+										<a rel="nofollow" class="comment-reply-link" href="#respond" on='tap:AMP.setState( {"commentform_post_106":{"replyToName":"Ryan Kienstra","values":{"comment_parent":"32"}}} )' aria-label="Reply to Ryan Kienstra">Reply</a>			</article><!-- .comment-body -->
+								</li>
+								<!-- #comment-## -->
+							</ol>
+								<!-- .comment-list --><div update class="live-list__button">
+									<button class="button" on="tap:amp-live-comments-list-106.update">New comment(s)</button>
+								</div>
+								<nav pagination></nav></amp-live-list><div id="respond" class="comment-respond">
+							<h2 id="reply-title" class="comment-reply-title">
+								<span [text]='commentform_post_106.replyToName ? "Leave a Reply to " + commentform_post_106.replyToName + "" : "Leave a Reply"'>Leave a Reply</span> <small><a id="cancel-comment-reply-link" href="/2018/02/06/elon-musks-new-tesla-pay-package-is-a-publicity-stunt-thats-also-real/#respond" hidden [hidden]='commentform_post_106.values.comment_parent == "0"' on='tap:AMP.setState( {"commentform_post_106":{"replyToName":"","values":{"comment_parent":"0"}}} )'>Cancel reply</a></small>
+							</h2>			<form method="post" id="commentform" class="comment-form" novalidate action-xhr="https://dev-ampconfdemo.pantheonsite.io/wp-comments-post.php?_wp_amp_action_xhr_converted=1" target="_top" on='submit:AMP.setState( { "commentform_post_106": { submitting: true } } );submit-error:AMP.setState( { "commentform_post_106": { submitting: false } } );submit-success:AMP.setState( { commentform_post_106: {"values":{"submit":"Post Comment","comment_post_ID":"106","comment_parent":"0","comment":""},"submitting":false,"replyToName":""} } )'>
+							<amp-state id="commentform_post_106"><script type="application/json">{"values":{"author":"","email":"","url":"","submit":"Post Comment","comment_post_ID":"106","comment_parent":"0","comment":""},"submitting":false,"replyToName":""}</script></amp-state>
+							<p class="comment-form-comment"><label for="comment">Comment</label> <textarea class="rounded" id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required" [disabled]="commentform_post_106.submitting" [text]="commentform_post_106.values.comment" on='change:AMP.setState( { commentform_post_106: { values: { "comment": event.value } } } )'></textarea></p>
+							<p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input class="rounded" id="author" name="author" type="text" value="" size="30" maxlength="245" required="required" [disabled]="commentform_post_106.submitting" [value]="commentform_post_106.values.author" on='change:AMP.setState( { commentform_post_106: { values: { "author": event.value } } } )'></p>
+							<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input class="rounded" id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes" required="required" [disabled]="commentform_post_106.submitting" [value]="commentform_post_106.values.email" on='change:AMP.setState( { commentform_post_106: { values: { "email": event.value } } } )'></p>
+							<p class="comment-form-url"><label for="url">Website</label> <input class="rounded" id="url" name="url" type="url" value="" size="30" maxlength="200" [disabled]="commentform_post_106.submitting" [value]="commentform_post_106.values.url" on='change:AMP.setState( { commentform_post_106: { values: { "url": event.value } } } )'></p>
+							<p class="comment-form-rating"><label for="rating">Your rating</label>
+							<select class="select-arr rounded" name="rating" id="rating" [disabled]="commentform_post_106.submitting" on='change:AMP.setState( { commentform_post_106: { values: { "rating": event.value } } } )'>
+								<option value="1">1 star</option>
+								<option value="2">2 stars</option>
+								<option value="3">3 stars</option>
+								<option value="4">4 stars</option>
+								<option value="5">5 stars</option>
+							</select>
+							</p>
+							<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit ampstart-btn rounded center bold white block col-12" value="Post review" [disabled]="commentform_post_106.submitting" [value]="commentform_post_106.values.submit" on='change:AMP.setState( { commentform_post_106: { values: { "submit": event.value } } } )'><input type="hidden" name="comment_post_ID" value="106" id="comment_post_ID" [disabled]="commentform_post_106.submitting" [value]="commentform_post_106.values.comment_post_ID" on='change:AMP.setState( { commentform_post_106: { values: { "comment_post_ID": event.value } } } )'><input type="hidden" name="comment_parent" id="comment_parent" value="0" [disabled]="commentform_post_106.submitting" [value]="commentform_post_106.values.comment_parent" on='change:AMP.setState( { commentform_post_106: { values: { "comment_parent": event.value } } } )'></p>
+							<div submit-success>
+								<template type="amp-mustache"><p>{{{message}}}</p>
+								</template>
+							</div>
+							<div submit-error>
+								<template type="amp-mustache"><p class="amp-comment-submit-error">{{{error}}}</p>
+								</template>
+							</div>
+						</form>
+						</div>
+							<!-- #respond -->
+
+						</div>
+
+					</div>
+					<!-- / product-reviews -->
+
+				</div>
+				<!-- / product-main -->
+
+			</div>
+			<!-- / lg-flex -->
+
+		</div>
+	</div>
+	<!-- / Product Wrap -->
+
+	<div id="travel-landing-content" class="travel-landing-content relative">
+
+		<div class="travel-footer-wrapper">
+
+			<!-- Popular -->
+			<section class="travel-popular pb4 pt3 relative">
+				<header class="max-width-3 mx-auto px1 md-px2">
+					<h3 class="h1 bold line-height-2 md-hide lg-hide" aria-hidden="true">Similar
+						<br>Adventures</h3>
+					<h3 class="h1 bold line-height-2 xs-hide sm-hide center">Similar Adventures</h3>
+				</header>
+				<div class="travel-overflow-container">
+					<div class="travel-overflow-wrap lg-flex px1 md-px2 mxn1">
+						<div class="m1 mt3 mb2">
+							<div class="travel-popular-tilt-right mb1">
+								<div class="relative travel-results-result">
+									<a class="travel-results-result-link block relative" href="#">
+										<amp-img class="block rounded" width="346" height="200" noloading="" src="https://www.ampstart.com/img/travel/activity/surf-day.jpg" srcset="https://www.ampstart.com/img/travel/activity/surf-day@2x.jpg 2x, https://www.ampstart.com/img/travel/activity/surf-day.jpg 1x"></amp-img>
+									</a>
+									<div class="travel-results-result-like absolute top-0 right-0">
+										<div class="p1">
+
+											<!-- Like Button -->
+											<label class="travel-like">
+												<input type="checkbox" class="absolute">
+												<div class="travel-like-hearts circle inline-block relative">
+													<div class="travel-like-heart-tiny travel-like-heart-solid absolute"></div>
+													<div class="travel-like-heart-tiny travel-like-heart-solid absolute"></div>
+													<div class="travel-like-heart-tiny travel-like-heart-solid absolute"></div>
+													<div class="travel-like-heart travel-like-heart-white absolute mx-auto "></div>
+													<div class="travel-like-heart travel-like-heart-solid absolute mx-auto "></div>
+													<div class="travel-like-heart travel-like-heart-outline absolute mx-auto "></div>
+												</div>
+											</label>
+											<!--/ Like Button -->
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="h2 line-height-2 mb1">
+								<span class="travel-results-result-text">Surf Day. Board and Wetsuits Included in Price!</span>
+								<span class="travel-results-result-subtext h3">&bull;</span>
+								<span class="travel-results-result-subtext h3">$&nbsp;</span><span class="black bold">100</span>
+							</div>
+
+							<div class="h4 line-height-2">
+								<div class="inline-block relative mr1 h3 line-height-2">
+									<div class="travel-results-result-stars green">★★★★★</div>
+								</div>
+								<span class="travel-results-result-subtext mr1">241 Reviews</span>
+								<span class="travel-results-result-subtext"><svg class="travel-icon" viewBox="0 0 77 100"><g fill="none" fill-rule="evenodd"><path stroke="currentColor" stroke-width="7.5" d="M38.794 93.248C58.264 67.825 68 49.692 68 38.848 68 22.365 54.57 9 38 9S8 22.364 8 38.85c0 10.842 9.735 28.975 29.206 54.398a1 1 0 0 0 1.588 0z"></path><circle cx="38" cy="39" r="10" fill="currentColor"></circle></g></svg> Oaxaca</span>
+							</div>
+						</div>
+						<div class="m1 mt3 mb2">
+							<div class="travel-results-result relative mb1">
+								<div class="relative travel-results-result">
+									<a class="travel-results-result-link block relative" href="#">
+										<amp-img class="block rounded" width="346" height="200" noloading="" src="https://www.ampstart.com/img/travel/activity/discover-electronic-scene.jpg" srcset="https://www.ampstart.com/img/travel/activity/discover-electronic-scene@2x.jpg 2x, https://www.ampstart.com/img/travel/activity/discover-electronic-scene.jpg 1x"></amp-img>
+									</a>
+									<div class="travel-results-result-flags absolute top-0 left-0">
+										<div class="p1"><span class="travel-pill bold">NEW</span></div>
+									</div>
+									<div class="travel-results-result-like absolute top-0 right-0">
+										<div class="p1">
+
+											<!-- Like Button -->
+											<label class="travel-like">
+												<input type="checkbox" class="absolute">
+												<div class="travel-like-hearts circle inline-block relative">
+													<div class="travel-like-heart-tiny travel-like-heart-solid absolute"></div>
+													<div class="travel-like-heart-tiny travel-like-heart-solid absolute"></div>
+													<div class="travel-like-heart-tiny travel-like-heart-solid absolute"></div>
+													<div class="travel-like-heart travel-like-heart-white absolute mx-auto "></div>
+													<div class="travel-like-heart travel-like-heart-solid absolute mx-auto "></div>
+													<div class="travel-like-heart travel-like-heart-outline absolute mx-auto "></div>
+												</div>
+											</label>
+											<!--/ Like Button -->
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="h2 line-height-2 mb1">
+								<span class="travel-results-result-text">Discover Oaxaca&#39;s Electronic Music Scene with a Top DJ</span>
+								<span class="travel-results-result-subtext h3">&bull;</span>
+								<span class="travel-results-result-subtext h3">$&nbsp;</span><span class="black bold">113</span>
+							</div>
+
+							<div class="h4 line-height-2">
+								<div class="inline-block relative mr1 h3 line-height-2">
+									<div class="travel-results-result-stars green">★★★★★</div>
+								</div>
+								<span class="travel-results-result-subtext mr1">42 Reviews</span>
+								<span class="travel-results-result-subtext"><svg class="travel-icon" viewBox="0 0 77 100"><g fill="none" fill-rule="evenodd"><path stroke="currentColor" stroke-width="7.5" d="M38.794 93.248C58.264 67.825 68 49.692 68 38.848 68 22.365 54.57 9 38 9S8 22.364 8 38.85c0 10.842 9.735 28.975 29.206 54.398a1 1 0 0 0 1.588 0z"></path><circle cx="38" cy="39" r="10" fill="currentColor"></circle></g></svg> Oaxaca</span>
+							</div>
+						</div>
+						<div class="m1 mt3 mb2">
+							<div class="travel-popular-tilt-left mb1">
+								<div class="relative travel-results-result">
+									<a class="travel-results-result-link block relative" href="#">
+										<amp-img class="block rounded" width="346" height="200" noloading="" src="https://www.ampstart.com/img/travel/activity/skateboard-around-city.jpg" srcset="https://www.ampstart.com/img/travel/activity/skateboard-around-city@2x.jpg 2x, https://www.ampstart.com/img/travel/activity/skateboard-around-city.jpg 1x"></amp-img>
+									</a>
+									<div class="travel-results-result-like absolute top-0 right-0">
+										<div class="p1">
+
+											<!-- Like Button -->
+											<label class="travel-like">
+												<input type="checkbox" class="absolute">
+												<div class="travel-like-hearts circle inline-block relative">
+													<div class="travel-like-heart-tiny travel-like-heart-solid absolute"></div>
+													<div class="travel-like-heart-tiny travel-like-heart-solid absolute"></div>
+													<div class="travel-like-heart-tiny travel-like-heart-solid absolute"></div>
+													<div class="travel-like-heart travel-like-heart-white absolute mx-auto "></div>
+													<div class="travel-like-heart travel-like-heart-solid absolute mx-auto "></div>
+													<div class="travel-like-heart travel-like-heart-outline absolute mx-auto "></div>
+												</div>
+											</label>
+											<!--/ Like Button -->
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="h2 line-height-2 mb1">
+								<span class="travel-results-result-text">Skateboard Around the City</span>
+								<span class="travel-results-result-subtext h3">&bull;</span>
+								<span class="travel-results-result-subtext h3">$&nbsp;</span><span class="black bold">92</span>
+							</div>
+
+							<div class="h4 line-height-2">
+								<div class="inline-block relative mr1 h3 line-height-2">
+									<div class="travel-results-result-stars green">★★★★★</div>
+								</div>
+								<span class="travel-results-result-subtext mr1">17 Reviews</span>
+								<span class="travel-results-result-subtext"><svg class="travel-icon" viewBox="0 0 77 100"><g fill="none" fill-rule="evenodd"><path stroke="currentColor" stroke-width="7.5" d="M38.794 93.248C58.264 67.825 68 49.692 68 38.848 68 22.365 54.57 9 38 9S8 22.364 8 38.85c0 10.842 9.735 28.975 29.206 54.398a1 1 0 0 0 1.588 0z"></path><circle cx="38" cy="39" r="10" fill="currentColor"></circle></g></svg> Mexico City</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!--/ Popular -->
+
+			<!-- Search -->
+			<section class="travel-search py4 xs-hide sm-hide relative">
+				<div class="px1 md-px2 pb1 relative">
+					<h3 class="travel-search-heading travel-spacing-none h1 bold mb2 center">Have a specific destination in mind?</h3>
+
+					<div class="flex justify-center pb2">
+						<div class="travel-input-group flex items-center col-8">
+							<input class="travel-input travel-input-big line-height-2 block col-12 flex-auto rounded-left" type="text" name="query" placeholder="Where would you like to go?" on="change:AMP.setState({fields_query: event.value})" value="" [value]="fields_query">
+							<span class="travel-input-group-sep travel-border-gray relative z1 block"></span>
+							<a href="travel-results.amp" class="travel-link travel-input travel-input-big line-height-2 link rounded-right nowrap text-decoration-none" on="
+              tap:AMP.setState({
+                  ui_reset: false,
+                  ui_filterPane: false,
+                  query_query: fields_query,
+                  fields_query_edited: false,
+                  query_departure: fields_departure,
+                  fields_departure_edited: false,
+                  query_return: fields_return,
+                  fields_return_edited: false,
+                  query_maxPrice: fields_maxPrice,
+                  fields_maxPrice_edited: false,
+                  query_city: fields_city,
+                  fields_city_edited: false,
+                  query_type: fields_type,
+                  fields_type_edited: false,
+                  query_sort: fields_sort,
+                  fields_sort_edited: false,
+              })
+            ">
+								Find my next adventure
+							</a>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!--/ Search -->
+
+			<!-- Footer -->
+			<footer class="travel-footer overflow-hidden">
+
+				<div class="relative bg-black">
+
+					<!-- Angle -->
+					<div class="travel-footer-angle-block absolute top-0 bottom-0 right-0 xs-hide sm-hide"></div>
+					<div class="travel-footer-angle absolute xs-hide sm-hide"></div>
+					<!--/ Angle -->
+
+					<!-- Right column -->
+					<div class="travel-newsletter-signup">
+						<header class="max-width-3 mx-auto px1 md-px2">
+							<h4 class="travel-footer-right-column-heading travel-spacing-none h2 mb3 blue">Want travel deals<br>straight to your inbox?</h4>
+							<div class="h4 bold mb1">Sign up to our newsletter</div>
+						</header>
+						<div class="relative">
+							<div class="travel-footer-input-bg bg-black absolute right-0 left-0 md-hide lg-hide"></div>
+							<div class="max-width-3 mx-auto px1 md-px2 relative">
+								<div class="travel-input-group flex items-center col-12 rounded travel-shadow">
+									<input class="travel-input travel-input-big block col-12 flex-auto rounded-left" type="text" name="email" placeholder="Enter your email">
+									<span class="travel-input-group-sep travel-border-gray relative z1 block"></span>
+									<button type="button" class="travel-link travel-input-big nowrap rounded-right">
+										Sign up now
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--/ Right column -->
+
+					<!-- Left column -->
+					<div class="max-width-3 mx-auto px1 md-px2">
+						<div class="flex pt3 md-pt4 col-12 md-col-6 pr3">
+							<div class="col-2">
+								<a href="travel.amp" class="inline-block h2 line-height-1 circle white">
+									<svg class="travel-icon travel-icon-logo h2" viewBox="0 0 100 100"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-width="7.5"><circle cx="50" cy="50" r="45"></circle><path d="M20.395 83.158c-2.37-10.263-.79-18.553 4.737-24.87 8.29-9.472 17.763-1.183 26.052-9.472 8.29-8.29 2.37-18.948 10.658-26.053 5.526-4.737 12.237-6.316 20.132-4.737M39.084 95c-2.788-10.2-1.912-17.304 2.627-21.316 6.808-6.017 14.956-.68 24.088-9.623 9.13-8.94 3.062-17.133 10.255-23.534 4.795-4.267 10.282-5.668 16.46-4.203"></path></g></svg>          </a>
+							</div>
+							<div class="col-5">
+								<h4 class="travel-spacing-none mb2 h3 gray bold">Company</h4>
+								<div class="line-height-4 mb4">
+									<a href="#" class="travel-link block gray">About</a>
+									<a href="#" class="travel-link block gray">Careers</a>
+									<a href="#" class="travel-link block gray">Contact</a>
+								</div>
+							</div>
+							<div class="col-5">
+								<h4 class="travel-spacing-none mb2 h3 gray bold">Discover</h4>
+								<div class="line-height-4 mb4">
+									<a href="#" class="travel-link block gray">Activities</a>
+									<a href="#" class="travel-link block gray">Tours</a>
+									<a href="#" class="travel-link block gray">Experiences</a>
+									<a href="#" class="travel-link block gray">Featured Adventures</a>
+									<a href="#" class="travel-link block gray">Search</a>
+								</div>
+							</div>
+						</div>
+						<div class="py3 gray">
+							&copy; Copyright 2018
+						</div>
+					</div>
+					<!--/ Left column -->
+				</div>
+			</footer>
+			<!--/ Footer  -->
+		</div>
+	</div>
+</section>
+</body>
+</html>
