@@ -74,7 +74,7 @@ function amp_travel_get_popular_adventures( $adventures, $attributes ) {
 
 	$output .= '<div class="overflow-scroll">
 				<div class="travel-overflow-container">
-					<div class="flex px1 md-px2 mxn1">';
+					<div class="travel-overflow-wrap flex px1 md-px2 mxn1">';
 
 	$popular_classes = array(
 		'travel-popular-tilt-right',
@@ -266,8 +266,8 @@ function amp_travel_modify_comment_display( $text ) {
 	}
 	$rating = get_comment_meta( get_comment_ID(), 'rating', true );
 	if ( $rating ) {
-		$rating_html = '<div style="width:100%;" class="inline-block relative h3 line-height-2">
-							<div class="travel-results-result-stars green">';
+		$rating_html = '<div class="comment-review relative h3 line-height-2">
+							<div  class="travel-results-result-stars green">';
 
 		for ( $i = 0; $i < round( $rating ); $i++ ) {
 			$rating_html .= '★';
