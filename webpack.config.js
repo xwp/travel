@@ -8,7 +8,6 @@ module.exports = {
 		path: path.resolve( __dirname ),
 		filename: '[name].js'
 	},
-	watch: true,
 	devtool: 'cheap-eval-source-map',
 	module: {
 		rules: [
