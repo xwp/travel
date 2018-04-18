@@ -159,7 +159,7 @@ function amp_travel_comment_rating_field() {
 
 	for ( $i = 5; $i >= 1; $i-- ) {
 		/* translators: %d: Rating */
-		echo '<option value="' . esc_attr( $i ) . '">' . sprintf( _n( '%d star', '%d stars', $i, 'travel' ), number_format_i18n( $i ) ) . '</option>';
+		echo '<option value="' . esc_attr( $i ) . '">' . sprintf( esc_html( _n( '%d star', '%d stars', $i, 'travel' ) ), number_format_i18n( $i ) ) . '</option>';
 	}
 	echo '</select>
 		</p>';
