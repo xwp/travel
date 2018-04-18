@@ -22,14 +22,23 @@ function amp_travel_theme() {
  * @return string Output.
  */
 function amp_travel_render_similar_adventures() {
+	$terms = wp_get_post_terms( get_the_ID(), 'location', array(
+		'fields' => 'names',
+	) );
 
-	// @todo Add params to look for similar, not any adventure.
 	$adventures = get_posts(
 		array(
 			'post_type'   => 'adventure',
 			'numberposts' => 3,
 			'meta_key'    => '_thumbnail_id',
 			'exclude'     => array( get_the_ID() ),
+			'tax_query'   => array(
+				array(
+					'taxonomy' => 'location',
+					'field'    => 'name',
+					'terms'    => $terms,
+				),
+			),
 		)
 	);
 
@@ -150,7 +159,7 @@ function amp_travel_comment_rating_field() {
 
 	for ( $i = 5; $i >= 1; $i-- ) {
 		/* translators: %d: Rating */
-		echo '<option value="' . esc_attr( $i ) . '">' . sprintf( _n( '%d star', '%d stars', $i, 'travel' ), esc_attr( $i ) ) . '</option>';
+		echo '<option value="' . esc_attr( $i ) . '">' . sprintf( _n( '%d star', '%d stars', $i, 'travel' ), number_format_i18n( $i ) ) . '</option>';
 	}
 	echo '</select>
 		</p>';
