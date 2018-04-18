@@ -109,11 +109,7 @@ cd /tmp/amp-wp
 npm install --loglevel error > /dev/null
 composer install --no-dev
 npm run build
-version_append=$(git --no-pager log -1 --format="%h" --date=short)-$(date "+%Y%m%dT%H%M%S")
 rsync -avz --delete ./build/ "$repo_dir/$plugin_path/"
-cat ./build/amp.php |
-    sed "/^ \* Version:/ s/$/-$version_append/" |
-    sed "/^define( 'AMP__VERSION/ s/' );/-$version_append' );/" > "$repo_dir/$plugin_path/amp.php"
 git --no-pager log -1 --format="Build AMP plugin at %h: %s" > /tmp/commit-message.txt
 cd "$repo_dir"
 git add -A "$plugin_path"
