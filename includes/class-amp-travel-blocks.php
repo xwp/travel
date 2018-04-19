@@ -453,7 +453,7 @@ class AMP_Travel_Blocks {
 			$excerpt = get_the_excerpt( $discover_post['ID'] );
 		}
 
-		$output = '<section class="travel-discover py4 mb3 relative">
+		$output = '<section id="travel-discover" class="travel-discover py4 mb3 relative">
 				<div class="max-width-3 mx-auto px1 md-px2">
 					<div class="flex justify-between items-center">
 						<header>
