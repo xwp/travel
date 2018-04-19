@@ -51,7 +51,7 @@ export default registerBlockType(
 				<div key="bg-image" className="editor travel-hero-bg absolute col-12">
 					<img className="align-full absolute" width="100%" height="80vmax" src={ travelGlobals.siteUrl + '/wp-content/themes/travel/img/hero-1.jpg' } />
 				</div>,
-				<section className='travel-hero relative'>
+				<section key="hero" className='travel-hero relative'>
 					<div className='travel-hero-content-inner relative px1 md-px2 flex-auto self-end'>
 						<header>
 							<RichText
