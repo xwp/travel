@@ -5,7 +5,6 @@
  * @package WPAMPTheme
  */
 
-
 $locations = wp_get_post_terms( get_the_ID(), 'location', array(
 	'fields' => 'names',
 ) );

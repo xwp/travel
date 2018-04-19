@@ -20,11 +20,15 @@ get_header();
 						</div>
 						<div items>
 							<?php
-							/* Start the Loop */
-							while ( have_posts() ) :
-								the_post();
-								get_template_part( 'templates/entry/slim' );
-							endwhile;
+							if ( have_posts() ) :
+								/* Start the Loop */
+								while ( have_posts() ) :
+									the_post();
+									get_template_part( 'templates/entry/slim' );
+								endwhile;
+							else :
+								esc_html_e( 'No results found.', 'travel' );
+							endif;
 							?>
 						</div>
 						<div pagination></div>
