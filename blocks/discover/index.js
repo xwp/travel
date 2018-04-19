@@ -4,8 +4,8 @@
  * Internal block libraries.
  */
 const { __ } = wp.i18n;
-const { registerBlockType, RichText } = wp.blocks;
-const { withAPIData } = wp.components;
+const { registerBlockType, InspectorControls } = wp.blocks;
+const { withAPIData, TextControl, PanelBody } = wp.components;
 const { RawHTML } = wp.element;
 const { decodeEntities }  = wp.utils;
 
@@ -27,7 +27,7 @@ export default registerBlockType(
 			return {
 				posts: '/wp/v2/posts?per_page=1'
 			};
-		} )( ( { posts } ) => {
+		} )( ( { posts, isSelected, setAttributes, attributes: { heading, subheading } } ) => {
 			if ( ! posts.data ) {
 				return __( 'Loading...' );
 			}
@@ -49,19 +49,35 @@ export default registerBlockType(
 					</div>
 				);
 
-			return (
+			return [
+				isSelected && (
+					<InspectorControls key='inspector'>
+						<PanelBody title={ __( 'Discover block settings' ) }>
+							<TextControl
+								label={ __( 'Discover Header' ) }
+								value={ heading }
+								onChange={ ( value ) => setAttributes( { heading: value } ) }
+							/>
+							<TextControl
+								label={ __( 'Discover Sub-heading' ) }
+								value={ subheading }
+								onChange={ ( value ) => setAttributes( { subheading: value } ) }
+							/>
+						</PanelBody>
+					</InspectorControls>
+				),
 				<section className='travel-discover py4 mb3 relative'>
 					<div className='max-width-3 mx-auto'>
 						<div className='flex justify-between items-center'>
 							<header>
-								<h2 className='travel-discover-heading bold line-height-2 xs-hide sm-hide'>{ __( 'Discover Adventures' ) }</h2>
-								<div className='travel-discover-subheading h2 xs-hide sm-hide'>{ __( 'Get inspired and find your next big trip' ) }</div>
+								<h2 className='travel-discover-heading bold line-height-2 xs-hide sm-hide'>{ heading }</h2>
+								<div className='travel-discover-subheading h2 xs-hide sm-hide'>{ subheading }</div>
 							</header>
 							{ content }
 						</div>
 					</div>
 				</section>
-			);
+			];
 		} ),
 		save() {
 
