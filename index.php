@@ -23,9 +23,9 @@ get_header();
 
 	<!-- Hero -->
 	<div class="travel-hero-bg absolute col-12">
-		<amp-img class="travel-hero-bg-img absolute" src="<?php echo esc_html( get_template_directory_uri() ); ?>/img/hero-2.jpg" height="80vmax" noloading="" width="100vw"></amp-img>
-		<amp-img class="travel-hero-bg-img absolute" src="<?php echo esc_html( get_template_directory_uri() ); ?>/img/hero-3.jpg" height="80vmax" noloading="" width="100vw"></amp-img>
-		<amp-img class="travel-hero-bg-img absolute" src="<?php echo esc_html( get_template_directory_uri() ); ?>/img/hero-1.jpg" height="80vmax" noloading="" width="100vw"></amp-img>
+		<amp-img class="travel-hero-bg-img absolute" src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/hero-2.jpg" height="80vmax" noloading="" width="100vw"></amp-img>
+		<amp-img class="travel-hero-bg-img absolute" src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/hero-3.jpg" height="80vmax" noloading="" width="100vw"></amp-img>
+		<amp-img class="travel-hero-bg-img absolute" src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/hero-1.jpg" height="80vmax" noloading="" width="100vw"></amp-img>
 	</div>
 <?php
 if ( have_posts() ) :

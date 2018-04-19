@@ -16,7 +16,7 @@ export default registerBlockType(
 	{
 		title: __( 'Featured Destinations' ),
 		category: 'common',
-		icon: 'wordpress-alt',
+		icon: 'location-alt',
 		keywords: [
 			__( 'Featured destinations' ),
 			__( 'Adventures' ),

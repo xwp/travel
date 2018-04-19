@@ -18,7 +18,7 @@ export default registerBlockType(
 	{
 		title: __( 'Search' ),
 		category: 'common',
-		icon: 'wordpress-alt',
+		icon: 'search',
 		keywords: [
 			__( 'Adventure' ),
 			__( 'Travel' )
