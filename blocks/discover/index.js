@@ -66,7 +66,7 @@ export default registerBlockType(
 						</PanelBody>
 					</InspectorControls>
 				),
-				<section className='travel-discover py4 mb3 relative'>
+				<section key='discover' className='travel-discover py4 mb3 relative'>
 					<div className='max-width-3 mx-auto'>
 						<div className='flex justify-between items-center'>
 							<header>

@@ -54,7 +54,7 @@ export default registerBlockType(
 						</PanelBody>
 					</InspectorControls>
 				),
-				<section className='travel-activities pb4 pt3 relative'>
+				<section key='activities' className='travel-activities pb4 pt3 relative'>
 					<div className='max-width-3 mx-auto px1 md-px2'>
 						<h3 className='bold h1 line-height-2'>{ heading }</h3>
 					</div>

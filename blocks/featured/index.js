@@ -80,7 +80,7 @@ export default registerBlockType(
 						</PanelBody>
 					</InspectorControls>
 				),
-				<section className='travel-featured pt3 relative clearfix'>
+				<section key='featured' className='travel-featured pt3 relative clearfix'>
 					<header className='max-width-2 mx-auto px1 md-px2 relative'>
 						<h3 className='travel-featured-heading h1 bold line-height-2 mb2 center'>{ heading }</h3>
 					</header>

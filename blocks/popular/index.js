@@ -4,8 +4,8 @@
  * Internal block libraries.
  */
 const { __ } = wp.i18n;
-const { registerBlockType, RichText } = wp.blocks;
-const { Placeholder, withAPIData } = wp.components;
+const { registerBlockType, InspectorControls } = wp.blocks;
+const { Placeholder, withAPIData, TextControl, PanelBody } = wp.components;
 
 /**
  * Register block.
@@ -26,7 +26,7 @@ export default registerBlockType(
 			return {
 				popularPosts: '/wp/v2/adventures?per_page=3&orderby=meta_value_num&meta_key=amp_travel_rating&_embed'
 			};
-		} )( ( { popularPosts } ) => { // eslint-disable-line
+		} )( ( { popularPosts, isSelected, setAttributes, attributes: { heading } } ) => { // eslint-disable-line
 			const popularPostsCount = 3;
 			const hasAdventures = Array.isArray( popularPosts.data ) && popularPosts.data.length;
 			if ( ! hasAdventures || popularPostsCount !== popularPosts.data.length ) {
@@ -44,10 +44,21 @@ export default registerBlockType(
 				'travel-popular-tilt-left'
 			];
 
-			return (
-				<section className='travel-popular pb4 pt3 relative'>
+			return [
+				isSelected && (
+					<InspectorControls key='inspector'>
+						<PanelBody title={ __( 'Popular block settings' ) }>
+							<TextControl
+								label={ __( 'Popular Adventures Header' ) }
+								value={ heading }
+								onChange={ ( value ) => setAttributes( { heading: value } ) } // eslint-disable-line
+							/>
+						</PanelBody>
+					</InspectorControls>
+				),
+				<section key='popular' className='travel-popular pb4 pt3 relative'>
 					<header className='max-width-3 mx-auto px1 md-px2'>
-						<h3 className='h1 bold line-height-2'>{ __( 'Top Adventures' ) }</h3>
+						<h3 className='h1 bold line-height-2'>{ heading }</h3>
 					</header>
 					<div className='overflow-scroll'>
 						<div className='travel-overflow-container'>
@@ -87,7 +98,7 @@ export default registerBlockType(
 						</div>
 					</div>
 				</section>
-			);
+			];
 		}),
 		save() {
 
