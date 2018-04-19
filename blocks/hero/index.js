@@ -127,7 +127,7 @@ export default registerBlockType(
 
 			return (
 				<section className='travel-hero relative'>
-					<div className='travel-hero-content max-width-3 mx-auto absolute top-0 left-0 right-0 flex self-end items-center'>
+					<div className='travel-hero-content max-width-3 mx-auto relative top-0 left-0 right-0 flex self-end items-center'>
 						<div className='travel-hero-content-inner relative px1 md-px2 flex-auto self-end'>
 							<header>
 								<h1 className='travel-hero-heading mb2 line-height-1'>{ attributes.heading }</h1>

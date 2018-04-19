@@ -34,11 +34,11 @@ export default registerBlockType(
 
 			const content = 0 === posts.data.length ?
 				(
-					<div className='travel-discover-panel travel-shadow-hover px3 py2 ml1 mr3 myn3 xs-hide sm-hide'>
+					<div className='travel-discover-panel travel-shadow-hover px3 py2 ml1 mr3 myn3'>
 						<div>{ __( 'No posts found, add some to use the block.' ) }</div>
 					</div> ) :
 				(
-					<div className='travel-discover-panel travel-shadow-hover px3 py2 ml1 myn3 xs-hide sm-hide'>
+					<div className='travel-discover-panel travel-shadow-hover px3 py2 ml1 myn3'>
 						<div className='bold h2 line-height-2 my1'>{ posts.data[0].title.rendered }</div>
 						<p className='travel-discover-panel-subheading h3 my1 line-height-2'>
 							<RawHTML key='html'>{ decodeEntities( posts.data[0].excerpt.rendered ) }</RawHTML>
@@ -50,7 +50,7 @@ export default registerBlockType(
 				);
 
 			return (
-				<section className='travel-discover py4 mb3 relative xs-hide sm-hide'>
+				<section className='travel-discover py4 mb3 relative'>
 					<div className='max-width-3 mx-auto'>
 						<div className='flex justify-between items-center'>
 							<header>
