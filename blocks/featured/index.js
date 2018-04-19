@@ -5,8 +5,8 @@
  * Internal block libraries.
  */
 const { __ } = wp.i18n;
-const { registerBlockType } = wp.blocks;
-const { Placeholder, withAPIData } = wp.components;
+const { registerBlockType, InspectorControls } = wp.blocks;
+const { Placeholder, withAPIData, TextControl, PanelBody } = wp.components;
 
 /**
  * Register block.
@@ -23,24 +23,16 @@ export default registerBlockType(
 			__( 'Travel' )
 		],
 
-		attributes: {
-			heading: {
-				selector: '.travel-featured-heading',
-				source: 'children',
-				type: 'array'
-			}
-		},
-
 		edit: withAPIData( () => {
 			return {
 				featuredLocations: '/wp/v2/locations?per_page=6&meta_value=1&meta_key=amp_travel_featured'
 			};
-		} )( ( { featuredLocations } ) => { // eslint-disable-line
+		} )( ( { featuredLocations, isSelected, setAttributes, attributes: { heading } } ) => { // eslint-disable-line
 			const hasLocations = Array.isArray( featuredLocations.data ) && 6 <= featuredLocations.data.length;
 			if ( ! hasLocations ) {
 				return (
-					<Placeholder key="placeholder"
-								icon="admin-post"
+					<Placeholder key='placeholder'
+								icon='admin-post'
 								label={ __( 'Locations' ) }
 					>
 						{ __( 'Not enough featured locations found. Please add at least six "Locations" terms, select an image, and check "Featured destination."' ) }
@@ -76,10 +68,21 @@ export default registerBlockType(
 				}
 			];
 
-			return (
-				<section className='travel-featured pt3 relative clearfix'>
+			return [
+				isSelected && (
+					<InspectorControls key='inspector'>
+						<PanelBody title={ __( 'Featured Destinations settings' ) }>
+							<TextControl
+								label={ __( 'Featured Destinations Header' ) }
+								value={ heading }
+								onChange={ ( value ) => setAttributes( { heading: value } ) } // eslint-disable-line
+							/>
+						</PanelBody>
+					</InspectorControls>
+				),
+				<section key='featured' className='travel-featured pt3 relative clearfix'>
 					<header className='max-width-2 mx-auto px1 md-px2 relative'>
-						<h3 className='travel-featured-heading h1 bold line-height-2 mb2 center'>{ __( 'Featured Destinations' ) }</h3>
+						<h3 className='travel-featured-heading h1 bold line-height-2 mb2 center'>{ heading }</h3>
 					</header>
 					<div className='max-width-3 mx-auto relative'>
 						<div className='travel-featured-grid flex flex-wrap items-stretch'>
@@ -136,7 +139,7 @@ export default registerBlockType(
 						</div>
 					</div>
 				</section>
-			);
+			];
 		} ), // eslint-disable-line
 		save() {
 

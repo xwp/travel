@@ -6,8 +6,8 @@
  * Internal block libraries.
  */
 const { __ } = wp.i18n;
-const { registerBlockType, RichText } = wp.blocks;
-const { Placeholder, withAPIData } = wp.components;
+const { registerBlockType, InspectorControls } = wp.blocks;
+const { Placeholder, withAPIData, TextControl, PanelBody } = wp.components;
 const { RawHTML } = wp.element;
 const { decodeEntities } = wp.utils;
 
@@ -29,7 +29,7 @@ export default registerBlockType(
 			return {
 				activityResults: '/wp/v2/activities'
 			};
-		} )( ( { activityResults } ) => {
+		} )( ( { activityResults, isSelected, setAttributes, attributes: { heading } } ) => {
 			const hasActivities = Array.isArray( activityResults.data ) && activityResults.data.length;
 			if ( ! hasActivities ) {
 				return (
@@ -42,10 +42,21 @@ export default registerBlockType(
 
 			const activities = activityResults.data;
 
-			return (
-				<section className='travel-activities pb4 pt3 relative'>
+			return [
+				isSelected && (
+					<InspectorControls key='inspector'>
+						<PanelBody title={ __( 'Activity List settings' ) }>
+							<TextControl
+								label={ __( 'Activity List Header' ) }
+								value={ heading }
+								onChange={ ( value ) => setAttributes( { heading: value } ) }
+							/>
+						</PanelBody>
+					</InspectorControls>
+				),
+				<section key='activities' className='travel-activities pb4 pt3 relative'>
 					<div className='max-width-3 mx-auto px1 md-px2'>
-						<h3 className='bold h1 line-height-2'>{ __( 'Browse by activity' ) }</h3>
+						<h3 className='bold h1 line-height-2'>{ heading }</h3>
 					</div>
 					<div className='overflow-scroll'>
 						<div className='travel-overflow-container'>
@@ -67,7 +78,7 @@ export default registerBlockType(
 						</div>
 					</div>
 				</section>
-			);
+			];
 		} ),
 		save() {
 
