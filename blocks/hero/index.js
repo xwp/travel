@@ -48,8 +48,8 @@ export default registerBlockType(
 			const { heading, subheading, ctaText } = attributes;
 
 			return [
-				<div className="travel-hero-bg absolute col-12">
-					<img className="absolute" width="100%" height="80vmax" src="http://localhost:8888/wordpress/wp-content/themes/travel/img/hero-1.jpg"/>
+				<div key="bg-image" className="editor travel-hero-bg absolute col-12">
+					<img className="align-full absolute" width="100%" height="80vmax" src={ travelGlobals.siteUrl + '/wp-content/themes/travel/img/hero-1.jpg' } />
 				</div>,
 				<section className='travel-hero relative'>
 					<div className='travel-hero-content-inner relative px1 md-px2 flex-auto self-end'>
@@ -106,7 +106,7 @@ export default registerBlockType(
 						</div>
 					</div>
 				</section>,
-				<div className='travel-angles max-width-3 mx-auto'>
+				<div key="travel-angles" className='travel-angles max-width-3 mx-auto'>
 					<div className='travel-angle-left'>
 						<div className='travel-angle-1 absolute'></div>
 					</div>
