@@ -453,14 +453,14 @@ class AMP_Travel_Blocks {
 			$excerpt = get_the_excerpt( $discover_post['ID'] );
 		}
 
-		$output = '<section id="travel-discover" class="travel-discover py4 mb3 relative xs-hide sm-hide">
+		$output = '<section id="travel-discover" class="travel-discover py4 mb3 relative">
 				<div class="max-width-3 mx-auto px1 md-px2">
 					<div class="flex justify-between items-center">
 						<header>
 							<h2 class="travel-discover-heading bold line-height-2 xs-hide sm-hide">' . esc_html( $heading ) . '</h2>
 							<div class="travel-discover-subheading h2 xs-hide sm-hide">' . esc_html( $subheading ) . '</div>
 						</header>
-						<div class="travel-discover-panel travel-shadow-hover px3 py2 ml1 mr3 myn3 xs-hide sm-hide">
+						<div class="travel-discover-panel travel-shadow-hover px3 py2 ml1 mr3 myn3">
 							<div class="bold h2 line-height-2 my1">' . esc_html( $title ) . '</div>
 							<p class="travel-discover-panel-subheading h3 my1 line-height-2">
 								' . esc_html( $excerpt ) . '
