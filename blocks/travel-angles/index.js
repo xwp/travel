@@ -12,7 +12,7 @@ export default registerBlockType(
 	{
 		title: __( 'Travel Angles' ),
 		category: 'common',
-		icon: 'wordpress-alt',
+		icon: 'format-image',
 		keywords: [
 			__( 'Design' )
 		],

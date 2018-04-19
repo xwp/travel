@@ -19,7 +19,7 @@ export default registerBlockType(
 		title: __( 'Hero block' ),
 		description: __( 'Hero block of the Travel theme. Includes main heading, subheading, and search with datepicker.' ),
 		category: 'common',
-		icon: 'wordpress-alt',
+		icon: 'slides',
 		keywords: [
 			__( 'Main header' ),
 			__( 'Heading' ),

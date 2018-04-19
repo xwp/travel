@@ -19,7 +19,7 @@ export default registerBlockType(
 	{
 		title: __( 'Activity list' ),
 		category: 'common',
-		icon: 'wordpress-alt',
+		icon: 'tickets',
 		keywords: [
 			__( 'Browse activities' ),
 			__( 'Travel' )
