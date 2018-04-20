@@ -51,3 +51,7 @@ html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-t
 .travel-search-input.blocks-rich-text {
     width: 100%;
 }
+
+.editor-block-list__layout {
+    overflow: hidden;
+}
