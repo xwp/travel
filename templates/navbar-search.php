@@ -21,9 +21,9 @@
 							<?php esc_html_e( 'Results for:', 'travel' ); ?>
 						</div>
 						<div class="travel-results-navbar-subheading h6 caps line-height-4">
-							<?php echo ! empty( $_GET['s'] ) ? esc_attr( $_GET['s'] ) . '•' : ''; ?>
-							<?php echo ! empty( $_GET['start'] ) ? sprintf( 'From %s', esc_attr( $_GET['start'] ) ) : ''; ?>
-							<?php echo ! empty( $_GET['end'] ) ? sprintf( 'Until %s', esc_attr( $_GET['end'] ) ) : ''; ?>
+							<?php echo ! empty( $_GET['s'] ) ? esc_html( $_GET['s'] ) . '•' : ''; ?>
+							<?php echo ! empty( $_GET['start'] ) ? sprintf( 'From %s', esc_html( $_GET['start'] ) ) : ''; ?>
+							<?php echo ! empty( $_GET['end'] ) ? sprintf( 'Until %s', esc_html( $_GET['end'] ) ) : ''; ?>
 						</div>
 					</div>
 				</div>
@@ -34,8 +34,7 @@
 							<input class="travel-input travel-input-dark rounded" type="text" name="query" placeholder="<?php esc_html_e( 'Search' ); ?>" on='
 								input-throttled:AMP.setState({
 									fields_query: event.value,
-									fields_query_live: event.value,
-									fields_query_edited: query_query != event.value
+									fields_query_live: event.value
 								});' value="<?php echo esc_attr( $_GET['s'] ); ?>">
 						</label>
 						<label class="travel-date-input travel-input-dark travel-date-input-touched bold relative rounded ml2">
@@ -60,7 +59,8 @@
 								<?php esc_html_e( 'Return', 'travel' ); ?>
 							</div>
 						</label>
-						<a href="<?php echo esc_url( site_url() ); ?>?s=<?php echo esc_attr( $_GET['s'] ); ?>" [href]="'<?php echo esc_url( site_url() ); ?>?s=' + fields_query_live + '&start=' + (fields_start || '') + '&end=' + (fields_end || '')" class="search-travel-btn travel-input travel-input-dark rounded ampstart-btn white bold">
+						<a href="<?php echo esc_url( amp_travel_get_current_search_url() ); ?>"
+						[href]="'<?php echo esc_url( site_url() ); ?>?s=' + fields_query_live + '&start=' + (fields_start || '') + '&end=' + (fields_end || '')" class="search-travel-btn travel-input travel-input-dark rounded ampstart-btn white bold">
 							<?php esc_html_e( 'Find adventures', 'travel' ); ?>
 						</a>
 					</div>

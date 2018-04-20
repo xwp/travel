@@ -14,9 +14,7 @@
 	</div>
 	<div class="h2 line-height-2 mb1">
 		<span class="travel-results-result-text"><?php echo get_the_title(); ?></span>
-		<span class="travel-results-result-subtext h3">&bull;</span>
-		<span class="travel-results-result-subtext h3">$&nbsp;</span>
-		<span class="bold"><?php echo esc_html( get_post_meta( get_the_ID(), 'amp_travel_price', true ) ); ?></span>
+		<?php get_template_part( 'templates/entry/meta/price' ); ?>
 	</div>
 	<?php get_template_part( 'templates/entry/meta/slim-meta' ); ?>
 </div>
