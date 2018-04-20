@@ -30,17 +30,20 @@ export default registerBlockType(
 			heading: {
 				source: 'children',
 				type: 'array',
-				selector: 'h1'
+				selector: 'h1',
+				default: __( 'Adventures made easy' )
 			},
 			subheading: {
 				source: 'children',
 				type: 'array',
-				selector: '.travel-hero-subheading'
+				selector: '.travel-hero-subheading',
+				default: __( 'Find and book activities, tours, and experiences.' )
 			},
 			ctaText: {
 				source: 'children',
 				type: 'array',
-				selector: 'a.ampstart-btn'
+				selector: 'a.ampstart-btn',
+				default: __( 'Find Adventures & Tours' )
 			}
 		},
 
@@ -55,20 +58,18 @@ export default registerBlockType(
 					<div className='travel-hero-content-inner relative px1 md-px2 flex-auto self-end'>
 						<header>
 							<RichText
-								key='editable'
+								key='heading-editable'
 								className='travel-hero-heading mb2 line-height-1'
 								tagName='h1'
 								value={ heading }
 								onChange={ ( value ) => setAttributes( { heading: value } ) }
-								placeholder={ __( 'Adventures made easy' ) }
 							/>
 							<RichText
-								key='editable'
+								key='subheading-editable'
 								className='travel-hero-subheading line-height-2 bold xs-hide sm-hide'
 								tagName='h2'
 								value={ subheading }
 								onChange={ ( value ) => setAttributes( { subheading: value } ) }
-								placeholder={ __( 'Find and book activities, tours, and experiences.' ) }
 							/>
 						</header>
 						<div className='travel-hero-search'>
@@ -95,9 +96,9 @@ export default registerBlockType(
 
 							<RichText
 								className='ampstart-btn travel-input-big rounded center bold white block col-12'
-								key='editable'
+								key='cta-editable'
 								tagName='a'
-								value={ ctaText || [ __( 'Find Adventures & Tours' ) ] }
+								value={ ctaText }
 								onChange={ ( value ) => setAttributes( { ctaText: value } ) }
 							/>
 							<a className='travel-hero-discover block center mx-auto mt1 md-hide lg-hide'>
