@@ -12,5 +12,4 @@ if ( empty( $price ) ) {
 }
 ?>
 <span class="travel-results-result-subtext h3">&bull;</span>
-<span class="travel-results-result-subtext h3">$&nbsp;</span>
-<span class="bold"><?php echo esc_html( get_post_meta( get_the_ID(), 'amp_travel_price', true ) ); ?></span>
+<span class="travel-results-result-subtext h3">$&nbsp;</span><span class="bold"><?php echo esc_html( get_post_meta( get_the_ID(), 'amp_travel_price', true ) ); ?></span>
