@@ -58,23 +58,21 @@ export default registerBlockType(
 					<div className='max-width-3 mx-auto px1 md-px2'>
 						<h3 className='bold h1 line-height-2'>{ heading }</h3>
 					</div>
-					<div className='overflow-scroll'>
-						<div className='travel-overflow-container'>
-							<div className='flex p1 md-px1 mxn1'>
-								{ activities.map( ( activity, i ) =>
-									<a key='activity' href={ activity.link } className={ 'travel-activities-activity mx1 travel-type-' + activity.slug } target="_blank">
-										<div className='travel-shadow circle inline-block'>
-											<div className='travel-activities-activity-icon'>
-												<RawHTML key='html'>{ decodeEntities( activity.svg ) }</RawHTML>
-												<RawHTML key='html'>{ decodeEntities( activity.meta.amp_travel_activity_svg ) }</RawHTML>
-											</div>
+					<div className='travel-overflow-container'>
+						<div className='flex flex-wrap p1 md-px1 mxn1'>
+							{ activities.map( ( activity, i ) =>
+								<a key='activity' href={ activity.link } className={ 'travel-activities-activity mx1 travel-type-' + activity.slug } target="_blank">
+									<div className='travel-shadow circle inline-block'>
+										<div className='travel-activities-activity-icon'>
+											<RawHTML key='html'>{ decodeEntities( activity.svg ) }</RawHTML>
+											<RawHTML key='html'>{ decodeEntities( activity.meta.amp_travel_activity_svg ) }</RawHTML>
 										</div>
-										<p className='bold center line-height-4'>
-											{ activity.name }
-										</p>
-									</a>
-								) }
-							</div>
+									</div>
+									<p className='bold center line-height-4'>
+										{ activity.name }
+									</p>
+								</a>
+							) }
 						</div>
 					</div>
 				</section>
