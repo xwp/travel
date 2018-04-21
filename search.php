@@ -18,7 +18,7 @@ get_header();
 						<div update class="live-list__button">
 							<button class="button" on="tap:amp-travel-posts-list.update"><?php esc_html_e( 'Load Newer Adventures', 'travel' ); ?></button>
 						</div>
-						<div items>
+						<div class="flex flex-wrap mxn1 flex-auto" items>
 							<?php
 							if ( have_posts() ) :
 								/* Start the Loop */
