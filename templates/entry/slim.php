@@ -10,7 +10,7 @@
 	<div class="relative travel-results-result">
 		<a class="travel-results-result-link" href="<?php the_permalink(); ?>">
 			<?php
-				$image_data   = wp_get_attachment_image_src( get_post_thumbnail_id() );
+				$image_data   = wp_get_attachment_image_src( get_post_thumbnail_id(), 'travel-600x300' );
 				$image_url    = $image_data[0];
 				$image_width  = $image_data[1];
 				$image_height = $image_data[2];
