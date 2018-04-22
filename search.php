@@ -1,55 +1,43 @@
 <?php
 /**
- * This is a placeholder for search template.
+ * Search template.
  *
  * @package WPAMPTheme
- * @todo Create a proper template.
  */
 
-// Ignore the issues of this file since that's just a copied HTML placeholder and contains issues.
-
-// @codingStandardsIgnoreFile
 get_header();
 ?>
 <div class="travel-overlay-fx-scale">
-    <div class="travel-no-focus flex-auto overflow-auto" role="button" tabindex="-1" on="tap:AMP.setState({ui_filterPane: false, ui_reset: false, ui_sortPane: false})">
+	<div class="travel-no-focus flex-auto overflow-auto" role="button" tabindex="-1">
 
-        <!-- Results -->
-        <section class="travel-results pb1 md-pt1">
-            <div class="travel-inline-list travel-results-list">
-                <div class="max-width-3 mx-auto px1 md-px2">
-                    <?php if ( have_posts() ): while ( have_posts() ) : ?>
-                        <?php the_post(); ?>
-                        <div class="col-12 sm-col-6 lg-col-4 p1 travel-results-result" style="float:left;">
-                            <div class="relative travel-results-result">
-                                <a class="travel-results-result-link" href="<?php the_permalink(); ?>">
-                                    <amp-img class="rounded bg-silver mb1" width="2" height="1" noloading="" layout="responsive" src="<?php echo wp_get_attachment_url( get_post_thumbnail_id() ); ?>" ></amp-img>
-                                </a>
-                            </div>
-                            <div class="h2 line-height-2 mb1">
-                                <span class="travel-results-result-text"><?php echo get_the_title(); ?></span>
-                                <span class="travel-results-result-subtext h3">&bull;</span>
-                                <span class="travel-results-result-subtext h3">$&nbsp;</span>
-                                <span class="bold">100</span>
-                            </div>
-                            <div class="h4 line-height-2">
-                                <div class="inline-block relative mr1 h3 line-height-2">
-
-                                </div>
-                                <span class="travel-results-result-subtext mr1">Not Yet Reviewed</span>
-                                <span class="nowrap">
-                                        --
-                                    </span>
-                            </div>
-                        </div>
-                    <?php
-                    endwhile;
-                    else: ?>
-                    <div>No results</div>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </section>
-        <!--/ Results -->
-    </div>
+		<!-- Results -->
+		<section class="travel-results pb1 md-pt1">
+			<div class="travel-inline-list travel-results-list">
+				<div class="max-width-3 mx-auto px1 md-px2">
+					<amp-live-list id="amp-travel-posts-list" class="live-list" data-poll-interval="<?php echo esc_attr( AMP_TRAVEL_LIVE_LIST_POLL_INTERVAL ); ?>" data-max-items-per-page="<?php echo esc_attr( get_option( 'posts_per_page' ) ); ?>">
+						<div update class="live-list__button">
+							<button class="button" on="tap:amp-travel-posts-list.update"><?php esc_html_e( 'Load Newer Adventures', 'travel' ); ?></button>
+						</div>
+						<div class="flex flex-wrap mxn1 flex-auto" items>
+							<?php
+							if ( have_posts() ) :
+								/* Start the Loop */
+								while ( have_posts() ) :
+									the_post();
+									get_template_part( 'templates/entry/slim' );
+								endwhile;
+							else :
+								esc_html_e( 'No results found.', 'travel' );
+							endif;
+							?>
+						</div>
+						<div pagination></div>
+					</amp-live-list>
+				</div>
+			</div>
+		</section>
+		<!--/ Results -->
+	</div>
 </div>
+
+<?php get_footer(); ?>

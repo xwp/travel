@@ -123,7 +123,7 @@ function amp_travel_get_popular_adventures( $adventures, $attributes ) {
 			</div>
 			<span class="travel-results-result-subtext mr1">' .
 			/* translators: %d: The number of reviews */
-			sprintf( esc_html__( '%d Reviews', 'travel' ), esc_html( $reviews->approved ) ) . '</span>
+			sprintf( esc_html( _n( '%d Review', '%d Reviews', $reviews->approved, 'travel' ) ), esc_html( $reviews->approved ) ) . '</span>
 				<span class="travel-results-result-subtext"><svg class="travel-icon" viewBox="0 0 77 100"><g fill="none" fill-rule="evenodd"><path stroke="currentColor" stroke-width="7.5" d="M38.794 93.248C58.264 67.825 68 49.692 68 38.848 68 22.365 54.57 9 38 9S8 22.364 8 38.85c0 10.842 9.735 28.975 29.206 54.398a1 1 0 0 0 1.588 0z"></path><circle cx="38" cy="39" r="10" fill="currentColor"></circle></g></svg>
 				' . esc_html( $location ) . '</span>
 			</div>
@@ -304,13 +304,32 @@ function amp_travel_states() {
 
 		<amp-state id="fields_query"><script type="application/json">""</script></amp-state>
 		<amp-state id="fields_query_initial"><script type="application/json">""</script></amp-state>
-		<amp-state id="fields_query_live"><script type="application/json">""</script></amp-state>
-		<amp-state id="fields_query_edited"><script type="application/json">false</script></amp-state>
-		<amp-state id="query_query"><script type="application/json">""</script></amp-state>
+		<amp-state id="fields_query_live"><script type="application/json"><?php echo isset( $_GET['s'] ) ? sprintf( '"%s"', esc_html( $_GET['s'] ) ) : ''; ?></script></amp-state>
+		<amp-state id="query_query"><script type="application/json"><?php echo isset( $_GET['s'] ) ? sprintf( '"%s"', esc_html( $_GET['s'] ) ) : ''; ?></script></amp-state>
 
-		<amp-state id="fields_start"><script type="application/json">""</script></amp-state>
-		<amp-state id="fields_end"><script type="application/json">""</script></amp-state>
+		<amp-state id="fields_start"><script type="application/json"><?php echo isset( $_GET['start'] ) ? sprintf( '"%s"', esc_html( $_GET['start'] ) ) : ''; ?></script></amp-state>
+		<amp-state id="fields_end"><script type="application/json"><?php echo isset( $_GET['end'] ) ? sprintf( '"%s"', esc_html( $_GET['end'] ) ) : ''; ?></script></amp-state>
 	<?php
 	endif;
 }
 add_action( 'wp_footer', 'amp_travel_states' );
+
+/**
+ * Put together current search URL for search.php link.
+ *
+ * @return string
+ */
+function amp_travel_get_current_search_url() {
+	$url        = site_url() . '?s=' . sanitize_text_field( wp_unslash( $_GET['s'] ) );
+	$start_date = ! empty( $_GET['start'] ) ? sanitize_text_field( wp_unslash( $_GET['start'] ) ) : '';
+	$end_date   = ! empty( $_GET['end'] ) ? sanitize_text_field( wp_unslash( $_GET['end'] ) ) : '';
+
+	if ( ! empty( $start_date ) ) {
+		$url .= '&start=' . $start_date;
+	}
+	if ( ! empty( $end_date ) ) {
+		$url .= '&end=' . $end_date;
+	}
+
+	return $url;
+}
