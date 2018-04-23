@@ -7,7 +7,7 @@
  */
 
 ?>
-<?php if ( ! is_search() ): ?>
+<?php if ( ! is_search() ) : ?>
 			<!-- Footer -->
 			<footer class="travel-footer overflow-hidden">
 
