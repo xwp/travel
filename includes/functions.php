@@ -333,3 +333,15 @@ function amp_travel_get_current_search_url() {
 
 	return $url;
 }
+
+/**
+ * Register footer menus.
+ */
+function amp_travel_register_footer_menus() {
+	register_nav_menus(
+		array(
+			'footer-menu' => __( 'Footer Menu', 'travel' ),
+		)
+	);
+}
+add_action( 'init', 'amp_travel_register_footer_menus' );

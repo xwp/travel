@@ -44,6 +44,7 @@ class AMP_Travel_Theme {
 		require_once $dir . '/includes/class-amp-travel-blocks.php';
 		require_once $dir . '/includes/class-amp-travel-cpt.php';
 		require_once $dir . '/includes/class-amp-travel-taxonomies.php';
+		require_once $dir . '/includes/class-amp-travel-footer-menu-walker.php';
 	}
 
 	/**
