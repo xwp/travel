@@ -1,6 +1,6 @@
 <?php
 /**
- * Search template.
+ * Template for displaying archive.
  *
  * @package WPAMPTheme
  */

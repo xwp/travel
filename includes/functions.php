@@ -147,6 +147,8 @@ function amp_travel_enqueue_styles() {
 		wp_enqueue_style( 'amp_travel_adventure', get_template_directory_uri() . '/assets/css/adventure.css' );
 	} elseif ( is_search() ) {
 		wp_enqueue_style( 'amp_travel_search', get_template_directory_uri() . '/assets/css/search.css' );
+	} elseif ( is_archive() ) {
+		wp_enqueue_style( 'amp_travel_archive', get_template_directory_uri() . '/assets/css/archive.css' );
 	} else {
 		wp_enqueue_style( 'amp_travel_homepage', get_template_directory_uri() . '/assets/css/homepage.css' );
 	}
@@ -304,11 +306,14 @@ function amp_travel_states() {
 
 		<amp-state id="fields_query"><script type="application/json">""</script></amp-state>
 		<amp-state id="fields_query_initial"><script type="application/json">""</script></amp-state>
-		<amp-state id="fields_query_live"><script type="application/json"><?php echo isset( $_GET['s'] ) ? sprintf( '"%s"', esc_html( $_GET['s'] ) ) : ''; ?></script></amp-state>
-		<amp-state id="query_query"><script type="application/json"><?php echo isset( $_GET['s'] ) ? sprintf( '"%s"', esc_html( $_GET['s'] ) ) : ''; ?></script></amp-state>
 
-		<amp-state id="fields_start"><script type="application/json"><?php echo isset( $_GET['start'] ) ? sprintf( '"%s"', esc_html( $_GET['start'] ) ) : ''; ?></script></amp-state>
-		<amp-state id="fields_end"><script type="application/json"><?php echo isset( $_GET['end'] ) ? sprintf( '"%s"', esc_html( $_GET['end'] ) ) : ''; ?></script></amp-state>
+		<?php if ( is_search() ) : ?>
+			<amp-state id="fields_query_live"><script type="application/json"><?php echo isset( $_GET['s'] ) ? sprintf( '"%s"', esc_html( $_GET['s'] ) ) : '""'; ?></script></amp-state>
+			<amp-state id="query_query"><script type="application/json"><?php echo isset( $_GET['s'] ) ? sprintf( '"%s"', esc_html( $_GET['s'] ) ) : '""'; ?></script></amp-state>
+
+			<amp-state id="fields_start"><script type="application/json"><?php echo isset( $_GET['start'] ) ? sprintf( '"%s"', esc_html( $_GET['start'] ) ) : '""'; ?></script></amp-state>
+			<amp-state id="fields_end"><script type="application/json"><?php echo isset( $_GET['end'] ) ? sprintf( '"%s"', esc_html( $_GET['end'] ) ) : '""'; ?></script></amp-state>
+		<?php endif; ?>
 	<?php
 	endif;
 }
