@@ -276,8 +276,7 @@ class AMP_Travel_Blocks {
 						<h3 class='bold h1 line-height-2 mb2 xs-hide sm-hide center'>" . esc_attr( $heading ) . '</h3>
 					</div>';
 		}
-		$output .= "<div class='overflow-scroll'>
-						<div class='travel-overflow-container'>
+		$output .= "<div class='travel-overflow-container'>
 							<div class='flex justify-center p1 md-px1 mxn1'>";
 
 		foreach ( $activities as $activity ) {
@@ -293,7 +292,6 @@ class AMP_Travel_Blocks {
 		}
 
 		$output .= '</div>
-						</div>
 					</div>
 				</section>';
 		return $output;
