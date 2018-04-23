@@ -16,7 +16,7 @@
 			<div class="archive-title flex flex-auto items-center">
 				<div>
 					<div class="h3 line-height-2 bold">
-						<?php echo esc_html( get_the_archive_title() ); ?>
+						<?php echo wp_kses_post( get_the_archive_title() ); ?>
 					</div>
 				</div>
 			</div>
