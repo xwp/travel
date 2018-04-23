@@ -9,7 +9,7 @@
 // Ignore the issues of this file since that's just a copied HTML placeholder.
 // @codingStandardsIgnoreFile
 ?>
-<?php if ( ! is_search() ): ?>
+<?php if ( ! is_search() && ! is_archive() ): ?>
 <!-- Footer -->
 	<footer class="travel-footer overflow-hidden">
 
