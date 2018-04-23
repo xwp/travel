@@ -1,6 +1,6 @@
 <?php
 /**
- * Search template.
+ * Template for displaying archive.
  *
  * @package WPAMPTheme
  */
@@ -21,5 +21,3 @@ get_header();
 		<!--/ Results -->
 	</div>
 </div>
-
-<?php get_footer(); ?>
