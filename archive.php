@@ -21,3 +21,5 @@ get_header();
 		<!--/ Results -->
 	</div>
 </div>
+
+<?php get_footer(); ?>
