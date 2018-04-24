@@ -7,7 +7,6 @@
  */
 
 ?>
-<?php if ( ! is_search() ) : ?>
 	<!-- Footer -->
 	<footer class="travel-footer overflow-hidden">
 		<div class="relative bg-black">
@@ -63,7 +62,6 @@
 			<!--/ Left column -->
 		</div>
 	</footer>
-<?php endif; ?>
 <!--/ Footer  -->
 <?php wp_footer(); ?>
 
