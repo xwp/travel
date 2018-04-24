@@ -35,7 +35,7 @@
 								input-throttled:AMP.setState({
 									fields_query: event.value,
 									fields_query_live: event.value
-								});' value="<?php echo esc_attr( $_GET['s'] ); ?>">
+								});' value="<?php echo isset( $_GET['s'] ) ? esc_attr( $_GET['s'] ) : ''; ?>">
 						</label>
 						<label class="travel-date-input travel-input-dark travel-date-input-touched bold relative rounded ml2">
 							<input class="block relative p0 z1" type="date" placeholder="yyyy-mm-dd" on='
@@ -60,7 +60,7 @@
 							</div>
 						</label>
 						<a href="<?php echo esc_url( amp_travel_get_current_search_url() ); ?>"
-						[href]="'<?php echo esc_url( site_url() ); ?>?s=' + fields_query_live + '&start=' + (fields_start || '') + '&end=' + (fields_end || '')" class="search-travel-btn travel-input travel-input-dark rounded ampstart-btn white bold">
+						[href]="'<?php echo esc_url( site_url() ); ?>?s=' + fields_query_live + '&start=' + (fields_start || '') + '&end=' + (fields_end || '')" class="search-travel-btn travel-input travel-input-white rounded ampstart-btn bold">
 							<?php esc_html_e( 'Find adventures', 'travel' ); ?>
 						</a>
 					</div>

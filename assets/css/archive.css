@@ -9,3 +9,7 @@
 .archive-title {
     margin-left: 25px;
 }
+
+#crumb a.travel-link {
+    color: #323a43;
+}
