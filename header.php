@@ -19,6 +19,9 @@
 	<?php if ( is_singular( 'adventure' ) ) : ?>
 		<?php get_template_part( 'templates/navbar-adventure' ); ?>
 	<?php endif; ?>
+	<?php if ( is_archive() ) : ?>
+		<?php get_template_part( 'templates/navbar-archive' ); ?>
+	<?php endif; ?>
 	<?php if ( is_search() ) : ?>
 		<?php get_template_part( 'templates/navbar-search' ); ?>
 	<?php endif; ?>
