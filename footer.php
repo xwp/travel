@@ -48,7 +48,7 @@
 					if ( has_nav_menu( 'footer-menu' ) ) {
 						wp_nav_menu( array(
 							'theme_location'  => 'footer-menu',
-							'menu_class'			=> 'col-12 flex m0 p0',
+							'menu_class'      => 'col-12 flex m0 p0',
 							'walker'          => new AMP_Travel_Footer_Menu_Walker(),
 							'item_spacing'    => 'discard',
 							'container_class' => 'col-10',
