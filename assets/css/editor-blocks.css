@@ -55,3 +55,8 @@ html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-t
 .editor-block-list__layout {
     overflow: hidden;
 }
+
+/* Hide AMP plugin validator notices for the screencast */
+.notice-warning {
+    display: none;
+}
