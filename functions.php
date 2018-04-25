@@ -5,6 +5,20 @@
  * @package WPAMPTheme
  */
 
+if ( ! file_exists( get_template_directory() . '/assets/js/editor-blocks.js' ) ) {
+	/**
+	 * Print admin notice when theme build is needed.
+	 */
+	function _amp_travel_print_build_needed_admin_notice() {
+		?>
+		<div class="notice notice-error">
+			<p><?php esc_html_e( 'You appear to be running the current theme from source. Please do `npm run build` to finish installation.', 'travel' ); ?></p>
+		</div>
+		<?php
+	}
+	add_action( 'admin_notices', '_amp_travel_print_build_needed_admin_notice' );
+}
+
 if ( ! function_exists( 'travel_setup' ) ) :
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.

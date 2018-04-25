@@ -1,66 +1,43 @@
 <?php
 /**
- * The main template file
- *
- * This is the most generic template file in a WordPress theme
- * and one of the two required files for a theme (the other being style.css).
- * It is used to display a page when nothing more specific matches a query.
- * E.g., it puts together the home page when no home.php file exists.
- *
- * @link https://codex.wordpress.org/Template_Hierarchy
- *
- * @package WPAMPTheme
+ * This is a static placeholder for the actual index.php
+ * file for the purpose of displaying Gutenberg blocks in front-end.
+ * It's a direct copy of the source of the Travel theme homepage template,
+ * copying the header, style, and footer. Elements covered by blocks are not copied.
+ * @todo Create proper templates.
  */
 
-get_header(); ?>
+// Ignore the issues of this file since that's just a copied HTML placeholder and contains some issues (e.g. including the scripts directly.)
 
-	<main id="primary" class="site-main">
+// @codingStandardsIgnoreFile
+get_header();
+?>
+	<section class="relative z2">
+		<header class="travel-header absolute top-0 right-0 left-0">
+			<div class="px1 md-px2 py1 md-py2 flex justify-between items-center">
+				<a href="travel.amp" class="travel-icon-logo mx-auto inline-block circle">
+					<svg class="travel-icon travel-icon-logo h2" viewbox="0 0 100 100"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-width="7.5"><circle cx="50" cy="50" r="45"></circle><path d="M20.395 83.158c-2.37-10.263-.79-18.553 4.737-24.87 8.29-9.472 17.763-1.183 26.052-9.472 8.29-8.29 2.37-18.948 10.658-26.053 5.526-4.737 12.237-6.316 20.132-4.737M39.084 95c-2.788-10.2-1.912-17.304 2.627-21.316 6.808-6.017 14.956-.68 24.088-9.623 9.13-8.94 3.062-17.133 10.255-23.534 4.795-4.267 10.282-5.668 16.46-4.203"></path></g></svg>        </a>
+			</div>
+		</header>
+	</section>
 
-	<?php
-	if ( have_posts() ) :
-
-		/* Display the appropriate header when required. */
-		travel_index_header();
-
-		/* Counter to keep track of what post we're on. */
-		$post_count = 1;
-
-		/* Start the Loop. */
-		while ( have_posts() ) :
-			the_post();
-
-			/*
-			 * Include the component stylesheet for the content.
-			 * This call runs only once on index and archive pages.
-			 * At some point, override functionality should be built in similar to the template part below.
-			 */
-			wp_print_styles( array( 'travel-content' ) ); // Note: If this was already done it will be skipped.
-
-			/*
-			 * Include the Post-Type-specific template for the content.
-			 * If you want to override this in a child theme, then include a file
-			 * called content-___.php (where ___ is the Post Type name) and that will be used instead.
-			 */
-			get_template_part( 'template-parts/content', get_post_type() );
-
-			/* Increment counter. */
-			$post_count++;
-
-		endwhile;
-
-		if ( ! is_singular() ) :
-			the_posts_navigation();
-		endif;
-
-	else :
-
-		get_template_part( 'template-parts/content', 'none' );
-
-	endif;
-	?>
-
-	</main><!-- #primary -->
-
+	<!-- Hero -->
+	<div class="travel-hero-bg absolute col-12">
+		<amp-img class="travel-hero-bg-img absolute" src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/hero-2.jpg" height="80vmax" noloading="" width="100vw"></amp-img>
+		<amp-img class="travel-hero-bg-img absolute" src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/hero-3.jpg" height="80vmax" noloading="" width="100vw"></amp-img>
+		<amp-img class="travel-hero-bg-img absolute" src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/hero-1.jpg" height="80vmax" noloading="" width="100vw"></amp-img>
+	</div>
 <?php
-get_sidebar();
+if ( have_posts() ) :
+
+	/* Start the Loop */
+	while ( have_posts() ) :
+		the_post();
+		the_content();
+
+	endwhile;
+
+endif;
+
 get_footer();
+?>

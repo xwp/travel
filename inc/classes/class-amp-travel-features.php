@@ -87,6 +87,7 @@ class AMP_Travel_Features {
 		load_theme_textdomain( 'travel', get_template_directory() . '/languages' );
 
 		add_theme_support( 'amp', array() );
+		add_image_size( 'travel-600x300', 600, 300, true );
 	}
 
 }

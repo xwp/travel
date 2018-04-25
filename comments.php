@@ -1,13 +1,8 @@
 <?php
 /**
- * The template for displaying comments
+ * Comments template.
  *
- * This is the template that displays the area of the page that contains both the current comments
- * and the comment form.
- *
- * @link https://codex.wordpress.org/Template_Hierarchy
- *
- * @package WPAMPTheme
+ *  @package WPAMPTheme
  */
 
 /*
@@ -18,61 +13,44 @@
 if ( post_password_required() ) {
 	return;
 }
+
+$reviews = wp_count_comments( get_the_ID() );
 ?>
 
-<?php wp_print_styles( array( 'travel-comments' ) ); ?>
-<div id="comments" class="comments-area">
+<div class="product-reviews">
 
-	<?php
-	// You can start editing here -- including this comment!
-	if ( have_comments() ) :
-	?>
-		<h2 class="comments-title">
-			<?php
-			$comment_count = get_comments_number();
-			if ( 1 === $comment_count ) {
-				printf(
-					/* translators: 1: title. */
-					esc_html_e( 'One thought on &ldquo;%1$s&rdquo;', 'travel' ),
-					'<span>' . get_the_title() . '</span>'
-				);
-			} else {
-				printf( // WPCS: XSS OK.
-					/* translators: 1: comment count number, 2: title. */
-					esc_html( _nx( '%1$s thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', $comment_count, 'comments title', 'travel' ) ),
-					number_format_i18n( $comment_count ),
-					'<span>' . get_the_title() . '</span>'
-				);
-			}
-			?>
-		</h2><!-- .comments-title -->
+	<h2 class="mb3"><?php esc_html_e( 'Reviews', 'travel' ); ?></h2>
 
-		<?php the_comments_navigation(); ?>
+	<div class="comments wrap__item">
 
-		<ol class="comment-list">
-			<?php
-				wp_list_comments(
-					array(
-						'style'      => 'ol',
-						'short_ping' => true,
-					)
-				);
-			?>
-		</ol><!-- .comment-list -->
+		<?php $sort_attr = ( 'asc' === get_option( 'comment_order' ) ) ? ' sort="ascending" ' : ''; ?>
+		<amp-live-list id="amp-live-comments-list-<?php the_ID(); ?>" class="live-list" layout="container" <?php echo $sort_attr; // WPCS: XSS OK. ?> data-poll-interval="<?php echo esc_attr( AMP_TRAVEL_LIVE_LIST_POLL_INTERVAL ); ?>" data-max-items-per-page="<?php echo esc_attr( get_option( 'page_comments' ) ? get_option( 'comments_per_page' ) : 10000 ); ?>">
+			<ol items class="comments__list">
+				<?php
+				wp_list_comments( array(
+					'style'      => 'ol',
+					'short_ping' => true,
+				) );
+				?>
+			</ol><!-- .comment-list -->
+			<div update class="live-list__button">
+				<button class="button" on="tap:amp-live-comments-list-<?php the_ID(); ?>.update"><?php esc_html_e( 'New review(s)', 'travel' ); ?></button>
+			</div>
+			<nav pagination>
+				<?php the_comments_navigation(); ?>
+			</nav>
+		</amp-live-list>
+
+		<?php if ( ! comments_open() ) : ?>
+			<p class="no-comments"><?php esc_html_e( 'Reviews are closed.', 'travel' ); ?></p>
+		<?php endif; ?>
 
 		<?php
-		the_comments_navigation();
-
-		// If comments are closed and there are comments, let's leave a little note, shall we?
-		if ( ! comments_open() ) :
+		// Warning: If you supply title_reply_before/title_reply_after here then the comment_form_defaults filter won't be able to inject the necessary markup for AMP.
+		comment_form();
 		?>
-			<p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'travel' ); ?></p>
-		<?php
-		endif;
 
-	endif; // Check for have_comments().
+	</div>
 
-	comment_form();
-	?>
-
-</div><!-- #comments -->
+</div>
+<!-- / product-reviews -->
