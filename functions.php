@@ -5,6 +5,8 @@
  * @package WPAMPTheme
  */
 
+define( 'AMP_TRAVEL_LIVE_LIST_POLL_INTERVAL', 15000 );
+
 if ( ! file_exists( get_template_directory() . '/assets/js/editor-blocks.js' ) ) {
 	/**
 	 * Print admin notice when theme build is needed.
