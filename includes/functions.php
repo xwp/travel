@@ -325,7 +325,9 @@ add_action( 'wp_footer', 'amp_travel_states' );
  * @return string
  */
 function amp_travel_get_current_search_url() {
-	$url        = site_url() . '?s=' . sanitize_text_field( wp_unslash( $_GET['s'] ) );
+	$url        = site_url() . '?s=';
+	$search_str = isset( $_GET['s'] ) ? sanitize_text_field( wp_unslash( $_GET['s'] ) ) : '';
+	$url       .= $search_str;
 	$start_date = ! empty( $_GET['start'] ) ? sanitize_text_field( wp_unslash( $_GET['start'] ) ) : '';
 	$end_date   = ! empty( $_GET['end'] ) ? sanitize_text_field( wp_unslash( $_GET['end'] ) ) : '';
 
@@ -350,3 +352,26 @@ function amp_travel_register_footer_menus() {
 	);
 }
 add_action( 'init', 'amp_travel_register_footer_menus' );
+
+/**
+ * Get archive title depending on the page.
+ *
+ * @return string
+ */
+function amp_travel_get_archive_title() {
+	if ( is_tax() ) {
+		return single_term_title( '', false );
+	}
+
+	return get_the_archive_title();
+}
+
+/**
+ * Get count for found posts.
+ *
+ * @return integer
+ */
+function amp_travel_get_posts_count() {
+	global $wp_query;
+	return $wp_query->found_posts;
+}

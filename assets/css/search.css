@@ -10,8 +10,10 @@
     color: #323a43;
 }
 
-.search-travel-btn {
+.search-travel-btn,
+.search-travel-btn:visited{
     margin-left: 25px;
+    color: #8b58e3;
 }
 
 .flex.items-stretch .search-info.lg-hide {
