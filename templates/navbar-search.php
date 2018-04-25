@@ -15,18 +15,6 @@
 				<a href="<?php echo esc_html( home_url() ); ?>" class="travel-results-navbar-icon h2 circle my1 md-my2">
 					<svg class="travel-icon travel-icon-logo h2" viewbox="0 0 100 100"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-width="7.5"><circle cx="50" cy="50" r="45"></circle><path d="M20.395 83.158c-2.37-10.263-.79-18.553 4.737-24.87 8.29-9.472 17.763-1.183 26.052-9.472 8.29-8.29 2.37-18.948 10.658-26.053 5.526-4.737 12.237-6.316 20.132-4.737M39.084 95c-2.788-10.2-1.912-17.304 2.627-21.316 6.808-6.017 14.956-.68 24.088-9.623 9.13-8.94 3.062-17.133 10.255-23.534 4.795-4.267 10.282-5.668 16.46-4.203"></path></g></svg>
 				</a>
-				<div class="search-info flex flex-auto items-center md-hide lg-hide">
-					<div>
-						<div class="h3 line-height-2 bold">
-							<?php esc_html_e( 'Results for:', 'travel' ); ?>
-						</div>
-						<div class="travel-results-navbar-subheading h6 caps line-height-4">
-							<?php echo ! empty( $_GET['s'] ) ? esc_html( $_GET['s'] ) . '•' : ''; ?>
-							<?php echo ! empty( $_GET['start'] ) ? sprintf( 'From %s', esc_html( $_GET['start'] ) ) : ''; ?>
-							<?php echo ! empty( $_GET['end'] ) ? sprintf( 'Until %s', esc_html( $_GET['end'] ) ) : ''; ?>
-						</div>
-					</div>
-				</div>
 				<div class="ml3 flex items-center xs-hide sm-hide">
 
 					<div class="flex items-center">
@@ -35,7 +23,7 @@
 								input-throttled:AMP.setState({
 									fields_query: event.value,
 									fields_query_live: event.value
-								});' value="<?php echo esc_attr( $_GET['s'] ); ?>">
+								});' value="<?php echo isset( $_GET['s'] ) ? esc_attr( $_GET['s'] ) : ''; ?>">
 						</label>
 						<label class="travel-date-input travel-input-dark travel-date-input-touched bold relative rounded ml2">
 							<input class="block relative p0 z1" type="date" placeholder="yyyy-mm-dd" on='
@@ -60,7 +48,7 @@
 							</div>
 						</label>
 						<a href="<?php echo esc_url( amp_travel_get_current_search_url() ); ?>"
-						[href]="'<?php echo esc_url( site_url() ); ?>?s=' + fields_query_live + '&start=' + (fields_start || '') + '&end=' + (fields_end || '')" class="search-travel-btn travel-input travel-input-dark rounded ampstart-btn white bold">
+						[href]="'<?php echo esc_url( site_url() ); ?>?s=' + fields_query_live + '&start=' + (fields_start || '') + '&end=' + (fields_end || '')" class="search-travel-btn travel-input travel-input-white rounded ampstart-btn bold">
 							<?php esc_html_e( 'Find adventures', 'travel' ); ?>
 						</a>
 					</div>
