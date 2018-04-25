@@ -67,7 +67,7 @@ class AMP_Travel_Footer_Menu_Walker extends Walker_Nav_Menu {
 		}
 
 		if ( 0 === $depth ) {
-			$output .= '<div class="col-5"><h4 class="travel-spacing-none mb2 h3 gray bold">' . $item->title . '</h4>';
+			$output .= '<div class="col-6"><h4 class="travel-spacing-none mb2 h3 gray bold">' . $item->title . '</h4>';
 		} else {
 			$output .= '<a' . $attributes . $class_names . '>' . $item->title . '</a>';
 		}
