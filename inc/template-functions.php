@@ -1,20 +1,127 @@
 <?php
 /**
- * Theme functions file.
+ * Functions which enhance the theme by hooking into WordPress
  *
  * @package WPAMPTheme
  */
 
-define( 'AMP_TRAVEL_LIVE_LIST_POLL_INTERVAL', 15000 );
+/**
+ * Adds custom classes to the array of body classes.
+ *
+ * @param array $classes Classes for the body element.
+ * @return array
+ */
+function travel_body_classes( $classes ) {
+	// Adds a class of hfeed to non-singular pages.
+	if ( ! is_singular() ) {
+		$classes[] = 'hfeed';
+	}
+
+	if ( is_active_sidebar( 'sidebar-1' ) ) {
+		global $template;
+		if ( 'front-page.php' !== basename( $template ) ) {
+			$classes[] = 'has-sidebar';
+		}
+	}
+
+	return $classes;
+}
+add_filter( 'body_class', 'travel_body_classes' );
 
 /**
- * Init theme.
- *
- * @return object Theme object
+ * Add a pingback url auto-discovery header for singularly identifiable articles.
  */
-function amp_travel_theme() {
-	return AMP_Travel_Theme::get_instance();
+function travel_pingback_header() {
+	if ( is_singular() && pings_open() ) {
+		echo '<link rel="pingback" href="', esc_url( get_bloginfo( 'pingback_url' ) ), '">';
+	}
 }
+add_action( 'wp_head', 'travel_pingback_header' );
+
+/**
+ * Adds async/defer attributes to enqueued / registered scripts.
+ *
+ * If #12009 lands in WordPress, this function can no-op since it would be handled in core.
+ *
+ * @link https://core.trac.wordpress.org/ticket/12009
+ * @param string $tag    The script tag.
+ * @param string $handle The script handle.
+ * @return array
+ */
+function travel_filter_script_loader_tag( $tag, $handle ) {
+
+	foreach ( array( 'async', 'defer' ) as $attr ) {
+		if ( ! wp_scripts()->get_data( $handle, $attr ) ) {
+			continue;
+		}
+
+		// Prevent adding attribute when already added in #12009.
+		if ( ! preg_match( ":\s$attr(=|>|\s):", $tag ) ) {
+			$tag = preg_replace( ':(?=></script>):', " $attr", $tag, 1 );
+		}
+
+		// Only allow async or defer, not both.
+		break;
+	}
+
+	return $tag;
+}
+
+add_filter( 'script_loader_tag', 'travel_filter_script_loader_tag', 10, 2 );
+
+/**
+ * Generate stylesheet URI.
+ *
+ * @param object $wp_styles Registered styles.
+ * @param string $handle The style handle.
+ */
+function travel_get_preload_stylesheet_uri( $wp_styles, $handle ) {
+	$preload_uri = $wp_styles->registered[ $handle ]->src . '?ver=' . $wp_styles->registered[ $handle ]->ver;
+	return $preload_uri;
+}
+
+/**
+ * Adds preload for in-body stylesheets depending on what templates are being used.
+ *
+ * @link https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content
+ */
+function travel_add_body_style() {
+
+	// Get the current template global.
+	global $template;
+
+	// Get registered styles.
+	$wp_styles = wp_styles();
+
+	$prelods = array();
+
+	// Preload content.css.
+	$preloads['travel-content'] = travel_get_preload_stylesheet_uri( $wp_styles, 'travel-content' );
+
+	// Preload sidebar.css and widget.css.
+	if ( is_active_sidebar( 'sidebar-1' ) ) {
+		$preloads['travel-sidebar'] = travel_get_preload_stylesheet_uri( $wp_styles, 'travel-sidebar' );
+		$preloads['travel-widgets'] = travel_get_preload_stylesheet_uri( $wp_styles, 'travel-widgets' );
+	}
+
+	// Preload comments.css.
+	if ( ! post_password_required() && is_singular() && ( comments_open() || get_comments_number() ) ) {
+		$preloads['travel-comments'] = travel_get_preload_stylesheet_uri( $wp_styles, 'travel-comments' );
+	}
+
+	// Preload front-page.css.
+	if ( 'front-page.php' === basename( $template ) ) {
+		$preloads['travel-front-page'] = travel_get_preload_stylesheet_uri( $wp_styles, 'travel-front-page' );
+	}
+
+	// Output the preload markup in <head>.
+	foreach ( $preloads as $handle => $src ) {
+		echo '<link rel="preload" id="' . esc_attr( $handle ) . '-preload" href="' . esc_url( $src ) . '" as="style" />';
+		echo "\n";
+	}
+
+}
+add_action( 'wp_head', 'travel_add_body_style' );
 
 /**
  * Display similar adventures.
@@ -122,8 +229,8 @@ function amp_travel_get_popular_adventures( $adventures, $attributes ) {
 		$output .= '</div>
 			</div>
 			<span class="travel-results-result-subtext mr1">' .
-			/* translators: %d: The number of reviews */
-			sprintf( esc_html( _n( '%d Review', '%d Reviews', $reviews->approved, 'travel' ) ), esc_html( $reviews->approved ) ) . '</span>
+		           /* translators: %d: The number of reviews */
+		           sprintf( esc_html( _n( '%d Review', '%d Reviews', $reviews->approved, 'travel' ) ), esc_html( $reviews->approved ) ) . '</span>
 				<span class="travel-results-result-subtext"><svg class="travel-icon" viewBox="0 0 77 100"><g fill="none" fill-rule="evenodd"><path stroke="currentColor" stroke-width="7.5" d="M38.794 93.248C58.264 67.825 68 49.692 68 38.848 68 22.365 54.57 9 38 9S8 22.364 8 38.85c0 10.842 9.735 28.975 29.206 54.398a1 1 0 0 0 1.588 0z"></path><circle cx="38" cy="39" r="10" fill="currentColor"></circle></g></svg>
 				' . esc_html( $location ) . '</span>
 			</div>
@@ -183,7 +290,7 @@ function amp_travel_save_comment_meta_data( $comment_id ) {
 	$comment = get_comment( $comment_id );
 	if ( current_user_can( 'unfiltered_html' ) ) {
 		if ( ! isset( $_POST['_wp_unfiltered_html_comment'] )
-			|| ! wp_verify_nonce( $_POST['_wp_unfiltered_html_comment'], 'unfiltered-html-comment_' . $comment->comment_post_ID )
+		     || ! wp_verify_nonce( $_POST['_wp_unfiltered_html_comment'], 'unfiltered-html-comment_' . $comment->comment_post_ID )
 		) {
 			kses_remove_filters(); // Start with a clean slate.
 			kses_init_filters(); // Set up the filters.

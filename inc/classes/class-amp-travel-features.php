@@ -1,16 +1,23 @@
 <?php
 /**
- * AMP Travel Theme class.
+ * AMP Travel Theme Features class.
  *
  * @package WPAMPTheme
  */
 
 /**
- * Class AMP_Travel_Theme.
+ * Class AMP_Travel_Features.
  *
  * @package WPAMPTheme
  */
-class AMP_Travel_Theme {
+class AMP_Travel_Features {
+
+	/**
+	 * Array of feature objects.
+	 *
+	 * @var stdClass
+	 */
+	public $features;
 
 	/**
 	 * Get theme instance.
@@ -20,8 +27,8 @@ class AMP_Travel_Theme {
 	public static function get_instance() {
 		static $instance;
 
-		if ( ! $instance instanceof AMP_Travel_Theme ) {
-			$instance = new AMP_Travel_Theme();
+		if ( ! $instance instanceof AMP_Travel_Features ) {
+			$instance = new AMP_Travel_Features();
 		}
 
 		return $instance;
@@ -37,25 +44,34 @@ class AMP_Travel_Theme {
 	}
 
 	/**
-	 * Theme includes.
+	 * Include feature classes.
 	 */
 	public function includes() {
 		$dir = get_template_directory();
-		require_once $dir . '/includes/class-amp-travel-blocks.php';
-		require_once $dir . '/includes/class-amp-travel-cpt.php';
-		require_once $dir . '/includes/class-amp-travel-taxonomies.php';
+
+		require_once $dir . '/inc/classes/class-amp-travel-taxonomies.php';
+		require_once $dir . '/inc/classes/class-amp-travel-blocks.php';
+		require_once $dir . '/inc/classes/class-amp-travel-cpt.php';
+		require_once $dir . '/inc/classes/class-amp-travel-taxonomies.php';
 	}
 
 	/**
 	 * Init classes.
 	 */
 	public function instantiate_classes() {
-		$travel_blocks = new AMP_Travel_Blocks();
-		$travel_blocks->init();
-		$travel_cpt = new AMP_Travel_CPT();
-		$travel_cpt->init();
-		$travel_taxonomies = new AMP_Travel_Taxonomies();
-		$travel_taxonomies->init();
+		$this->features = new stdClass();
+
+		// Init blocks.
+		$this->features->blocks = new AMP_Travel_Blocks();
+		$this->features->blocks->init();
+
+		// Init custom post type.
+		$this->features->cpt = new AMP_Travel_CPT();
+		$this->features->cpt->init();
+
+		// Init taxonomies.
+		$this->features->taxonomies = new AMP_Travel_Taxonomies();
+		$this->features->taxonomies->init();
 	}
 
 	/**
