@@ -27,7 +27,6 @@ get_header();
 </div>
 
 <div id="travel-landing-content" class="travel-landing-content relative">
-
 	<div class="travel-footer-wrapper">
 		<?php get_template_part( 'templates/footer-search' ); ?>
 	</div>
