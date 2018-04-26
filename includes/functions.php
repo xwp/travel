@@ -107,7 +107,11 @@ function amp_travel_get_popular_adventures( $adventures, $attributes ) {
 			</div>
 		</div>
 		<div class="h2 line-height-2 mb1">
-			<span class="travel-results-result-text">' . esc_html( get_the_title( $adventure->ID ) ) . '</span>
+			<span class="travel-results-result-text">
+				<a class="text-decoration-none" href="' . esc_url( get_the_permalink( $adventure->ID ) ) . '">' .
+					esc_html( get_the_title( $adventure->ID ) ) .
+				'</a>
+			</span>
 			<span class="travel-results-result-subtext h3">•</span>
 			<span class="travel-results-result-subtext h3">$&nbsp;</span><span class="black bold">' . esc_html( $price ) . '</span>
 		</div>
@@ -340,6 +344,18 @@ function amp_travel_get_current_search_url() {
 
 	return $url;
 }
+
+/**
+ * Register footer menus.
+ */
+function amp_travel_register_footer_menus() {
+	register_nav_menus(
+		array(
+			'footer-menu' => __( 'Footer Menu', 'travel' ),
+		)
+	);
+}
+add_action( 'init', 'amp_travel_register_footer_menus' );
 
 /**
  * Get archive title depending on the page.
