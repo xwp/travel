@@ -58,7 +58,7 @@ export default registerBlockType(
 				),
 				<section key='popular' className='travel-popular pb4 pt3 relative'>
 					<header className='max-width-3 mx-auto px1 md-px2'>
-						<h3 className='h1 bold line-height-2'>{ heading }</h3>
+						<h3 className='center h1 bold line-height-2'>{ heading }</h3>
 					</header>
 					<div className='overflow-scroll'>
 						<div className='travel-overflow-container'>

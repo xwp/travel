@@ -30,6 +30,7 @@ html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-t
 .travel-activities .travel-overflow-container {
     padding-left: 0;
     padding-right: 0;
+    display: block;
 }
 
 .travel-activities-activity-icon {

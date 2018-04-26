@@ -56,10 +56,10 @@ export default registerBlockType(
 				),
 				<section key='activities' className='travel-activities pb4 pt3 relative'>
 					<div className='max-width-3 mx-auto px1 md-px2'>
-						<h3 className='bold h1 line-height-2'>{ heading }</h3>
+						<h3 className='center bold h1 line-height-2'>{ heading }</h3>
 					</div>
 					<div className='travel-overflow-container'>
-						<div className='flex flex-wrap flex-auto p1 md-px1 mxn1'>
+						<div className='justify-center flex flex-wrap flex-auto p1 md-px1 mxn1'>
 							{ activities.map( ( activity, i ) =>
 								<a key='activity' href={ activity.link } className={ 'travel-activities-activity mx1 travel-type-' + activity.slug } target="_blank">
 									<div className='travel-shadow circle inline-block'>
