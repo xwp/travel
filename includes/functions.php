@@ -73,7 +73,7 @@ function amp_travel_get_popular_adventures( $adventures, $attributes ) {
 	}
 
 	$output .= '<div class="travel-overflow-container">
-					<div class="travel-overflow-wrap flex flex-wrap flex-auto mxn1">';
+					<div class="travel-overflow-wrap flex flex-wrap flex-auto mxn1 md-px2">';
 
 	$popular_classes = array(
 		'travel-popular-tilt-right',
