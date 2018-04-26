@@ -14,8 +14,12 @@ html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-t
     max-width: none;
 }
 
-.edit-post-visual-editor .editor-block-list__block[data-type="amp-travel/activity-list"]{
+.edit-post-visual-editor .editor-block-list__block[data-type="amp-travel/activity-list"] {
     max-width: 80vw;
+}
+
+.edit-post-visual-editor .editor-block-list__block[data-type="amp-travel/popular"] {
+    max-width: 70vw;
 }
 
 .travel-overflow-container {
