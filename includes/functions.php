@@ -72,8 +72,7 @@ function amp_travel_get_popular_adventures( $adventures, $attributes ) {
 			</header>';
 	}
 
-	$output .= '<div class="overflow-scroll">
-				<div class="travel-overflow-container">
+	$output .= '<div class="travel-overflow-container">
 					<div class="travel-overflow-wrap flex px1 md-px2 mxn1">';
 
 	$popular_classes = array(
@@ -136,9 +135,8 @@ function amp_travel_get_popular_adventures( $adventures, $attributes ) {
 	}
 
 	$output .= '</div>
-			</div>
-		</div>
-	</section>';
+            </div>
+        </section>';
 
 	return $output;
 }
