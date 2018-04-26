@@ -73,7 +73,7 @@ function amp_travel_get_popular_adventures( $adventures, $attributes ) {
 	}
 
 	$output .= '<div class="travel-overflow-container">
-					<div class="travel-overflow-wrap flex px1 md-px2 mxn1">';
+					<div class="travel-overflow-wrap flex flex-wrap flex-auto mxn1 md-px2">';
 
 	$popular_classes = array(
 		'travel-popular-tilt-right',
@@ -98,7 +98,7 @@ function amp_travel_get_popular_adventures( $adventures, $attributes ) {
 			$location = $locations[0];
 		}
 
-		$output .= '<div class="m1 mt3 mb2"><div class="' . esc_html( $popular_classes[ $index ] ) . ' mb1">
+		$output .= '<div class="col-12 sm-col-6 lg-col-4 p1"><div class="' . esc_html( $popular_classes[ $index ] ) . ' mb1">
 			<div class="relative travel-results-result">
 				<a class="travel-results-result-link block relative" href="' . esc_url( get_the_permalink( $adventure->ID ) ) . '">
 					<amp-img class="block rounded" width="346" height="200" noloading="" src="' . esc_url( $img_src ) . '" srcset="' . esc_attr( $img_srcset ) . '"></amp-img>

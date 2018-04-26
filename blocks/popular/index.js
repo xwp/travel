@@ -62,13 +62,13 @@ export default registerBlockType(
 					</header>
 					<div className='overflow-scroll'>
 						<div className='travel-overflow-container'>
-							<div className='flex px1 md-px2 mxn1'>
+							<div className='flex flex-wrap flex-auto mxn1'>
 								{ adventures.map( ( adventure, i ) => // eslint-disable-line
-									<div key='adventure' className='m1 mt3 mb2'>
+									<div key='adventure' className='col-12 sm-col-6 lg-col-4 p1'>
 										<div className={ popularClasses[ i ] + ' mb1' }>
 											<div className='relative travel-results-result'>
 												<a className='travel-results-result-link block relative' href={ adventure.link }>
-													<img src={ adventure._embedded['wp:featuredmedia'][0].source_url } className='block rounded' width='346' height='200' ></img>
+													<img src={ adventure._embedded['wp:featuredmedia'][0].source_url } className='block rounded' width='300' height='150' ></img>
 												</a>
 											</div>
 										</div>

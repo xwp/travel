@@ -277,7 +277,7 @@ class AMP_Travel_Blocks {
 					</div>';
 		}
 		$output .= "<div class='travel-overflow-container'>
-							<div class='flex justify-center p1 md-px1 mxn1'>";
+							<div class='flex flex-wrap flex-auto justify-center p1 md-px1 mxn1'>";
 
 		foreach ( $activities as $activity ) {
 			$output .= "<a href='" . get_term_link( $activity ) . "' class='travel-activities-activity travel-type-" . $activity->slug . " mx1'>
