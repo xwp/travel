@@ -297,6 +297,8 @@ class AMP_Travel_CPT {
 			if ( isset( $_POST['amp_travel_images'] ) ) {
 				$images = array_map( 'floatval', wp_unslash( $_POST['amp_travel_images'] ) );
 				update_post_meta( $post->ID, 'amp_travel_images', $images );
+			} else {
+				delete_post_meta( $post->ID, 'amp_travel_images' );
 			}
 		}
 	}
