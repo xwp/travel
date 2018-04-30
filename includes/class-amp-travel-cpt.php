@@ -229,7 +229,9 @@ class AMP_Travel_CPT {
 		<div class="editor-post-featured-image" id="amp-travel-images-wrap">
 			<?php
 			foreach ( $images as $image ) {
-				$this->image_template( $image );
+				if ( wp_attachment_is_image( $image ) ) {
+					$this->image_template( $image );
+				}
 			}
 			?>
 		</div>
