@@ -211,7 +211,7 @@ class AMP_Travel_CPT {
 		$price            = isset( $adventure_custom['amp_travel_price'][0] ) ? $adventure_custom['amp_travel_price'][0] : '';
 		$start_date       = isset( $adventure_custom['amp_travel_start_date'][0] ) ? $adventure_custom['amp_travel_start_date'][0] : '';
 		$end_date         = isset( $adventure_custom['amp_travel_end_date'][0] ) ? $adventure_custom['amp_travel_end_date'][0] : '';
-		$images           = isset( $adventure_custom['amp_travel_images'][0] ) ? maybe_unserialize( $adventure_custom['amp_travel_images'][0] ) : [];
+		$images           = isset( $adventure_custom['amp_travel_images'][0] ) ? maybe_unserialize( $adventure_custom['amp_travel_images'][0] ) : array();
 
 		?>
 		<div>
