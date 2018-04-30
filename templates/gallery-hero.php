@@ -5,7 +5,7 @@
  * @package WPAMPTheme
  */
 
-$thumbnail         = get_the_post_thumbnail_url( get_the_ID(), 'large' );
+$thumbnail         = get_the_post_thumbnail_url( get_the_ID(), 'travel-1000x560' );
 $additional_images = get_post_meta( get_the_ID(), 'amp_travel_images', true );
 
 ?>
@@ -23,7 +23,7 @@ $additional_images = get_post_meta( get_the_ID(), 'amp_travel_images', true );
 
 		<?php if ( ! empty( $additional_images ) ) : ?>
 			<?php foreach ( $additional_images as $additional_image ) : ?>
-				<?php $thumbnail = wp_get_attachment_image_url( $additional_image, 'large' ); ?>
+				<?php $thumbnail = wp_get_attachment_image_url( $additional_image, 'travel-1000x560' ); ?>
 				<?php if ( false !== $thumbnail ) : ?>
 					<amp-img
 							src="<?php echo esc_attr( $thumbnail ); ?>"

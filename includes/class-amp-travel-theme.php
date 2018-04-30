@@ -73,6 +73,7 @@ class AMP_Travel_Theme {
 
 		add_theme_support( 'amp', array() );
 		add_image_size( 'travel-600x300', 600, 300, true );
+		add_image_size( 'travel-1000x560', 1000, 560, true );
 	}
 
 }
