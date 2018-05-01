@@ -37,6 +37,26 @@ class AMP_Travel_CPT {
 
 		add_filter( 'rest_adventure_collection_params', array( $this, 'filter_rest_adventure_collection_params' ), 10, 1 );
 		add_filter( 'rest_adventure_query', array( $this, 'filter_rest_adventure_query' ), 10, 2 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
+	}
+
+	/**
+	 * Enqueue admin scripts.
+	 */
+	public function enqueue_admin_scripts() {
+
+		$screen = get_current_screen();
+		if ( ! is_object( $screen ) || self::POST_TYPE_SLUG_SINGLE !== $screen->id ) {
+			return;
+		}
+
+		wp_enqueue_media();
+
+		wp_enqueue_script(
+			'amp-travel-images',
+			get_template_directory_uri() . '/assets/js/image.js',
+			array( 'jquery', 'underscore', 'wp-i18n' )
+		);
 	}
 
 	/**
@@ -77,6 +97,7 @@ class AMP_Travel_CPT {
 	 * @param WP_REST_Response $response Response.
 	 * @param WP_POST          $adventure Adventure post.
 	 * @param WP_REST_Request  $request Request.
+	 *
 	 * @return mixed
 	 */
 	public function add_adventure_rest_data( $response, $adventure, $request ) {
@@ -175,17 +196,23 @@ class AMP_Travel_CPT {
 	 * Adds meta boxes for adventure post type.
 	 */
 	public function add_adventure_meta_boxes() {
-		add_meta_box( 'amp_travel_adventure_meta', __( 'Adventure details', 'travel' ), array( $this, 'adventure_meta_box_html' ), 'adventure', 'side' );
+		add_meta_box( 'amp_travel_adventure_meta', __( 'Adventure details', 'travel' ), array(
+			$this,
+			'adventure_meta_box_html',
+		), 'adventure', 'side' );
 	}
 
 	/**
 	 * Displays meta boxes in admin.
 	 */
 	public function adventure_meta_box_html() {
+
 		$adventure_custom = get_post_custom();
 		$price            = isset( $adventure_custom['amp_travel_price'][0] ) ? $adventure_custom['amp_travel_price'][0] : '';
 		$start_date       = isset( $adventure_custom['amp_travel_start_date'][0] ) ? $adventure_custom['amp_travel_start_date'][0] : '';
 		$end_date         = isset( $adventure_custom['amp_travel_end_date'][0] ) ? $adventure_custom['amp_travel_end_date'][0] : '';
+		$images           = isset( $adventure_custom['amp_travel_images'][0] ) ? maybe_unserialize( $adventure_custom['amp_travel_images'][0] ) : array();
+
 		?>
 		<div>
 			<label for='amp_travel_start_date'><?php esc_html_e( 'Start date', 'travel' ); ?></label><input placeholder='yyyy-mm-dd' pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}' type='date' id='amp_travel_start_date' name='amp_travel_start_date' value='<?php echo esc_attr( $start_date ); ?>'>
@@ -198,6 +225,42 @@ class AMP_Travel_CPT {
 
 		<label for='amp_travel_price'><?php esc_html_e( 'Price (USD)', 'travel' ); ?></label>
 		<input id='amp_travel_price' name='amp_travel_price' value='<?php echo esc_attr( $price ); ?>'>
+		<label for='amp_travel_images'><?php esc_html_e( 'Additional carousel images', 'travel' ); ?></label>
+		<div class="editor-post-featured-image" id="amp-travel-images-wrap">
+			<?php
+			foreach ( $images as $image ) {
+				if ( wp_attachment_is_image( $image ) ) {
+					$this->image_template( $image );
+				}
+			}
+			?>
+		</div>
+		<button type="button" id="amp_travel_images" class="travel-image-select button" data-title="<?php esc_attr_e( 'Select carousel images.', 'travel' ); ?>" data-text="<?php esc_attr_e( 'Use selection', 'travel' ); ?>"><?php esc_html_e( 'Select Images', 'travel' ); ?></button>
+		<script type="text/html" id="travel-images-tmpl">
+			<?php $this->image_template(); ?>
+		</script>
+		<?php
+	}
+
+	/**
+	 * Output a a template for a single image item.
+	 *
+	 * @param int $id The id of the image.
+	 */
+	public function image_template( $id = null ) {
+		if ( null === $id ) {
+			$image_src = '{{url}}';
+			$id        = '{{id}}';
+		} else {
+			$image_src = esc_url( wp_get_attachment_image_url( $id, 'medium' ) );
+		}
+
+		?>
+		<div class="travel-images-preview" data-id="<?php echo esc_attr( $id ); ?>" id="travel-image-<?php echo esc_attr( $id ); ?>">
+			<img src="<?php echo esc_attr( $image_src ); ?>" class="travel-image-control-preview">
+			<a href="#" class="travel-image-control-remove" data-target="travel-image-<?php echo esc_attr( $id ); ?>"><span class="dashicons dashicons-no"></span></a>
+			<input type="hidden" name='amp_travel_images[]' value='<?php echo esc_attr( $id ); ?>'>
+		</div>
 		<?php
 	}
 
@@ -213,6 +276,8 @@ class AMP_Travel_CPT {
 			isset( $_POST['amp_travel_end_date'] )
 			||
 			isset( $_POST['amp_travel_price'] )
+			||
+			isset( $_POST['amp_travel_images'] )
 		) {
 			global $post;
 
@@ -230,6 +295,12 @@ class AMP_Travel_CPT {
 
 			if ( isset( $_POST['amp_travel_end_date'] ) ) {
 				update_post_meta( $post->ID, 'amp_travel_end_date', sanitize_text_field( wp_unslash( $_POST['amp_travel_end_date'] ) ) );
+			}
+			if ( isset( $_POST['amp_travel_images'] ) ) {
+				$images = array_map( 'intval', wp_unslash( $_POST['amp_travel_images'] ) );
+				update_post_meta( $post->ID, 'amp_travel_images', $images );
+			} else {
+				delete_post_meta( $post->ID, 'amp_travel_images' );
 			}
 		}
 	}
@@ -266,6 +337,7 @@ class AMP_Travel_CPT {
 			'enum'              => array( 'amp_travel_rating' ),
 			'validate_callback' => 'rest_validate_request_arg',
 		);
+
 		return $query_params;
 	}
 }

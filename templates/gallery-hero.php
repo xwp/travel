@@ -5,27 +5,34 @@
  * @package WPAMPTheme
  */
 
+$thumbnail         = get_the_post_thumbnail_url( get_the_ID(), 'travel-1000x560' );
+$additional_images = get_post_meta( get_the_ID(), 'amp_travel_images', true );
+
 ?>
 <!-- CAROUSEL -->
 <div class="hero-carousel">
 	<amp-carousel layout="responsive" type="slides" height="50vw" width="100vw" autoplay loop>
-		<amp-img
-			src="https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?filter=grayscale&w=1000"
-			srcset="https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?filter=grayscale&w=1000 1x, https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?filter=grayscale&w=2000 2x"
-			width="1000"
-			height="560"
-		></amp-img>
-		<amp-img
-			src="https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?filter=grayscale&w=1000"
-			srcset="https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?w=1000 1x, https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?w=2000 2x"
-			width="1000"
-			height="560"
-		></amp-img>
-		<amp-img
-			src="https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?filter=sepia&w=1000"
-			srcset="https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?filter=sepia&w=1000 1x, https://i0.wp.com/files.urldocs.com/share/hero-3/hero-3.jpg?filter=sepia&w=2000 2x"
-			width="1000"
-			height="560"
-		></amp-img>
+		<?php if ( ! empty( $thumbnail ) ) : ?>
+			<amp-img
+					src="<?php echo esc_attr( $thumbnail ); ?>"
+					srcset="<?php echo esc_attr( $thumbnail ); ?> 1x, <?php echo esc_attr( $thumbnail ); ?> 2x"
+					width="1000"
+					height="560"
+			></amp-img>
+		<?php endif; ?>
+
+		<?php if ( ! empty( $additional_images ) ) : ?>
+			<?php foreach ( $additional_images as $additional_image ) : ?>
+				<?php $thumbnail = wp_get_attachment_image_url( $additional_image, 'travel-1000x560' ); ?>
+				<?php if ( false !== $thumbnail ) : ?>
+					<amp-img
+							src="<?php echo esc_attr( $thumbnail ); ?>"
+							srcset="<?php echo esc_attr( $thumbnail ); ?> 1x, <?php echo esc_attr( $thumbnail ); ?> 2x"
+							width="1000"
+							height="560"
+					></amp-img>
+				<?php endif; ?>
+			<?php endforeach; ?>
+		<?php endif; ?>
 	</amp-carousel>
 </div>
