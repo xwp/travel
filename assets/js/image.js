@@ -10,7 +10,7 @@
   jQuery( document ).ready( function( $ ) {
 
     // Uploading files
-    let file_frame;
+    let fileFrame;
     let template = $( '#travel-images-tmpl' ).html();
     jQuery( document ).on( 'click', '.travel-image-select', function( event ) {
 
@@ -20,47 +20,58 @@
       let text = $( this ).data( 'text' );
 
       // If the media frame already exists, reopen it.
-      if ( file_frame ) {
+      if ( fileFrame ) {
         // Open frame
-        file_frame.open();
+        fileFrame.open();
         return;
       }
 
       // Create the media frame.
-      file_frame = wp.media.frames.file_frame = wp.media( {
+      fileFrame = wp.media.frames.fileFrame = wp.media( {
         title: title,
         button: {
           text: text,
         },
-        multiple: true,
+        multiple: 'add',
+      } );
+
+      fileFrame.on( 'open', function() {
+        $( '.travel-images-preview' ).each( function() {
+          fileFrame.state().get( 'selection' ).add( new wp.media.attachment( $( this ).data( 'id' ) ) );
+        } );
+        // Set window to browse tab.
+        fileFrame.content.mode('browse');
       } );
 
       // When an image is selected, run a callback.
-      file_frame.on( 'select', function() {
+      fileFrame.on( 'select', function() {
 
-        let images = file_frame.state().get( 'selection' );
+        let images = fileFrame.state().get( 'selection' );
         let wrapper = $( '#amp-travel-images-wrap' );
-
+        // Clear selection from metabox to use the new selection order.
+        wrapper.empty();
         images.each( function( image ) {
           let attachment = image.toJSON();
 
-          if ( !$( '#travel-image-' + attachment.id ).length ) {
+          if ( ! $( '#travel-image-' + attachment.id ).length ) {
 
             let url = attachment.url;
-            let image_template = template;
+            let imageTemplate = template;
             if ( attachment.sizes.medium ) {
               url = attachment.sizes.medium.url;
             }
-            image_template = image_template.replace( /\{\{id\}\}/g, attachment.id ).replace( /\{\{url\}\}/g, url );
-            wrapper.append( image_template );
+            imageTemplate = imageTemplate.replace( /\{\{id\}\}/g, attachment.id ).replace( /\{\{url\}\}/g, url );
+            wrapper.append( imageTemplate );
           }
         } );
 
       } );
 
-      // Finally, open the modal
-      file_frame.open();
+      // Open the modal.
+      fileFrame.open();
     } );
+
+    // Bind, image remove button to remove the image.
     jQuery( document ).on( 'click', '.travel-image-control-remove', function( event ) {
       event.preventDefault();
       let image = $( this ).data( 'target' );

@@ -69,18 +69,22 @@ html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-t
 .notice-warning {
     display: none;
 }
+
 .travel-image-control-wrapper{
     position: relative;
     width: 100%;
     padding-bottom: 6px;
 }
+
 .travel-images-preview{
     position: relative;
 }
+
 .travel-image-control-wrapper > img {
     max-width: 100%;
     height: auto;
 }
+
 a.travel-image-control-remove {
     text-decoration: none;
     position: absolute;
@@ -90,4 +94,8 @@ a.travel-image-control-remove {
     background-color: rgba(0,0,0,0.5);
     padding: 6px;
     border-radius: 0 0 0 6px;
+}
+
+button.travel-image-select {
+    width: 100%;
 }

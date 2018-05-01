@@ -225,7 +225,7 @@ class AMP_Travel_CPT {
 
 		<label for='amp_travel_price'><?php esc_html_e( 'Price (USD)', 'travel' ); ?></label>
 		<input id='amp_travel_price' name='amp_travel_price' value='<?php echo esc_attr( $price ); ?>'>
-		<label for='amp_travel_images'><?php esc_html_e( 'Additional carousel images.', 'travel' ); ?></label>
+		<label for='amp_travel_images'><?php esc_html_e( 'Additional carousel images', 'travel' ); ?></label>
 		<div class="editor-post-featured-image" id="amp-travel-images-wrap">
 			<?php
 			foreach ( $images as $image ) {
@@ -252,11 +252,11 @@ class AMP_Travel_CPT {
 			$image_src = '{{url}}';
 			$id        = '{{id}}';
 		} else {
-			$image_src = wp_get_attachment_image_url( $id, 'medium' );
+			$image_src = esc_url( wp_get_attachment_image_url( $id, 'medium' ) );
 		}
 
 		?>
-		<div class="travel-images-preview" data-id="{{id}}" id="travel-image-<?php echo esc_attr( $id ); ?>">
+		<div class="travel-images-preview" data-id="<?php echo esc_attr( $id ); ?>" id="travel-image-<?php echo esc_attr( $id ); ?>">
 			<img src="<?php echo esc_attr( $image_src ); ?>" class="travel-image-control-preview">
 			<a href="#" class="travel-image-control-remove" data-target="travel-image-<?php echo esc_attr( $id ); ?>"><span class="dashicons dashicons-no"></span></a>
 			<input type="hidden" name='amp_travel_images[]' value='<?php echo esc_attr( $id ); ?>'>
@@ -297,7 +297,7 @@ class AMP_Travel_CPT {
 				update_post_meta( $post->ID, 'amp_travel_end_date', sanitize_text_field( wp_unslash( $_POST['amp_travel_end_date'] ) ) );
 			}
 			if ( isset( $_POST['amp_travel_images'] ) ) {
-				$images = array_map( 'floatval', wp_unslash( $_POST['amp_travel_images'] ) );
+				$images = array_map( 'intval', wp_unslash( $_POST['amp_travel_images'] ) );
 				update_post_meta( $post->ID, 'amp_travel_images', $images );
 			} else {
 				delete_post_meta( $post->ID, 'amp_travel_images' );
@@ -310,7 +310,6 @@ class AMP_Travel_CPT {
 	 *
 	 * @param array           $args Query args.
 	 * @param WP_REST_Request $request Request object.
-	 *
 	 * @return array
 	 */
 	public function filter_rest_adventure_query( $args, $request ) {
@@ -328,7 +327,6 @@ class AMP_Travel_CPT {
 	 * Filter the REST accepted params to accept ordering by 'rating'.
 	 *
 	 * @param array $query_params Collection params.
-	 *
 	 * @return array Collection params.
 	 */
 	public function filter_rest_adventure_collection_params( $query_params ) {
