@@ -224,7 +224,7 @@ function amp_travel_check_first_review( $approved, $comment ) {
 		);
 	}
 	$dupe    .= ') LIMIT 1';
-	$dupe_id = $wpdb->get_var( $dupe );
+	$dupe_id = $wpdb->get_var( $dupe ); //WPCS: unprepared SQL ok.
 
 	if ( $dupe_id ) {
 		return new WP_Error( 'already_reviewed', __( 'You may only submit a single review.' ), 409 );
@@ -240,7 +240,7 @@ function amp_travel_check_first_review( $approved, $comment ) {
  * @param array $comment The comment data to check.
  * @return int|WP_Error If comment is allowed or not.
  */
-function amp_travel_validate_comment( $approved, $comment ){
+function amp_travel_validate_comment( $approved, $comment ) {
 	// Check if the user has already submitted a review.
 	$approved = amp_travel_check_first_review( $approved, $comment );
 	if( is_wp_error( $approved ) ){
