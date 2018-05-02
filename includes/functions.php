@@ -243,7 +243,7 @@ function amp_travel_check_first_review( $approved, $comment ) {
 function amp_travel_validate_comment( $approved, $comment ) {
 	// Check if the user has already submitted a review.
 	$approved = amp_travel_check_first_review( $approved, $comment );
-	if ( is_wp_error( $approved ) ){
+	if ( is_wp_error( $approved ) ) {
 		return $approved;
 	}
 	if ( empty( $_POST['rating'] ) ) {
