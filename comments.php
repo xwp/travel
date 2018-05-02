@@ -48,9 +48,9 @@ $reviews = wp_count_comments( get_the_ID() );
 		<?php
 		// Warning: If you supply title_reply_before/title_reply_after here then the comment_form_defaults filter won't be able to inject the necessary markup for AMP.
 		comment_form( array(
-			'title_reply'   => 'Leave a Review',
-			'label_submit'  => 'Post Review',
-			'comment_field' => '<p class="comment-form-comment"><label for="comment">' . _x( 'Review', 'noun' ) . '</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" aria-required="true" required="required"></textarea></p>',
+			'title_reply'   => __( 'Leave a Review', 'travel' ),
+			'label_submit'  => __( 'Post Review', 'travel' ),
+			'comment_field' => '<p class="comment-form-comment"><label for="comment">' . __( 'Review', 'travel' ) . '</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" aria-required="true" required="required"></textarea></p>',
 		) );
 		?>
 
