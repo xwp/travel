@@ -60,16 +60,24 @@
     position: relative;
 }
 
+.travel-results-results-stars-empty-small,
 .travel-results-results-stars-empty {
     position: absolute;
-    left: 0.09em;
-    top: 0.4em;
-    letter-spacing: 0.22em;
+    left: 0;
+    font-size: 1.4em;
+    opacity: 0.4;
+    color: #ccc;
+}
+.travel-results-results-stars-empty-small {
+    font-size: 1em;
 }
 
 .travel-results-results-stars-solid {
     min-height: 40px;
     font-size: 1.4em;
     position: relative;
-    top: 0.05em;
+}
+
+.travel-results-results-stars-solid-small {
+    position: relative;
 }

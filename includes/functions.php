@@ -246,7 +246,7 @@ function amp_travel_validate_comment( $approved, $comment ) {
 	if ( is_wp_error( $approved ) ) {
 		return $approved;
 	}
-	if ( empty( $_POST['rating'] ) ) {
+	if ( empty( $_POST['rating'] ) ) { // WPCS: CSRF ok.
 		return new WP_Error( 'already_reviewed', __( 'A rating is required.' ), 409 );
 	}
 	return $approved;
@@ -329,12 +329,13 @@ function amp_travel_modify_comment_display( $text ) {
 	$rating = get_comment_meta( get_comment_ID(), 'rating', true );
 	if ( $rating ) {
 		$rating_html = '<div class="comment-review relative h3 line-height-2">
-							<div  class="travel-results-result-stars green">';
-
+							<div  class="travel-results-result-stars green">
+									<div class="travel-results-results-stars-empty-small">★★★★★</div>
+									<div class="travel-results-results-stars-solid-small">';
 		for ( $i = 0; $i < round( $rating ); $i++ ) {
 			$rating_html .= '★';
 		}
-		$rating_html .= '</div></div>';
+		$rating_html .= '</div></div></div>';
 		$text         = $rating_html . $text;
 		return $text;
 	} else {
