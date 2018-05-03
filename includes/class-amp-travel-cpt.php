@@ -170,23 +170,24 @@ class AMP_Travel_CPT {
 		);
 
 		$args = array(
-			'labels'        => $labels,
-			'description'   => __( 'Adventure Custom Post Type for travel theme.', 'travel' ),
-			'public'        => true,
-			'menu_position' => 20,
-			'menu_icon'     => 'dashicons-location-alt',
-			'supports'      => array(
+			'labels'                => $labels,
+			'description'           => __( 'Adventure Custom Post Type for travel theme.', 'travel' ),
+			'public'                => true,
+			'menu_position'         => 20,
+			'menu_icon'             => 'dashicons-location-alt',
+			'supports'              => array(
 				'title',
 				'editor',
 				'thumbnail',
 				'comments',
 			),
-			'has_archive'   => true,
-			'rewrite'       => array(
+			'has_archive'           => true,
+			'rewrite'               => array(
 				'slug' => self::POST_TYPE_SLUG_SINGLE,
 			),
-			'show_in_rest'  => true,
-			'rest_base'     => self::POST_TYPE_SLUG_PLURAL,
+			'show_in_rest'          => true,
+			'rest_base'             => self::POST_TYPE_SLUG_PLURAL,
+			'rest_controller_class' => 'WP_REST_Adventure_Controller',
 		);
 
 		register_post_type( self::POST_TYPE_SLUG_SINGLE, $args );

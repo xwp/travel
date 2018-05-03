@@ -41,6 +41,7 @@ class AMP_Travel_Theme {
 	 */
 	public function includes() {
 		$dir = get_template_directory();
+		require_once $dir . '/includes/class-amp-travel-rest.php';
 		require_once $dir . '/includes/class-amp-travel-blocks.php';
 		require_once $dir . '/includes/class-amp-travel-cpt.php';
 		require_once $dir . '/includes/class-amp-travel-taxonomies.php';
