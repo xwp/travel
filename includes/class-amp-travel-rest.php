@@ -27,10 +27,11 @@ class WP_REST_Adventure_Controller extends WP_REST_Posts_Controller {
 
 		// @todo: Perhaps this should detect if it's an amp-list or not.
 		// Move items under 'items' key for amp-list to be able to use it.
-		$data = array(
+		$data   = array(
 			'items' => array(),
 		);
-		if ( ! empty( $request->get_param( 'search' ) ) ) {
+		$search = $request->get_param( 'search' );
+		if ( ! empty( $search ) ) {
 			$data['items'] = array(
 				'adventures' => $items->get_data(),
 			);
