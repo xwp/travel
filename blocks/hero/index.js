@@ -173,7 +173,8 @@ export default registerBlockType(
 														value: '{{title.rendered}}'
 													},
 													'{{title.rendered}}'
-												),'{{/adventures}}'
+												),
+												'{{/adventures}}'
 											) }
 										</template>
 									</amp-list>
