@@ -154,6 +154,7 @@ function amp_travel_enqueue_styles() {
 	} else {
 		wp_enqueue_style( 'amp_travel_homepage', get_template_directory_uri() . '/assets/css/homepage.css' );
 	}
+	wp_enqueue_style( 'amp_travel_ratings', get_template_directory_uri() . '/assets/css/stars.css' );
 }
 add_action( 'wp_enqueue_scripts', 'amp_travel_enqueue_styles' );
 
@@ -161,16 +162,17 @@ add_action( 'wp_enqueue_scripts', 'amp_travel_enqueue_styles' );
  * Add rating field to comments.
  */
 function amp_travel_comment_rating_field() {
-	echo '<p class="comment-form-rating"><label for="rating">' . esc_html( 'Your rating' ) . '</label>
-			<select required="required" class="select-arr rounded" name="rating" id="rating" [disabled]="commentform_post_' . esc_attr( get_the_ID() ) . '.submitting" on=\'change:AMP.setState( { commentform_post_' . esc_attr( get_the_ID() ) . ': { values: { "rating": event.value } } } )\'>
-			<option value="">--</option>';
-
-	for ( $i = 5; $i >= 1; $i-- ) {
-		/* translators: %d: Rating */
-		echo '<option value="' . esc_attr( $i ) . '">' . sprintf( esc_html( _n( '%d star', '%d stars', $i, 'travel' ) ), esc_html( number_format_i18n( $i ) ) ) . '</option>';
-	}
-	echo '</select>
-		</p>';
+	?>
+	<p class="comment-form-rating">
+		<label><?php esc_html_e( 'Your rating', 'travel' ); ?></label>
+		<fieldset class="rating">
+			<?php for ( $i = 5; $i >= 1; $i -- ) : ?>
+				<input name="rating" type="radio" id="rating<?php echo esc_attr( $i ); ?>" value="<?php echo esc_attr( $i ); ?>" />
+				<label for="rating<?php echo esc_attr( $i ); ?>">☆</label>
+			<?php endfor; ?>
+		</fieldset>
+	</p>
+	<?php
 }
 add_action( 'comment_form_logged_in_after', 'amp_travel_comment_rating_field' );
 add_action( 'comment_form_after_fields', 'amp_travel_comment_rating_field' );
@@ -198,6 +200,64 @@ function amp_travel_save_comment_meta_data( $comment_id ) {
 	}
 }
 add_action( 'comment_post', 'amp_travel_save_comment_meta_data' );
+
+/**
+ * Check if the reviewer has not already submitted a review.
+ *
+ * @param int   $approved Current status.
+ * @param array $comment The comment data to check.
+ * @return int|WP_Error If comment is allowed or not.
+ */
+function amp_travel_check_first_review( $approved, $comment ) {
+
+	if ( ! empty( $comment['user_id'] ) ) {
+		$author_arg = array(
+			'author__in' => array( $comment['user_id'] ),
+		);
+	} elseif ( ! empty( $comment['comment_author_email'] ) ) {
+		$author_arg = array(
+			'author_email' => $comment['comment_author_email'],
+		);
+	} else {
+		return $approved;
+	}
+
+	$comments = get_comments(
+		array_merge(
+			$author_arg,
+			array(
+				'post_id' => $comment['comment_post_ID'],
+				'status'  => 'approve',
+			)
+		)
+	);
+
+	if ( ! empty( $comments ) ) {
+		return new WP_Error( 'already_reviewed', __( 'You may only submit a single review.' ), 409 );
+	}
+
+	return $approved;
+}
+
+/**
+ * Validate the comment is allowed.
+ *
+ * @param int   $approved Current status.
+ * @param array $comment The comment data to check.
+ * @return int|WP_Error If comment is allowed or not.
+ */
+function amp_travel_validate_comment( $approved, $comment ) {
+	// Check if the user has already submitted a review.
+	$approved = amp_travel_check_first_review( $approved, $comment );
+	if ( is_wp_error( $approved ) ) {
+		return $approved;
+	}
+	if ( empty( $_POST['rating'] ) ) { // WPCS: CSRF ok.
+		return new WP_Error( 'no_rating', __( 'A rating is required.' ), 409 );
+	}
+	return $approved;
+}
+add_filter( 'pre_comment_approved', 'amp_travel_validate_comment', 10, 2 );
 
 /**
  * Update adventure rating.
@@ -275,12 +335,13 @@ function amp_travel_modify_comment_display( $text ) {
 	$rating = get_comment_meta( get_comment_ID(), 'rating', true );
 	if ( $rating ) {
 		$rating_html = '<div class="comment-review relative h3 line-height-2">
-							<div  class="travel-results-result-stars green">';
-
+							<div  class="travel-results-result-stars green">
+									<div class="travel-results-results-stars-empty-small">★★★★★</div>
+									<div class="travel-results-results-stars-solid-small">';
 		for ( $i = 0; $i < round( $rating ); $i++ ) {
 			$rating_html .= '★';
 		}
-		$rating_html .= '</div></div>';
+		$rating_html .= '</div></div></div>';
 		$text         = $rating_html . $text;
 		return $text;
 	} else {
