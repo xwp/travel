@@ -16,7 +16,7 @@ class WP_REST_Adventure_Controller extends WP_REST_Posts_Controller {
 	 * Retrieves a collection of adventures.
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
-
+	 *
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
@@ -24,9 +24,18 @@ class WP_REST_Adventure_Controller extends WP_REST_Posts_Controller {
 		if ( is_wp_error( $items ) ) {
 			return $items;
 		}
+
 		// @todo: Perhaps this should detect if it's an amp-list or not.
 		// Move items under 'items' key for amp-list to be able to use it.
-		$items->set_data( array( 'items' => $items->get_data() ) );
+		$data = array(
+			'items' => array(),
+		);
+		if ( ! empty( $request->get_param( 'search' ) ) ) {
+			$data['items'] = array(
+				'adventures' => $items->get_data(),
+			);
+		}
+		$items->set_data( $data );
 
 		return $items;
 	}
