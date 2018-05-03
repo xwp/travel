@@ -154,6 +154,7 @@ function amp_travel_enqueue_styles() {
 	} else {
 		wp_enqueue_style( 'amp_travel_homepage', get_template_directory_uri() . '/assets/css/homepage.css' );
 	}
+	wp_enqueue_style( 'amp_travel_ratings', get_template_directory_uri() . '/assets/css/stars.css' );
 }
 add_action( 'wp_enqueue_scripts', 'amp_travel_enqueue_styles' );
 
@@ -208,25 +209,30 @@ add_action( 'comment_post', 'amp_travel_save_comment_meta_data' );
  * @return int|WP_Error If comment is allowed or not.
  */
 function amp_travel_check_first_review( $approved, $comment ) {
-	global $wpdb;
 
-	// Check if user reviewed already.
-	$dupe = $wpdb->prepare(
-		"SELECT comment_ID FROM $wpdb->comments WHERE comment_post_ID = %d AND comment_parent = %s AND comment_approved != 'trash' AND ( comment_author = %s ",
-		wp_unslash( $comment['comment_post_ID'] ),
-		wp_unslash( $comment['comment_parent'] ),
-		wp_unslash( $comment['comment_author'] )
-	);
-	if ( $comment['comment_author_email'] ) {
-		$dupe .= $wpdb->prepare(
-			'AND comment_author_email = %s ',
-			wp_unslash( $comment['comment_author_email'] )
+	if ( ! empty( $comment['user_id'] ) ) {
+		$author_arg = array(
+			'author__in' => array( $comment['user_id'] ),
 		);
+	} elseif ( ! empty( $comment['comment_author_email'] ) ) {
+		$author_arg = array(
+			'author_email' => $comment['comment_author_email'],
+		);
+	} else {
+		return $approved;
 	}
-	$dupe    .= ') LIMIT 1';
-	$dupe_id = $wpdb->get_var( $dupe ); // WPCS: unprepared SQL ok.
 
-	if ( $dupe_id ) {
+	$comments = get_comments(
+		array_merge(
+			$author_arg,
+			array(
+				'post_id' => $comment['comment_post_ID'],
+				'status'  => 'approve',
+			)
+		)
+	);
+
+	if ( ! empty( $comments ) ) {
 		return new WP_Error( 'already_reviewed', __( 'You may only submit a single review.' ), 409 );
 	}
 
@@ -247,7 +253,7 @@ function amp_travel_validate_comment( $approved, $comment ) {
 		return $approved;
 	}
 	if ( empty( $_POST['rating'] ) ) { // WPCS: CSRF ok.
-		return new WP_Error( 'already_reviewed', __( 'A rating is required.' ), 409 );
+		return new WP_Error( 'no_rating', __( 'A rating is required.' ), 409 );
 	}
 	return $approved;
 }
