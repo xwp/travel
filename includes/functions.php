@@ -376,6 +376,9 @@ function amp_travel_states() {
 
 			<amp-state id="fields_start"><script type="application/json"><?php echo isset( $_GET['start'] ) ? sprintf( '"%s"', esc_html( $_GET['start'] ) ) : '""'; ?></script></amp-state>
 			<amp-state id="fields_end"><script type="application/json"><?php echo isset( $_GET['end'] ) ? sprintf( '"%s"', esc_html( $_GET['end'] ) ) : '""'; ?></script></amp-state>
+		<?php else : ?>
+			<amp-state id="fields_start"><script type="application/json">""</script></amp-state>
+			<amp-state id="fields_end"><script type="application/json">""</script></amp-state>
 		<?php endif; ?>
 	<?php
 	endif;
