@@ -7,3 +7,11 @@
 .comment-form input {
     margin-bottom: 1rem;
 }
+
+@media (min-width: 52.06rem) {
+    .comment-form .comment-form-author,
+    .comment-form .comment-form-email {
+        width: 50%;
+        padding-right: 15px;
+    }
+}
