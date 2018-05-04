@@ -3,3 +3,7 @@
 .comment-review {
     width: 100%;
 }
+
+.comment-form input {
+    margin-bottom: 1rem;
+}
