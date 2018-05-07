@@ -3,3 +3,9 @@
 .comment-review {
     width: 100%;
 }
+
+.comment-form .comment-form-rating-select {
+	width: 50%;
+	padding-right: 15px;
+	margin-bottom: 0;
+}
