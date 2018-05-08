@@ -4,6 +4,12 @@
     width: 100%;
 }
 
+.comment-form .comment-form-rating-select {
+	width: 50%;
+	padding-right: 15px;
+	margin-bottom: 0;
+}
+
 .comment-form input {
     margin-bottom: 1rem;
 }

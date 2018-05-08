@@ -158,21 +158,52 @@ function amp_travel_enqueue_styles() {
 }
 add_action( 'wp_enqueue_scripts', 'amp_travel_enqueue_styles' );
 
+
 /**
- * Add rating field to comments.
+ * Add star rating field to comments.
  */
-function amp_travel_comment_rating_field() {
+function amp_travel_comment_star_rating_field() {
 	?>
 	<p class="comment-form-rating">
 		<label><?php esc_html_e( 'Your rating', 'travel' ); ?></label>
-		<fieldset class="rating">
-			<?php for ( $i = 5; $i >= 1; $i -- ) : ?>
-				<input name="rating" type="radio" id="rating<?php echo esc_attr( $i ); ?>" value="<?php echo esc_attr( $i ); ?>" />
-				<label for="rating<?php echo esc_attr( $i ); ?>">☆</label>
-			<?php endfor; ?>
-		</fieldset>
+	<fieldset class="rating">
+		<?php for ( $i = 5; $i >= 1; $i -- ) : ?>
+			<input name="rating" type="radio" id="rating<?php echo esc_attr( $i ); ?>" value="<?php echo esc_attr( $i ); ?>" />
+			<label for="rating<?php echo esc_attr( $i ); ?>">☆</label>
+		<?php endfor; ?>
+	</fieldset>
 	</p>
 	<?php
+}
+
+/**
+ * Add select rating field to comments.
+ */
+function amp_travel_comment_select_rating_field() {
+	echo '<p class="comment-form-rating-select"><label for="rating">' . esc_html__( 'Your rating', 'travel' ) . '</label>
+			<select required="required" class="select-arr rounded" name="rating" id="rating" [disabled]="commentform_post_' . esc_attr( get_the_ID() ) . '.submitting" on=\'change:AMP.setState( { commentform_post_' . esc_attr( get_the_ID() ) . ': { values: { "rating": event.value } } } )\'>
+			<option value="">--</option>';
+
+	for ( $i = 5; $i >= 1; $i-- ) {
+		/* translators: %d: Rating */
+		echo '<option value="' . esc_attr( $i ) . '">' . sprintf( esc_html( _n( '%d star', '%d stars', $i, 'travel' ) ), esc_html( number_format_i18n( $i ) ) ) . '</option>';
+	}
+	echo '</select>
+		</p>';
+}
+
+/**
+ * Add star or select rating field to comments.
+ */
+function amp_travel_comment_rating_field() {
+	global $is_IE;
+	if ( true === $is_IE ) {
+		// add the legacy select field type.
+		amp_travel_comment_select_rating_field();
+	} else {
+		// add the star rating field type.
+		amp_travel_comment_star_rating_field();
+	}
 }
 add_action( 'comment_form_logged_in_after', 'amp_travel_comment_rating_field' );
 add_action( 'comment_form_after_fields', 'amp_travel_comment_rating_field' );
