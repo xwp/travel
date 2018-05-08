@@ -180,7 +180,7 @@ function amp_travel_comment_star_rating_field() {
  * Add select rating field to comments.
  */
 function amp_travel_comment_select_rating_field() {
-	echo '<p class="comment-form-rating-select"><label for="rating">' . esc_html( 'Your rating' ) . '</label>
+	echo '<p class="comment-form-rating-select"><label for="rating">' . esc_html__( 'Your rating', 'travel' ) . '</label>
 			<select required="required" class="select-arr rounded" name="rating" id="rating" [disabled]="commentform_post_' . esc_attr( get_the_ID() ) . '.submitting" on=\'change:AMP.setState( { commentform_post_' . esc_attr( get_the_ID() ) . ': { values: { "rating": event.value } } } )\'>
 			<option value="">--</option>';
 
