@@ -30,7 +30,7 @@ export default registerBlockType(
 
 			return [
 				isSelected && (
-					<InspectorControls key="inspector">
+					<InspectorControls key="activity-inspector">
 						<PanelBody title={ __( 'Activity List settings', 'travel' ) }>
 							<TextControl
 								label={ __( 'Activity List Header', 'travel' ) }
@@ -41,7 +41,7 @@ export default registerBlockType(
 					</InspectorControls>
 				),
 
-				<Fragment key="fragment-ssr">
+				<Fragment key="activity-ssr">
 					<ServerSideRender
 						block={ blockName }
 						attributes={ attributes }
