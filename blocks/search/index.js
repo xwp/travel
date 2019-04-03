@@ -8,7 +8,8 @@
  * Internal block libraries.
  */
 const { __ } = wp.i18n;
-const { registerBlockType, RichText } = wp.blocks;
+const { registerBlockType } = wp.blocks;
+const { RichText } = wp.editor;
 
 /**
  * Register block.
@@ -16,7 +17,7 @@ const { registerBlockType, RichText } = wp.blocks;
 export default registerBlockType(
 	'amp-travel/search',
 	{
-		title: __( 'Search' ),
+		title: __( 'Travel Search' ),
 		category: 'common',
 		icon: 'search',
 		keywords: [
