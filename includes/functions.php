@@ -410,8 +410,8 @@ function amp_travel_states() {
 		<?php else : ?>
 			<amp-state id="fields_start"><script type="application/json">""</script></amp-state>
 			<amp-state id="fields_end"><script type="application/json">""</script></amp-state>
-		<?php endif; ?>
-	<?php
+			<?php
+		endif;
 	endif;
 }
 add_action( 'wp_footer', 'amp_travel_states' );
