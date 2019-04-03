@@ -485,6 +485,9 @@ class AMP_Travel_Blocks {
 						'type'    => 'string',
 						'default' => __( 'Featured destinations', 'travel' ),
 					),
+					'context' => array(
+						'type'    => 'string',
+					),
 				),
 				'render_callback' => array( $this, 'render_block_travel_featured' ),
 			) );
@@ -508,6 +511,9 @@ class AMP_Travel_Blocks {
 
 		// The count has to be 6 to fill the grid.
 		if ( count( $locations ) !== self::FEATURED_LOCATIONS_COUNT ) {
+			if ( isset( $attributes['context'] ) && 'server-side-render' === $attributes['context'] ) {
+				return __( 'Not enough featured locations found. Please add at least six "Locations" terms, select an image, and check "Featured destination."', 'travel' );
+			}
 			return '';
 		}
 
