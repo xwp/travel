@@ -5,7 +5,7 @@
  * Internal block libraries.
  */
 const { registerBlockType } = wp.blocks;
-const { PanelBody, Placeholder, ServerSideRender, TextControl } = wp.components;
+const { Disabled, PanelBody, ServerSideRender, TextControl } = wp.components;
 const { InspectorControls } = wp.editor;
 const { Fragment } = wp.element;
 const { __ } = wp.i18n;
@@ -43,10 +43,12 @@ export default registerBlockType(
 					</InspectorControls>
 				),
 				<Fragment key="discover-ssr">
-					<ServerSideRender
-						block={ blockName }
-						attributes={ ssrAttributes }
-					/>
+					<Disabled>
+						<ServerSideRender
+							block={ blockName }
+							attributes={ ssrAttributes }
+						/>
+					</Disabled>
 				</Fragment>
 			];
 		},

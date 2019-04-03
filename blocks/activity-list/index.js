@@ -5,7 +5,7 @@
  */
 const { registerBlockType } = wp.blocks;
 const { InspectorControls } = wp.editor;
-const { ServerSideRender, TextControl, PanelBody } = wp.components;
+const { Disabled, ServerSideRender, TextControl, PanelBody } = wp.components;
 const { Fragment } = wp.element;
 const { __ } = wp.i18n;
 
@@ -40,12 +40,13 @@ export default registerBlockType(
 						</PanelBody>
 					</InspectorControls>
 				),
-
 				<Fragment key="activity-ssr">
-					<ServerSideRender
-						block={ blockName }
-						attributes={ attributes }
-					/>
+					<Disabled>
+						<ServerSideRender
+							block={ blockName }
+							attributes={ attributes }
+						/>
+					</Disabled>
 				</Fragment>
 			];
 		},
