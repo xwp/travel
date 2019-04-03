@@ -40,11 +40,11 @@ export default registerBlockType(
 			return [
 				isSelected && (
 					<InspectorControls key='inspector'>
-						<PanelBody title={__('Featured Destinations settings', 'travel')}>
+						<PanelBody title={ __( 'Featured Destinations settings', 'travel' ) }>
 							<TextControl
-								label={__('Featured Destinations Header')}
-								value={heading}
-								onChange={(value) => setAttributes({ heading: value })}
+								label={ __('Featured Destinations Header', 'travel' ) }
+								value={ heading }
+								onChange={ ( value ) => setAttributes( { heading: value } ) }
 							/>
 						</PanelBody>
 					</InspectorControls>

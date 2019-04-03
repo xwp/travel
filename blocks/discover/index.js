@@ -9,7 +9,6 @@ const { InspectorControls } = wp.editor;
 const { Fragment } = wp.element;
 const { __ } = wp.i18n;
 
-
 const blockName = 'amp-travel/discover';
 
 /**
