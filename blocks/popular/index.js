@@ -45,8 +45,8 @@ export default registerBlockType(
 				),
 				<Fragment key="popular-ssr">
 					<ServerSideRender
-						block={blockName}
-						attributes={ssrAttributes}
+						block={ blockName }
+						attributes={ ssrAttributes }
 					/>
 				</Fragment>
 			];
