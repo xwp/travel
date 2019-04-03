@@ -4,11 +4,11 @@
 /**
  * Internal block libraries.
  */
-const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 const { PanelBody, ServerSideRender, TextControl } = wp.components;
 const { InspectorControls } = wp.editor;
 const { Fragment } = wp.element;
+const { __ } = wp.i18n;
 
 const blockName = 'amp-travel/popular';
 

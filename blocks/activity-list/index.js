@@ -3,11 +3,11 @@
 /**
  * Internal block libraries.
  */
-const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 const { InspectorControls } = wp.editor;
 const { ServerSideRender, TextControl, PanelBody } = wp.components;
 const { Fragment } = wp.element;
+const { __ } = wp.i18n;
 
 const blockName = 'amp-travel/activity-list';
 
