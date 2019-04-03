@@ -8,9 +8,13 @@ html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-t
     background-color: transparent;
 }
 
+.editor-block-list__block[data-type="amp-travel/featured"] .travel-featured-grid .col-12 {
+    max-height: 30rem;
+}
+
 .edit-post-visual-editor .editor-block-list__block[data-type="amp-travel/hero"],
 .edit-post-visual-editor .editor-block-list__block[data-type="amp-travel/search"],
-.edit-post-visual-editor .editor-block-list__block[data-type="amp-travel/featured"]{
+.edit-post-visual-editor .editor-block-list__block[data-type="amp-travel/featured"] {
     max-width: none;
 }
 
@@ -20,6 +24,11 @@ html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-t
 
 .edit-post-visual-editor .editor-block-list__block[data-type="amp-travel/popular"] {
     max-width: 70vw;
+}
+
+.edit-post-visual-editor .travel-popular,
+.edit-post-visual-editor .travel-featured {
+    padding: 0;
 }
 
 .travel-overflow-container {

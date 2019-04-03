@@ -7,8 +7,9 @@
 /**
  * Internal block libraries.
  */
+const { registerBlockType } = wp.blocks;
+const { RichText } = wp.editor;
 const { __ } = wp.i18n;
-const { registerBlockType, RichText } = wp.blocks;
 
 /**
  * Register block.

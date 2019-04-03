@@ -101,7 +101,7 @@ function amp_travel_get_popular_adventures( $adventures, $attributes ) {
 		$output .= '<div class="col-12 sm-col-6 lg-col-4 p1"><div class="' . esc_html( $popular_classes[ $index ] ) . ' mb1">
 			<div class="relative travel-results-result">
 				<a class="travel-results-result-link block relative" href="' . esc_url( get_the_permalink( $adventure->ID ) ) . '">
-					<amp-img class="block rounded" width="346" height="200" noloading="" src="' . esc_url( $img_src ) . '" srcset="' . esc_attr( $img_srcset ) . '"></amp-img>
+					<img class="block rounded" width="346" height="200" noloading="" src="' . esc_url( $img_src ) . '" srcset="' . esc_attr( $img_srcset ) . '"></img>
 				</a>
 			</div>
 		</div>
@@ -410,8 +410,8 @@ function amp_travel_states() {
 		<?php else : ?>
 			<amp-state id="fields_start"><script type="application/json">""</script></amp-state>
 			<amp-state id="fields_end"><script type="application/json">""</script></amp-state>
-		<?php endif; ?>
-	<?php
+			<?php
+		endif;
 	endif;
 }
 add_action( 'wp_footer', 'amp_travel_states' );

@@ -201,6 +201,9 @@ class AMP_Travel_Blocks {
 						'type'    => 'string',
 						'default' => __( 'Top Adventures', 'travel' ),
 					),
+					'context' => array(
+						'type'    => 'string',
+					),
 				),
 				'render_callback' => array( $this, 'render_block_travel_popular' ),
 			) );
@@ -214,6 +217,7 @@ class AMP_Travel_Blocks {
 	 * @return string Output.
 	 */
 	public function render_block_travel_popular( $attributes ) {
+		$is_server_side_render = ( isset( $attributes['context'] ) && 'server-side-render' === $attributes['context'] );
 		$output = '';
 
 		$adventures = get_posts(
@@ -226,6 +230,9 @@ class AMP_Travel_Blocks {
 		);
 
 		if ( count( $adventures ) !== self::POPULAR_POSTS_COUNT ) {
+			if ( $is_server_side_render ) {
+				return __( 'Not enough adventures with ratings found, add at least 3 to use the block.', 'travel' );
+			}
 			return $output;
 		}
 
@@ -485,6 +492,9 @@ class AMP_Travel_Blocks {
 						'type'    => 'string',
 						'default' => __( 'Featured destinations', 'travel' ),
 					),
+					'context' => array(
+						'type'    => 'string',
+					),
 				),
 				'render_callback' => array( $this, 'render_block_travel_featured' ),
 			) );
@@ -498,7 +508,8 @@ class AMP_Travel_Blocks {
 	 * @return string Output.
 	 */
 	public function render_block_travel_featured( $attributes ) {
-		$locations = get_terms( array(
+		$is_server_side_render = ( isset( $attributes['context'] ) && 'server-side-render' === $attributes['context'] );
+		$locations             = get_terms( array(
 			'taxonomy'   => 'location',
 			'meta_key'   => AMP_Travel_Taxonomies::LOCATION_FEATURED_META_FIELD,
 			'meta_value' => 1,
@@ -508,6 +519,9 @@ class AMP_Travel_Blocks {
 
 		// The count has to be 6 to fill the grid.
 		if ( count( $locations ) !== self::FEATURED_LOCATIONS_COUNT ) {
+			if ( $is_server_side_render ) {
+				return __( 'Not enough featured locations found. Please add at least six "Locations" terms, select an image, and check "Featured destination."', 'travel' );
+			}
 			return '';
 		}
 
@@ -582,7 +596,7 @@ class AMP_Travel_Blocks {
 
 			$output .= '<a href="' . esc_url( get_term_link( $location['term_id'] ) ) . '" class="travel-featured-tile flex flex-auto relative travel-featured-color-' .
 							esc_attr( $location_params[ $i ]['color'] ) . '">
-							<amp-img class="travel-object-cover flex-auto" layout="responsive" width="' .
+							<img class="travel-object-cover flex-auto" data-amp-layout="responsive" width="' .
 							esc_attr( $location_params[ $i ]['width'] ) . '" height="' .
 							esc_attr( $location_params[ $i ]['height'] ) . '" srcset="' . esc_attr( $location_img_srcset ) . '" src="' . esc_url( $location_img_src[0] ) . '""></amp-img>
 							<div class="travel-featured-overlay absolute z1 center top-0 right-0 bottom-0 left-0 white p2">
