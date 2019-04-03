@@ -22,20 +22,21 @@ export default registerBlockType(
 		category: 'common',
 		icon: 'universal-access',
 		keywords: [
-			__( 'Top rated' ),
-			__( 'Best' ),
-			__( 'Travel' )
+			__( 'Top rated', 'travel' ),
+			__( 'Best', 'travel' ),
+			__( 'Travel', 'travel' )
 		],
 
 		edit( { attributes, isSelected, setAttributes } ) {
 			const { heading } = attributes;
+			const ssrAttributes = Object.assign( {}, attributes, { context: 'server-side-render' } );
 
 			return [
 				isSelected && (
-					<InspectorControls key='inspector'>
-						<PanelBody title={ __( 'Popular block settings' ) }>
+					<InspectorControls key="popular-inspector">
+						<PanelBody title={ __( 'Popular block settings', 'travel' ) }>
 							<TextControl
-								label={ __( 'Popular Adventures Header' ) }
+								label={ __( 'Popular Adventures Header', 'travel' ) }
 								value={ heading }
 								onChange={ ( value ) => setAttributes( { heading: value } ) }
 							/>
@@ -45,7 +46,7 @@ export default registerBlockType(
 				<Fragment key="popular-ssr">
 					<ServerSideRender
 						block={blockName}
-						attributes={attributes}
+						attributes={ssrAttributes}
 					/>
 				</Fragment>
 			];

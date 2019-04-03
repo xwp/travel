@@ -201,6 +201,9 @@ class AMP_Travel_Blocks {
 						'type'    => 'string',
 						'default' => __( 'Top Adventures', 'travel' ),
 					),
+					'context' => array(
+						'type'    => 'string',
+					),
 				),
 				'render_callback' => array( $this, 'render_block_travel_popular' ),
 			) );
@@ -214,6 +217,7 @@ class AMP_Travel_Blocks {
 	 * @return string Output.
 	 */
 	public function render_block_travel_popular( $attributes ) {
+		$is_server_side_render = ( isset( $attributes['context'] ) && 'server-side-render' === $attributes['context'] );
 		$output = '';
 
 		$adventures = get_posts(
@@ -226,6 +230,9 @@ class AMP_Travel_Blocks {
 		);
 
 		if ( count( $adventures ) !== self::POPULAR_POSTS_COUNT ) {
+			if ( $is_server_side_render ) {
+				return __( 'Not enough adventures with ratings found, add at least 3 to use the block.', 'travel' );
+			}
 			return $output;
 		}
 
