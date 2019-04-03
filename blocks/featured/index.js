@@ -21,22 +21,15 @@ export default registerBlockType(
 		category: 'common',
 		icon: 'location-alt',
 		keywords: [
-			__( 'Featured destinations' ),
-			__( 'Adventures' ),
-			__( 'Travel' )
+			__( 'Featured destinations', 'travel' ),
+			__( 'Adventures', 'travel' ),
+			__( 'Travel', 'travel' )
 		],
 
 		edit( { attributes, isSelected, setAttributes } ) {
 			const { heading } = attributes;
 			const ssrAttributes = Object.assign( {}, attributes, { context: 'server-side-render' } );
 
-			const placeholder = (
-				<Placeholder key='placeholder'
-					icon='admin-post'
-					label={__('Locations')}
-				>
-					</Placeholder>
-			);
 			return [
 				isSelected && (
 					<InspectorControls key='inspector'>
@@ -51,8 +44,8 @@ export default registerBlockType(
 				),
 				<Fragment key="discover-ssr">
 					<ServerSideRender
-						block={blockName}
-						attributes={ssrAttributes}
+						block={ blockName }
+						attributes={ ssrAttributes }
 					/>
 				</Fragment>
 			];
