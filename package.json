@@ -34,7 +34,6 @@
     "jscs": "^3.0.7",
     "jshint": "^2.9.5",
     "raw-loader": "^0.5.1",
-    "webpack": "^3.10.0",
-    "wp-dev-lib": "github:xwp/wp-dev-lib"
+    "webpack": "^3.10.0"
   }
 }
